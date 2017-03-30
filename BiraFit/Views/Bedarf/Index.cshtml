@@ -1,0 +1,19 @@
+﻿@model List<BiraFit.Models.Bedarf>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bedürfnisse</h2>
+<ul>
+    @foreach (var item in @Model)
+    {
+        <li>ID: @item.Id
+            Beschreibung: @item.Beschreibung
+            Preis: @item.Preis
+        </li>
+    }
+    
+</ul>
+
+

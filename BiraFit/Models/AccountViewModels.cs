@@ -58,8 +58,14 @@ namespace BiraFit.Models
         [Display(Name = "Kennwort")]
         public string Password { get; set; }
 
+        [Required]
+        [Display(Name = "Sportler")]
+        public bool Sportler { get; set; }
+
         [Display(Name = "Speichern?")]
         public bool RememberMe { get; set; }
+
+        
     }
 
     public class RegisterViewModel
@@ -79,6 +85,8 @@ namespace BiraFit.Models
         [Display(Name = "Kennwort bestätigen")]
         [Compare("Password", ErrorMessage = "Das Kennwort entspricht nicht dem Bestätigungskennwort.")]
         public string ConfirmPassword { get; set; }
+
+        public bool Sportler { get; set; }
     }
 
     public class ResetPasswordViewModel
@@ -93,7 +101,7 @@ namespace BiraFit.Models
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort")]
         public string Password { get; set; }
-
+        
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort bestätigen")]
         [Compare("Password", ErrorMessage = "Das Kennwort stimmt nicht mit dem Bestätigungskennwort überein.")]
