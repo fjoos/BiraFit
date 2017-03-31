@@ -11,17 +11,8 @@ namespace BiraFit.Models
     public class Konversation
     {
         [Key]
-        [Display(Name = "Id")]
         public int Id { get; set; }
 
-        [Required]
-        [ForeignKey("Id")]
-        [Display(Name = "SportlerID")]
-        public Sportler SportlerID { get; set; }
-
-        [Required]
-        [ForeignKey("Id")]
-        [Display(Name = "TrainerID")]
-        public PersonalTrainer TrainerID { get; set; }
+        public List<Nachricht> Nachrichten { get; set; }
     }
 }

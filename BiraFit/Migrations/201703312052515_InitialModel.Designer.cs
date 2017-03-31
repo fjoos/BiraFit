@@ -13,7 +13,7 @@ namespace BiraFit.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201703311154342_InitialModel"; }
+            get { return "201703312052515_InitialModel"; }
         }
         
         string IMigrationMetadata.Source

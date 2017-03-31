@@ -3,7 +3,7 @@ namespace BiraFit.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ModifyUserTable : DbMigration
+    public partial class ChangeAspNetUsersTable : DbMigration
     {
         public override void Up()
         {
@@ -13,10 +13,8 @@ namespace BiraFit.Migrations
             Sql("ALTER TABLE AspNetUsers ADD ProfilBild VARCHAR(250) NULL");
             Sql("ALTER TABLE AspNetUsers ADD Aktiv BIT NOT NULL");
             Sql("ALTER TABLE AspNetUsers ADD AnmeldeDatum DateTime NOT NULL");
-
-
         }
-
+        
         public override void Down()
         {
         }

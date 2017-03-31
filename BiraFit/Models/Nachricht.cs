@@ -11,28 +11,19 @@ namespace BiraFit.Models
     public class Nachricht
     {
         [Key]
-        [Display(Name = "Id")]
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey("Id")]
-        [Display(Name = "KonversationID")]
-        public Konversation KonversationID { get; set; }
-
-        [Required]
-        [Display(Name = "Text")]
+        [Display(Name = "Nachricht")]
         public string Text { get; set; }
 
         [Required]
-        [Display(Name = "SenderID")]
-        public int SenderID { get; set; }
+        public int Sender_Id { get; set; }
 
         [Required]
-        [Display(Name = "EmpfaengerID")]
-        public int TrainerID { get; set; }
+        public int Empfaenger_Id { get; set; }
 
         [Required]
-        [Display(Name = "Datum")]
         public DateTime Datum { get; set; }
     }
 }

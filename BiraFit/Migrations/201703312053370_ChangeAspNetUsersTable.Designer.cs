@@ -7,13 +7,13 @@ namespace BiraFit.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ModifyUserTable : IMigrationMetadata
+    public sealed partial class ChangeAspNetUsersTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ModifyUserTable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeAspNetUsersTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703311229223_ModifyUserTable"; }
+            get { return "201703312053370_ChangeAspNetUsersTable"; }
         }
         
         string IMigrationMetadata.Source
