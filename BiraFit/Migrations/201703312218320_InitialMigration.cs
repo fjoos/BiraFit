@@ -3,7 +3,7 @@ namespace BiraFit.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialModel : DbMigration
+    public partial class InitialMigration : DbMigration
     {
         public override void Up()
         {
@@ -87,6 +87,12 @@ namespace BiraFit.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        AnmeldeDatum = c.DateTime(nullable: false),
+                        Name = c.String(nullable: false),
+                        Vorname = c.String(nullable: false),
+                        Adresse = c.String(nullable: false),
+                        ProfilBild = c.String(),
+                        Aktiv = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

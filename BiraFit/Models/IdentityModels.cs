@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System;
 
 namespace BiraFit.Models
 {
@@ -11,6 +13,24 @@ namespace BiraFit.Models
     [Table("AspNetUsers")]
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        public DateTime AnmeldeDatum { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Vorname { get; set; }
+
+        [Required]
+        public string Adresse { get; set; }
+
+        public string ProfilBild { get; set; }
+
+        [Required]
+        public int Aktiv { get; set; }
+
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

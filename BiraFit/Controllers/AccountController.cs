@@ -151,7 +151,7 @@ namespace BiraFit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AnmeldeDatum = DateTime.Now, Name = "Dörig", Vorname="Peter",Adresse="Steinackerstrasse 15",Aktiv = 1 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

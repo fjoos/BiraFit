@@ -223,13 +223,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703312052515_InitialModel.cs" />
-    <Compile Include="Migrations\201703312052515_InitialModel.Designer.cs">
-      <DependentUpon>201703312052515_InitialModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703312053370_ChangeAspNetUsersTable.cs" />
-    <Compile Include="Migrations\201703312053370_ChangeAspNetUsersTable.Designer.cs">
-      <DependentUpon>201703312053370_ChangeAspNetUsersTable.cs</DependentUpon>
+    <Compile Include="Migrations\201703312218320_InitialMigration.cs" />
+    <Compile Include="Migrations\201703312218320_InitialMigration.Designer.cs">
+      <DependentUpon>201703312218320_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -331,11 +327,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703312052515_InitialModel.resx">
-      <DependentUpon>201703312052515_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703312053370_ChangeAspNetUsersTable.resx">
-      <DependentUpon>201703312053370_ChangeAspNetUsersTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703312218320_InitialMigration.resx">
+      <DependentUpon>201703312218320_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
