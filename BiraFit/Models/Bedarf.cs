@@ -17,6 +17,10 @@ namespace BiraFit.Models
         public bool Open { get; set; }
 
         [Required]
+        [Display(Name = "Titel")]
+        public String Titel { get; set; }
+
+        [Required]
         [Display(Name = "SportlerID")]
         public int SportlerID { get; set; }
 
@@ -31,6 +35,10 @@ namespace BiraFit.Models
         [Required]
         [Display(Name = "Ort")]
         public string Ort { get; set; }
+
+        [Required]
+        [Display(Name = "Datum")]
+        public DateTime Datum { get; set; }
 
 
     }
