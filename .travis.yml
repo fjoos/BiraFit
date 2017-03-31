@@ -4,4 +4,4 @@ install:
 - travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./BiraFit.sln
 script:
 - xbuild BiraFit.sln
-- mono ./BiraFit/packages/xunit.runner.console*/tools/xunit.console.exe ./BiraFit.Tests/bin/Debug/BiraFit.Tests.dll
+- mono ./packages/xunit.runner.console*/tools/xunit.console.exe ./BiraFit.Tests/bin/Debug/BiraFit.Tests.dll
