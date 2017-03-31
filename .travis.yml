@@ -1,9 +1,8 @@
 language: csharp
-script:
-  - xbuild /p:Configuration=Debug BiraFit.sln
-before_install:
-  - sudo apt-get install nunit-console
-before_script:
+solution: BiraFit.sln
+install:
   - nuget restore BiraFit.sln
-after_script:
-  - nunit-console BiraFitTest/bin/Debug/BiraFitTest.dll
+  - nuget install xunit.runners -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release BiraFit.sln
+  - mono ./testrunner/xunit.runners*/tools/xunit.console.clr4.exe ./BiraFitTest/bin/Debug/BiraFitTest.dll
