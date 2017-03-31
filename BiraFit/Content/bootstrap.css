@@ -224,6 +224,7 @@ table {
   border-spacing: 0;
 }
 
+
 @media print {
   * {
     color: #000 !important;
