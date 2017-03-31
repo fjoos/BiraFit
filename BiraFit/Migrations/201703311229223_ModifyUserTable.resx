@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Target" xml:space="preserve">
+    <value>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</value>
+  </data>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
+  </data>
+</root>
