@@ -1,8 +1,7 @@
 language: csharp
-solution: BiraFit.sln
+solution: "./BiraFit.sln"
 install:
-  - nuget restore BiraFit.sln
-  - nuget install xunit.runners -OutputDirectory testrunner
+- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./BiraFit.sln
 script:
-  - xbuild /p:Configuration=Release BiraFit.sln
-  - mono ./testrunner/xunit.runners*/tools/xunit.console.clr4.exe ./BiraFitTest/bin/Debug/BiraFitTest.dll
+- xbuild ./BiraFit.sln
+- mono ./packages/xunit.runner.console*/tools/xunit.console.exe ./BiraFitTest/bin/Debug/BiraFitTest.dll
