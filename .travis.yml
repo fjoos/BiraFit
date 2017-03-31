@@ -1,8 +1,4 @@
 language: csharp
-solution: BiraFit.sln
 
 # uncomment and edit the following line if your project needs to run something other than `rake`:
 # script: bundle exec rspec spec
-install:
-  - sudo apt-get install -y gtk-sharp2
-  - nuget restore BiraFit.sln
