@@ -7,15 +7,21 @@ using System.Web;
 
 namespace BiraFit.Models
 {
-    [Table("Sportler")]
-    public class Sportler
+    [Table("Konversation")]
+    public class Konversation
     {
         [Key]
         [Display(Name = "Id")]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "UserID")]
-        public int userID { get; set; }
+        [ForeignKey("Id")]
+        [Display(Name = "SportlerID")]
+        public Sportler SportlerID { get; set; }
+
+        [Required]
+        [ForeignKey("Id")]
+        [Display(Name = "TrainerID")]
+        public PersonalTrainer TrainerID { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Web;
 
 namespace BiraFit.Models
 {
+    [Table("Bedarf")]
     public class Bedarf
     {
         [Key]
@@ -19,7 +20,7 @@ namespace BiraFit.Models
 
         [Required]
         [Display(Name = "Titel")]
-        public String Titel { get; set; }
+        public string Titel { get; set; }
 
         [Required]
         [ForeignKey("Id")]

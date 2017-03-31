@@ -7,6 +7,7 @@ using System.Web;
 
 namespace BiraFit.Models
 {
+    [Table("Angebot")]
     public class Angebot
     {
         [Key]
