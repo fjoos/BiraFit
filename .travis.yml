@@ -1,7 +1,8 @@
-language: csharp
-solution: "./BiraFit.sln"
-install:
-- travis_retry nuget restore -source "https://www.nuget.org/api/v2" ./BiraFit.sln
-script:
-- xbuild BiraFit.sln
-- mono ./packages/xunit.runner.console*/tools/xunit.console.exe ./BiraFitTest/bin/Debug/BiraFit.dll
+anguage: csharp
+solution: BiraFit.sln
+before_install:
+  - sudo apt-get install nunit-console
+before_script:
+  - nuget restore BiraFit.sln
+after_script:
+  - nunit-console BiraFitTest/bin/Debug/BiraFitTest.dll
