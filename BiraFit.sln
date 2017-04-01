@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFit", "BiraFit\BiraFit.csproj", "{64BAED4E-05A5-43A3-9DF1-7CBAD1F9C5CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFitTest", "BiraFitTest\BiraFitTest.csproj", "{43E46639-D5FC-460E-B663-86EDC1F4283F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFit.Tests", "BiraFitTest\BiraFit.Tests.csproj", "{43E46639-D5FC-460E-B663-86EDC1F4283F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
