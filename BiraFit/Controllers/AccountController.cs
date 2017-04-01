@@ -431,11 +431,11 @@ namespace BiraFit.Controllers
             if (model.Sportler)
             {
                 _context.Sportler.Add(new Sportler { User_Id = user.Id });
+                _context.SaveChanges();
+                return;
             }
-            else
-            {
-                _context.PersonalTrainer.Add(new PersonalTrainer { User_Id = user.Id });
-            }
+
+            _context.PersonalTrainer.Add(new PersonalTrainer { User_Id = user.Id });
             _context.SaveChanges();
         }
 
