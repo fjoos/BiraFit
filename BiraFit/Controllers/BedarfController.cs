@@ -43,14 +43,20 @@ namespace BiraFit.Controllers
         [HttpPost]
         public ActionResult Create(Bedarf Bedarf)
         {
-            int CurrentUserId = AuthenticateSportler();
-            if (CurrentUserId > 0)
+            int SportlerId = AuthenticateSportler();
+            if (CheckForOpenBedarf(SportlerId))
             {
-                string query = String.Format("INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{0}','{1}',{2},'{3}',{4},{5},'{6}')", Bedarf.Titel, Bedarf.Beschreibung, Bedarf.Preis, Bedarf.Ort, 1, CurrentUserId, DateTime.Now);
-                _context.Database.ExecuteSqlCommand(query);
+                if (SportlerId > 0)
+                {
+                    string query = String.Format("INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{0}','{1}',{2},'{3}',{4},{5},'{6}')", Bedarf.Titel, Bedarf.Beschreibung, Bedarf.Preis, Bedarf.Ort, 1, SportlerId, DateTime.Now);
+                    _context.Database.ExecuteSqlCommand(query);
+                    return RedirectToAction("Index", "Bedarf");
+                }
+                return RedirectToAction("Index", "Home");
             }
-            
-            return View();
+
+            //Redirect Fehler wegen Offenem Bedarf des Users -> Fehlermeldung ausgeben
+            return RedirectToAction("New", "Bedarf");
         }
 
         public int AuthenticateSportler()
@@ -65,6 +71,17 @@ namespace BiraFit.Controllers
                 }
             }
             return -1;
+        }
+
+        public bool CheckForOpenBedarf(int SportlerId)
+        {
+            string Query = String.Format("SELECT OpenBedarf FROM Bedarf where Sportler_Id={0}",SportlerId);
+            int Result = _context.Database.ExecuteSqlCommand(Query);
+            if(Result == -1)
+            {
+                return true;
+            }
+            return false;
         }
 
     }
