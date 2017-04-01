@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BiraFit.Models;
+using BiraFit.ViewModel;
+using Microsoft.AspNet.Identity;
+using System.Security.Claims;
 
 namespace BiraFit.Controllers
 {
@@ -15,11 +18,6 @@ namespace BiraFit.Controllers
         public BedarfController()
         {
             _context = new ApplicationDbContext();
-            /*
-            BedarfList = new List<Bedarf>();
-            BedarfList.Add(new Bedarf() { Id = 1, Open = true, Beschreibung = "Hallo Zusammen, Ich suche einen PersonalTrainer der mir hilft abzunehmen. Bin 24 Jahre alt und speiele gerne Fussball", Ort = "St. Gallen", Preis = 150 });
-            BedarfList.Add(new Bedarf() { Id = 2, Open = false, Beschreibung = "Hallo Zusammen, Ich suche einen PersonalTrainer der mir hilft muskeln aufzubauen. Bin 34 Jahre alt und speiele gerne Tennis", Ort = "Rapperswil", Preis = 250 });
-            */
         }
 
         protected override void Dispose(bool disposing)
@@ -32,6 +30,41 @@ namespace BiraFit.Controllers
         {
             var BedarfList = _context.Bedarf.ToList();
             return View(BedarfList);
+        }
+
+        public ActionResult New()
+        {
+            if (AuthenticateSportler() > 0)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public ActionResult Create(Bedarf Bedarf)
+        {
+            int CurrentUserId = AuthenticateSportler();
+            if (CurrentUserId > 0)
+            {
+                string query = String.Format("INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{0}','{1}',{2},'{3}',{4},{5},'{6}')", Bedarf.Titel, Bedarf.Beschreibung, Bedarf.Preis, Bedarf.Ort, 1, CurrentUserId, DateTime.Now);
+                _context.Database.ExecuteSqlCommand(query);
+            }
+            
+            return View();
+        }
+
+        public int AuthenticateSportler()
+        {
+            var CurrentUserId = User.Identity.GetUserId();
+            List<Sportler> SportlerList = _context.Sportler.ToList();
+            foreach (var item in SportlerList)
+            {
+                if(item.User_Id == CurrentUserId)
+                {
+                    return item.Id;
+                }
+            }
+            return -1;
         }
 
     }

@@ -14,7 +14,7 @@ namespace BiraFit.Models
         public int Id { get; set; }
 
         [Required]
-        public bool Open { get; set; }
+        public bool OpenBedarf { get; set; }
 
         [Required]
         public string Titel { get; set; }
