@@ -1,12 +1,11 @@
 ﻿@model BiraFit.Models.Bedarf
-
 @{
-    ViewBag.Title = "Neuer Bedarf";
+    ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Neuer Bedarf</h2>
-@using (Html.BeginForm("Create", "Bedarf"))
+<h2>Editieren</h2>
+@using (Html.BeginForm("Edit", "Bedarf"))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Titel)
@@ -28,5 +27,7 @@
         @Html.TextBoxFor(m => m.Ort, new { @class = "form-control" })
     </div>
 
-    <button type="submit" class="btn btn-primary">Bedarf erstellen</button>
+    <button type="submit" class="btn btn-primary">Bedarf speichern</button>
 }
+
+

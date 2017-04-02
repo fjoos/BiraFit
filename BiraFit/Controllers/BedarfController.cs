@@ -40,11 +40,12 @@ namespace BiraFit.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
         public ActionResult Create(Bedarf Bedarf)
         {
             int SportlerId = AuthenticateSportler();
-            if (CheckForOpenBedarf(SportlerId))
+            if (!IsBedarfOpen(SportlerId))
             {
                 if (SportlerId > 0)
                 {
@@ -59,27 +60,72 @@ namespace BiraFit.Controllers
             return RedirectToAction("New", "Bedarf");
         }
 
+        public ActionResult Edit(int Id)
+        {
+            int SportlerId = AuthenticateSportler();
+            
+            if (IsBedarfOwner(Id,SportlerId))
+            {
+                var Bedarf = _context.Bedarf.Single(b => b.Id == Id);
+                return View(Bedarf);
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Bedarf Bedarf)
+        {
+            var BedarfInDb = _context.Bedarf.Single(c => c.Id == Bedarf.Id);
+            TryUpdateModel(BedarfInDb);
+            _context.SaveChanges();
+            return View();
+        }
+
         public int AuthenticateSportler()
         {
             var CurrentUserId = User.Identity.GetUserId();
             List<Sportler> SportlerList = _context.Sportler.ToList();
-            foreach (var item in SportlerList)
+            foreach (var Sportler in SportlerList)
             {
-                if(item.User_Id == CurrentUserId)
+                if (Sportler.User_Id == CurrentUserId)
                 {
-                    return item.Id;
+                    return Sportler.Id;
                 }
             }
             return -1;
         }
 
-        public bool CheckForOpenBedarf(int SportlerId)
+        public bool IsBedarfOpen(int SportlerId)
         {
-            string Query = String.Format("SELECT OpenBedarf FROM Bedarf where Sportler_Id={0}",SportlerId);
-            int Result = _context.Database.ExecuteSqlCommand(Query);
-            if(Result == -1)
+            List<Bedarf> BedarfList = _context.Bedarf.ToList();
+
+            foreach (var Bedarf in BedarfList)
             {
-                return true;
+                if(Bedarf.Sportler_Id == SportlerId)
+                {
+                    if (Bedarf.OpenBedarf)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool IsBedarfOwner(int BedarfId, int SportlerId)
+        {
+            var Bedürfnisse = _context.Bedarf.ToList();
+            
+            foreach (var Bedarf in Bedürfnisse)
+            {
+                if(BedarfId == Bedarf.Id)
+                {
+                    if (Bedarf.Sportler_Id == SportlerId)
+                    {
+                        return true;
+                    }
+                }
+                
             }
             return false;
         }
