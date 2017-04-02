@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFit", "BiraFit\BiraFit.csproj", "{64BAED4E-05A5-43A3-9DF1-7CBAD1F9C5CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFit.Tests", "BiraFitTest\BiraFit.Tests.csproj", "{43E46639-D5FC-460E-B663-86EDC1F4283F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiraFit.Tests", "BiraFit.Tests\BiraFit.Tests.csproj", "{DA36A5EC-4AFE-481E-9468-0CD572A2A8C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{64BAED4E-05A5-43A3-9DF1-7CBAD1F9C5CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64BAED4E-05A5-43A3-9DF1-7CBAD1F9C5CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64BAED4E-05A5-43A3-9DF1-7CBAD1F9C5CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43E46639-D5FC-460E-B663-86EDC1F4283F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43E46639-D5FC-460E-B663-86EDC1F4283F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43E46639-D5FC-460E-B663-86EDC1F4283F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43E46639-D5FC-460E-B663-86EDC1F4283F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA36A5EC-4AFE-481E-9468-0CD572A2A8C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA36A5EC-4AFE-481E-9468-0CD572A2A8C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA36A5EC-4AFE-481E-9468-0CD572A2A8C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA36A5EC-4AFE-481E-9468-0CD572A2A8C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
