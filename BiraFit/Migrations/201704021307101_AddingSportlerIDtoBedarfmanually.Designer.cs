@@ -7,13 +7,13 @@ namespace BiraFit.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class AddingSportlerIDtoBedarfmanually : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddingSportlerIDtoBedarfmanually));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703271956098_InitialCreate"; }
+            get { return "201704021307101_AddingSportlerIDtoBedarfmanually"; }
         }
         
         string IMigrationMetadata.Source

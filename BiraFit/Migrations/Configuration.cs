@@ -10,7 +10,6 @@ namespace BiraFit.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "BiraFit.Models.ApplicationDbContext";
         }
 
         protected override void Seed(BiraFit.Models.ApplicationDbContext context)

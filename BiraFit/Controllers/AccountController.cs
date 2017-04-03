@@ -17,9 +17,11 @@ namespace BiraFit.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext _context;
 
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -151,12 +153,13 @@ namespace BiraFit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Sportler = model.Sportler };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AnmeldeDatum = DateTime.Now, Name = "Dörig", Vorname="Peter",Adresse="Steinackerstrasse 15",Aktiv = 1 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    AllocateUser(user, model);
+
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -422,6 +425,20 @@ namespace BiraFit.Controllers
 
             base.Dispose(disposing);
         }
+
+        public void AllocateUser(ApplicationUser user, RegisterViewModel model)
+        {
+            if (model.Sportler)
+            {
+                _context.Sportler.Add(new Sportler { User_Id = user.Id });
+                _context.SaveChanges();
+                return;
+            }
+
+            _context.PersonalTrainer.Add(new PersonalTrainer { User_Id = user.Id });
+            _context.SaveChanges();
+        }
+
 
         #region Hilfsprogramme
         // Wird für XSRF-Schutz beim Hinzufügen externer Anmeldungen verwendet
