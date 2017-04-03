@@ -90,7 +90,7 @@ namespace BiraFit.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Geburtsdatum")]
-        public string Birthdate { get; set; }
+        public System.DateTime Birthdate { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "\"{0}\" muss mindestens {2} Zeichen lang sein.", MinimumLength = 6)]
