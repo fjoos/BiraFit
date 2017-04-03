@@ -1,9 +1,21 @@
-﻿@model BiraFit.Models.Angebot
+﻿@model List<BiraFit.Models.Angebot>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Angebote</h2>
+<h2>Angebote von Personal Trainer</h2>
+
+@foreach (var item in @Model)
+{
+    <p>
+        @item.Beschreibung
+        @item.Datum
+        @item.Preis
+    </p>
+}
+
+
+
 
