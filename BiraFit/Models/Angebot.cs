@@ -21,5 +21,7 @@ namespace BiraFit.Models
 
         [Required]
         public DateTime Datum { get; set; }
+
+        public int Bedarf_Id { get; set; }
     }
 }
