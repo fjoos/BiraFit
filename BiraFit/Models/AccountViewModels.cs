@@ -76,6 +76,23 @@ namespace BiraFit.Models
         public string Email { get; set; }
 
         [Required]
+        [StringLength(20, ErrorMessage = "\"{0}\" darf maximal {2} Zeichen lang sein.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Vorname")]
+        public string Firstname { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "\"{0}\" darf maximal {2} Zeichen lang sein.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nachname")]
+        public string Lastname { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Geburtsdatum")]
+        public string Birthdate { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "\"{0}\" muss mindestens {2} Zeichen lang sein.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort")]
@@ -104,7 +121,7 @@ namespace BiraFit.Models
         
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort bestätigen")]
-        [Compare("Password", ErrorMessage = "Das Kennwort stimmt nicht mit dem Bestätigungskennwort überein.")]
+        [Compare("Password", ErrorMessage = "Die Kennwörter sind nicht identisch.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
