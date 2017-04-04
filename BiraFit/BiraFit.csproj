@@ -336,6 +336,7 @@
     <Content Include="Views\Bedarf\New.cshtml" />
     <Content Include="Views\Bedarf\Edit.cshtml" />
     <Content Include="Views\Angebot\Index.cshtml" />
+    <Content Include="Views\Angebot\AngebotTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
