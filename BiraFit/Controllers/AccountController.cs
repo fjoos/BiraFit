@@ -60,7 +60,7 @@ namespace BiraFit.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            return View("Login");
         }
 
         //
@@ -72,7 +72,7 @@ namespace BiraFit.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View("Login", model);
             }
 
             // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.

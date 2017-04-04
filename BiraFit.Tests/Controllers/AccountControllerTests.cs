@@ -5,52 +5,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.Mvc;
 using BiraFit.Models;
+using System.Web.Mvc;
+using System.Web;
+using Moq;
 
 namespace BiraFit.Controllers.Tests
 {
     [TestClass()]
     public class AccountControllerTests
     {
-        [TestMethod()]
-        public void LoginTest()
+
+        private AccountController controller;
+        private HttpContextBase rmContext;
+        private HttpRequestBase rmRequest;
+        private Mock<HttpContextBase> moqContext;
+        private Mock<HttpRequestBase> moqRequest;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            AccountController controller = new AccountController();
-            LoginViewModel lvmodel = new LoginViewModel();
-            String returnUrl = "wwww.google.ch";
+            controller = new AccountController();
+            moqContext = new Mock<HttpContextBase>();
+            moqRequest = new Mock<HttpRequestBase>();
+           }
+
+
+        /*
+         testuser: 
+        */
+        [TestMethod()]
+        public void LoginView()
+        {
+            ViewResult result = controller.Login("/login") as ViewResult;
+            var actualModel = result.Model as LoginViewModel;
+            Assert.IsNull(actualModel);
+        }
+
+        [TestMethod()]
+        public void LoginSuccess()
+        {
+            LoginViewModel lvmodel = new LoginViewModel() {
+                Sportler = true,
+                Email = "sportler@hotmail.com",
+                Password = "Hsr-123"
+            };
+            String returnUrl = "/";
             var result = controller.Login(lvmodel, returnUrl);
             Assert.IsNotNull(result);
         }
 
+        [TestMethod()]
+        public void LoginFail()
+        {
+            LoginViewModel lvmodel = new LoginViewModel()
+            {
+                Sportler = true,
+                Email = "sportler@hotmail.com",
+                Password = "Fail"
+            };
+            String returnUrl = "/";
+            var result = controller.Login(lvmodel, returnUrl);
+            Assert.IsNotNull(result);
+        }
 
         [TestMethod()]
-        public void RegisterTest()
+        public void RegisterView()
         {
-            AccountController controller = new AccountController();
-            RegisterViewModel rvm = new RegisterViewModel();
+          var result = controller.Register() as ViewResult;
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod()]
+        public void RegisterViewFull()
+        {
+           RegisterViewModel rvm = new RegisterViewModel();
             var result = controller.Register(rvm);
             Assert.IsNotNull(result);
         }
 
-
-        [TestMethod()]
-        public void ForgotPasswordTest()
-        {
-            AccountController controller = new AccountController();
-            ForgotPasswordViewModel viewmodel = new ForgotPasswordViewModel();
-            var result = controller.ForgotPassword(viewmodel);
-            Assert.IsNotNull(result);
-        }
-
-        [TestMethod()]
-        public void ConfirmEmailTest()
-        {
-            AccountController controller = new AccountController();
-            string userId = "1234";
-            string code = "asdf";
-            var result = controller.ConfirmEmail(userId, code);
-            Assert.IsNotNull(result);
-        }
     }
 }
