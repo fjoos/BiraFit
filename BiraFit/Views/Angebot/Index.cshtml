@@ -5,16 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Angebote von Personal Trainer</h2>
-
-@foreach (var item in @Model)
-{
-    <p>
-        @item.Beschreibung
-        @item.Datum
-        @item.Preis
-    </p>
-}
+@Html.Partial("AngebotTable")
 
 
 

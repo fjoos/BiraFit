@@ -245,12 +245,12 @@
       <DependentUpon>201704022335158_AngebotBedarfIDField-add.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="ViewModel\AccountViewModels.cs" />
     <Compile Include="Models\Angebot.cs" />
     <Compile Include="Models\Bedarf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Konversation.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="ViewModel\ManageViewModels.cs" />
     <Compile Include="Models\Nachricht.cs" />
     <Compile Include="Models\PersonalTrainer.cs" />
     <Compile Include="Models\Sportler.cs" />
@@ -346,6 +346,7 @@
     <Content Include="Views\Bedarf\New.cshtml" />
     <Content Include="Views\Bedarf\Edit.cshtml" />
     <Content Include="Views\Angebot\Index.cshtml" />
+    <Content Include="Views\Angebot\AngebotTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -87,7 +87,6 @@ namespace BiraFit.Models
         [Display(Name = "Nachname")]
         public string Lastname { get; set; }
 
-        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Geburtsdatum")]
         public System.DateTime Birthdate { get; set; }
