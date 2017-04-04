@@ -11,12 +11,13 @@
 </head>
 <body>
     <div style="max-height:50px"class="navbar navbar-inverse navbar-fixed-top">
-
         <div class="container">
 
             <div class="navbar-header">
-
-                <img style="max-height:50px;" src="~/resources/birafitnavbarlogo.png">
+                <h1 class="modal-title" style="color:orange">BiraFit</h1>
+                <!--
+                                    <img style="max-height:50px;" src="~/resources/birafitnavbarlogo.png">
+                -->
 
             </div>
 
@@ -28,8 +29,10 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-            <footer id="footer">
-                <div class="container">
+        <footer id="footer">
+
+            <!--
+                            <div class="container">
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3 column">
                             <h4>Information</h4>
@@ -69,6 +72,9 @@
                         </div>
                     </div>
                 </div>
+
+            -->
+
             <p>&copy; @DateTime.Now.Year - BiraFit</p>
         </footer>
     </div>
