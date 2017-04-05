@@ -3,64 +3,71 @@
     ViewBag.Title = "Registrieren";
 }
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-group", role = "form" }))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
 
     @Html.AntiForgeryToken()
-    <h4>Neues Konto erstellen.</h4>
-    <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Firstname, new { @class = "col-md-2 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control" })
-        </div>
-    </div>
+        <div class="container">
+            <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info" style="border-color: black;">
+                    <div class="panel-heading" style="background-color: black; border-color: black;">
+                        <div class="panel-title" style="color:orange">Neuen Account erstellen</div>
+                    </div>
+                    <div class="modal-body" style="padding:40px 50px; color:orange">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="fname">Vorname</label>
+                                @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control", @id = "fname", @placeholder = "Vorname" })
+                                @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
+                            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.Lastname, new { @class = "col-md-2 control-label" })
-        <div class="col-md-9">
-            @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control" })
-        </div>
-    </div>
+                            <div class="form-group">
+                                <label for="nname">Nachname</label>
+                                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", @id = "nname", @placeholder = "Nachname" })
+                                @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-            <div class="col-md-9">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            <div class="form-group">
+                                <label for="email">E-Mail</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @placeholder = "E-Mail" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="psw">Kennwort</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "psw", @placeholder = "Kennwort" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pswc">Kennwort Wiederholen</label>
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "pswc", @placeholder = "Kennwort" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-9 col-md-offset-3">
+                                    @Html.RadioButtonFor(model => model.Sportler, true, new { id = "sportler" })
+                                    @Html.Label("sportler", "Sportler")
+                                    @Html.RadioButtonFor(model => model.Sportler, false, new { id = "trainer" })
+                                    @Html.Label("trainer", "Trainer")
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-block" style="color:orange; background-color:black; border-color: black"><span class="glyphicon glyphicon-off" style="color:orange"></span> Registrieren</button>
+                        </form>
+                    </div>
+
+
+
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-            <div class="col-md-9">
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-            <div class="col-md-9">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-9 col-md-offset-3">
-                @Html.RadioButtonFor(model => model.Sportler, true, new { id = "sportler" })
-                @Html.Label("sportler", "Sportler")
-                @Html.RadioButtonFor(model => model.Sportler, false, new { id = "trainer" })
-                @Html.Label("trainer", "Trainer")
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-3 col-md-9">
-                <button id="btn-signup" type="submit" class="btn btn-info"><i class="icon-hand-right"></i>Registrieren</button>
-            </div>
-        </div>
-
-        }
+}
 
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")
