@@ -29,7 +29,7 @@ namespace BiraFit.Controllers
         public ActionResult Index()
         {
             var BedarfList = _context.Bedarf.ToList();
-            return View("Bedarf", BedarfList);
+            return View(BedarfList);
         }
 
         public ActionResult New()
