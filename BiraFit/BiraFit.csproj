@@ -226,7 +226,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AngebotController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BedarfController.cs" />
+    <Compile Include="Controllers\Helpers\AuthentificationHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NachrichtController.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="Models\Bedarf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Konversation.cs" />
+    <Compile Include="ViewModel\ChatViewModel.cs" />
     <Compile Include="ViewModel\ManageViewModels.cs" />
     <Compile Include="Models\Nachricht.cs" />
     <Compile Include="Models\PersonalTrainer.cs" />
@@ -370,6 +373,7 @@
     <Content Include="Views\Angebot\Index.cshtml" />
     <Content Include="Views\Angebot\AngebotTable.cshtml" />
     <Content Include="Views\Nachricht\Index.cshtml" />
+    <Content Include="Views\Nachricht\Chat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

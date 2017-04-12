@@ -1,4 +1,5 @@
-﻿using BiraFit.Models;
+﻿using BiraFit.Controllers.Helpers;
+using BiraFit.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -8,27 +9,14 @@ using System.Web.Mvc;
 
 namespace BiraFit.Controllers
 {
-    public class AngebotController : Controller
+    public class AngebotController : BaseController
     {
-        private ApplicationDbContext _context;
-        public static List<Angebot> AngebotList;
-
-        public AngebotController()
-        {
-            _context = new ApplicationDbContext();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _context.Dispose();
-        }
-
         // GET: Angebot
         public ActionResult Index()
         {
             var CurrentUserId = User.Identity.GetUserId();
-            var BedarfList = _context.Bedarf.ToList();
-            int CurrentSportlerId = AuthenticateSportler();
+            var BedarfList = Context.Bedarf.ToList();
+            int CurrentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             List<Angebot> Angebote = new List<Angebot>();
 
             if (CurrentSportlerId > 0)
@@ -37,7 +25,7 @@ namespace BiraFit.Controllers
                 {
                     if(Bedarf.Sportler_Id == CurrentSportlerId && Bedarf.OpenBedarf)
                     {
-                        foreach (var Angebot in _context.Angebot.ToList())
+                        foreach (var Angebot in Context.Angebot.ToList())
                         {
                             if(Bedarf.Id == Angebot.Bedarf_Id)
                             {
@@ -49,20 +37,6 @@ namespace BiraFit.Controllers
                 return View(Angebote);
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        public int AuthenticateSportler()
-        {
-            var CurrentUserId = User.Identity.GetUserId();
-            List<Sportler> SportlerList = _context.Sportler.ToList();
-            foreach (var Sportler in SportlerList)
-            {
-                if (Sportler.User_Id == CurrentUserId)
-                {
-                    return Sportler.Id;
-                }
-            }
-            return -1;
         }
     }
 }

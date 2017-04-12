@@ -1,0 +1,23 @@
+﻿@model BiraFit.ViewModel.ChatViewModel
+@{
+    ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chat</h2>
+@foreach (var item in @Model.nachricht)
+{
+    if(item.Sender_Id == @Model.id)
+    {
+        //wie bei whatsapp rechtsbündig -> mein Text
+        <p style="color:darkseagreen"><b>@item.Text</b></p>
+    }
+    else
+    {
+        //wie bei whatsapp linksbündig -> Text des Chatpartners
+        <p style="color:lightgray"><b>@item.Text</b></p>
+    }
+}
+
+
+

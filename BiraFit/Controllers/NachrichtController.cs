@@ -6,64 +6,70 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Security.Claims;
+using BiraFit.ViewModel;
+using BiraFit.Controllers.Helpers;
 
 namespace BiraFit.Controllers
 {
-    public class NachrichtController : Controller
+    public class NachrichtController : BaseController
     {
-        private ApplicationDbContext _context;
         private int Id;
         private bool IsSportler;
         public NachrichtController()
         {
             IsSportler = true;
-            _context = new ApplicationDbContext();
 
         }
         // GET: Nachricht
         public ActionResult Index()
         {
-
-            Id = AuthenticateSportler();
+            Id = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            //diesen bereich noch fixen!
             if (Id == -1)
             {
                 Id = AuthenticateTrainer();
                 IsSportler = false;
             }
-            var currentUserId = User.Identity.GetUserId();
+            
             if (IsSportler)
             {
 
-                var SportlerKonversationen = from b in _context.Konversation
-                                                    where b.Sportler_Id == Id
-                                                    select b;
+                var SportlerKonversationen = from b in Context.Konversation
+                                             where b.Sportler_Id == Id
+                                             select b;
                 List<Konversation> SportlerKonversationList = SportlerKonversationen.ToList<Konversation>();
                 return View(SportlerKonversationList);
             }
 
-            var TrainerKonversationen = from b in _context.Konversation
-                                 where b.PersonalTrainer_Id == Id
-                                 select b;
+            var TrainerKonversationen = from b in Context.Konversation
+                                        where b.PersonalTrainer_Id == Id
+                                        select b;
             return View(TrainerKonversationen);
         }
-
-        public int AuthenticateSportler()
+        
+        public ActionResult Chat(int id)
         {
-            var CurrentUserId = User.Identity.GetUserId();
-            List<Sportler> SportlerList = _context.Sportler.ToList();
-            foreach (var Sportler in SportlerList)
+            
+            if (!IsLoggedIn())
             {
-                if (Sportler.User_Id == CurrentUserId)
-                {
-                    return Sportler.Id;
-                }
+                return RedirectToAction("Index", "Home");
             }
-            return -1;
+
+            var Chat = from k in Context.Konversation
+                       where k.Id == id
+                       from m in k.Nachrichten
+                       orderby m.Datum
+                       select m;
+            List<Nachricht> ChatList = Chat.ToList();
+            
+            return View(new ChatViewModel { nachricht = ChatList, id = User.Identity.GetUserId() });
         }
 
         public int AuthenticateTrainer()
         {
             return 0;
         }
+
+        
     }
 }
