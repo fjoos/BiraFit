@@ -14,5 +14,9 @@ namespace BiraFit.Models
         public int Id { get; set; }
 
         public List<Nachricht> Nachrichten { get; set; }
+
+        public int Sportler_Id { get; set; }
+
+        public int PersonalTrainer_Id { get; set; }
     }
 }

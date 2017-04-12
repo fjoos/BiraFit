@@ -18,10 +18,10 @@ namespace BiraFit.Models
         public string Text { get; set; }
 
         [Required]
-        public int Sender_Id { get; set; }
+        public string Sender_Id { get; set; }
 
         [Required]
-        public int Empfaenger_Id { get; set; }
+        public string Empfaenger_Id { get; set; }
 
         [Required]
         public DateTime Datum { get; set; }

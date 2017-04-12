@@ -1,0 +1,13 @@
+﻿@model List<BiraFit.Models.Konversation>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Meine Chats</h2>
+@foreach (var item in @Model)
+{
+    <p>Nachricht:</p> @item.Id
+}
+
+

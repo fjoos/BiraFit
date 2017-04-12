@@ -229,6 +229,7 @@
     <Compile Include="Controllers\BedarfController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NachrichtController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -243,6 +244,18 @@
     <Compile Include="Migrations\201704022335158_AngebotBedarfIDField-add.cs" />
     <Compile Include="Migrations\201704022335158_AngebotBedarfIDField-add.Designer.cs">
       <DependentUpon>201704022335158_AngebotBedarfIDField-add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.cs" />
+    <Compile Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.Designer.cs">
+      <DependentUpon>201704101041178_personaltrainerid-sportlerid-konversation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs" />
+    <Compile Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.Designer.cs">
+      <DependentUpon>201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs" />
+    <Compile Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.Designer.cs">
+      <DependentUpon>201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModel\AccountViewModels.cs" />
@@ -304,6 +317,15 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <EmbeddedResource Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.resx">
+      <DependentUpon>201704101041178_personaltrainerid-sportlerid-konversation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.resx">
+      <DependentUpon>201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.resx">
+      <DependentUpon>201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\BiraFitLogo.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -347,6 +369,7 @@
     <Content Include="Views\Bedarf\Edit.cshtml" />
     <Content Include="Views\Angebot\Index.cshtml" />
     <Content Include="Views\Angebot\AngebotTable.cshtml" />
+    <Content Include="Views\Nachricht\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
