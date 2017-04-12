@@ -4,10 +4,53 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Editieren</h2>
+<h2 class="page-header">Bedarf bearbeiten</h2>
 @using (Html.BeginForm("Edit", "Bedarf"))
 {
-    <div class="form-group">
+    <div class="container">
+        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4">
+            <div class="panel panel-info" style="border-color: black;">
+                <div class="panel-heading" style="background-color: black; border-color: black;">
+                    <div class="panel-title" style="color:orange">Bedarf bearbeiten</div>
+                </div>
+                <div class="modal-body" style="padding:20px 50px; color:orange">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="titel">Titel</label>
+                            @Html.TextBoxFor(m => m.Titel, new { @class = "form-control", @id = "titel", @placeholder = "Titel" })
+                            @Html.ValidationMessageFor(m => m.Titel, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="beschreibung">Beschreibung</label>
+                            @Html.TextAreaFor(m => m.Beschreibung, new { @class = "form-control", @id = "beschreibung", @placeholder = "Beschreibung" })
+                            @Html.ValidationMessageFor(m => m.Beschreibung, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="preis">Meine Preisvorstellung</label>
+                            @Html.TextBoxFor(m => m.Preis, new { @class = "form-control", @id = "preis", @type = "number", @placeholder = "Preis pro Woche" })
+                            @Html.ValidationMessageFor(m => m.Preis, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ort">In der Umgebung von</label>
+                            @Html.TextBoxFor(m => m.Ort, new { @class = "form-control", @id = "ort", @placeholder = "Ort" })
+                            @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
+                        </div>
+                        <button type="submit" class="btn btn-info btn-block" style="color:orange; background-color:black; border-color: black">Bedarf speichern</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@*
+
+
+        <div class="form-group">
         @Html.LabelFor(m => m.Titel)
         @Html.TextBoxFor(m => m.Titel, new { @class = "form-control" })
     </div>
@@ -28,6 +71,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Bedarf speichern</button>
-}
 
-
+*@

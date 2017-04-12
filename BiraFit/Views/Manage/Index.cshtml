@@ -1,42 +1,110 @@
 ﻿@model BiraFit.Models.IndexViewModel
+
+
 @{
     ViewBag.Title = "Verwalten";
 }
 
-<h2>@ViewBag.Title.</h2>
+
+<h2 class="page-header">Mein Profil</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Kontoeinstellungen ändern</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Kennwort:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
+        @*
+                <dt>Externe Anmeldungen:</dt>
+            <dd>
+                @Model.Logins.Count [
+                @Html.ActionLink("Verwalten", "ManageLogins") ]
+            </dd>
+
+
+        *@
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-md-offset-3">
+                    <div class="panel panel-info" style="border-color: black">
+                        <div class="panel-heading" style="color:orange; background-color:black; border-color: black">
+                            <h3 class="panel-title">Benutzername</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-3 col-lg-3 " align="center"> <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" /></div>
+
+                                <div class="col-md-9 col-lg-9">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                            <tr>
+                                                <td>Vorname:</td>
+                                                <td>dasdas</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nachname:</td>
+                                                <td>derder</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Geburtstag:</td>
+                                                <td>31.31.2031</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Zu mir:</td>
+                                                <td>blablablabla</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><a href="mailto:@User.Identity.Name">@User.Identity.Name</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kennwort</td>
+                                                <td>
+                                                    [
+                                                    @if (Model.HasPassword)
             {
-                @Html.ActionLink("Kennwort ändern", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Erstellen", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>Externe Anmeldungen:</dt>
-        <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Verwalten", "ManageLogins") ]
-        </dd>
+                                                        @Html.ActionLink("Kennwort ändern", "ChangePassword")
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.ActionLink("Erstellen", "SetPassword")
+                                                    }
+                                                    ]
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <a href="#" class="btn btn-primary" style="color:orange; background-color:black; border-color: black">Profil bearbeiten</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
         @*
             Telefonnummern können als zweite Stufe in einem zweistufigen Authentifizierungssystem verwendet werden.
-             
+
              In <a href="http://go.microsoft.com/fwlink/?LinkId=403804">diesem Artikel</a>
                 finden Sie Details zum Einrichten dieser ASP.NET-Anwendung für die Unterstützung zweistufiger Authentifizierung mithilfe von SMS.
-             
+
              Entfernen Sie den Kommentar für den folgenden Block, nachdem Sie zweistufige Authentifizierung eingerichtet haben.
         *@
-        @*  
+        @*
             <dt>Telefonnummer:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -56,32 +124,32 @@
                 }
             </dd>
         *@
-        <dt>Zweistufige Authentifizierung:</dt>
-        <dd>
-            <p>
-                Es sind keine Anbieter für zweistufige Authentifizierung konfiguriert. In <a href="http://go.microsoft.com/fwlink/?LinkId=403804">diesem Artikel</a>
-                            finden Sie Details zum Einrichten dieser ASP.NET-Anwendung für die Unterstützung  zweistufiger Authentifizierung.
-            </p>
-            @*@if (Model.TwoFactor)
+        @*
+            <dt>Zweistufige Authentifizierung:</dt>
+            <dd>
+                <p>
+                    Es sind keine Anbieter für zweistufige Authentifizierung konfiguriert. In <a href="http://go.microsoft.com/fwlink/?LinkId=403804">diesem Artikel</a>
+                                finden Sie Details zum Einrichten dieser ASP.NET-Anwendung für die Unterstützung  zweistufiger Authentifizierung.
+                </p>
+        *@
+        @*@if (Model.TwoFactor)
+            {
+                using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Aktiviert
-                        <input type="submit" value="Deaktivieren" class="btn btn-link" />
-                        </text>
-                    }
+                    @Html.AntiForgeryToken()
+                    <text>Aktiviert
+                    <input type="submit" value="Deaktivieren" class="btn btn-link" />
+                    </text>
                 }
-                else
+            }
+            else
+            {
+                using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Deaktiviert
-                        <input type="submit" value="Aktivieren" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
-    </dl>
+                    @Html.AntiForgeryToken()
+                    <text>Deaktiviert
+                    <input type="submit" value="Aktivieren" class="btn btn-link" />
+                    </text>
+                }
+            }*@
 </div>
