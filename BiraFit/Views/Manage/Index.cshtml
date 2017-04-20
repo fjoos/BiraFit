@@ -1,8 +1,10 @@
 ﻿@model BiraFit.Models.IndexViewModel
-
+@using Microsoft.AspNet.Identity.Owin;
+ 
 
 @{
     ViewBag.Title = "Verwalten";
+    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(this.User.Identity.Name).Result;
 }
 
 
@@ -36,23 +38,19 @@
                                         <tbody>
                                             <tr>
                                                 <td>Vorname:</td>
-                                                <td>dasdas</td>
+                                                <td>@user.Vorname</td>
                                             </tr>
                                             <tr>
                                                 <td>Nachname:</td>
-                                                <td>derder</td>
+                                                <td>@user.Name</td>
                                             </tr>
                                             <tr>
                                                 <td>Geburtstag:</td>
                                                 <td>31.31.2031</td>
                                             </tr>
                                             <tr>
-                                                <td>Zu mir:</td>
-                                                <td>blablablabla</td>
-                                            </tr>
-                                            <tr>
                                                 <td>Email</td>
-                                                <td><a href="mailto:@User.Identity.Name">@User.Identity.Name</a></td>
+                                                <td><a href="mailto:@User.Identity.Name">@user.Email</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Kennwort</td>

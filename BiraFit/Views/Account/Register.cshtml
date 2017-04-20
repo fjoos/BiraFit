@@ -57,11 +57,11 @@
 
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    @Html.RadioButtonFor(model => model.Sportler, new { id = "sportler" })
+                                    @Html.RadioButtonFor(model => model.Sportler, true, new { id = "sportler" })
                                     @Html.Label("sportler", "Sportler")
                                     </div>
                                 <div class="col-md-6">
-                                    @Html.RadioButtonFor(model => model.Sportler, new { id = "trainer" })
+                                    @Html.RadioButtonFor(model => model.Sportler, false, new { id = "trainer" })
                                     @Html.Label("trainer", "Trainer")
                                 </div>
                             </div>

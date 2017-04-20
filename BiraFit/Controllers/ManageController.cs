@@ -15,10 +15,8 @@ namespace BiraFit.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController()
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
         }
 
         public ApplicationSignInManager SignInManager
