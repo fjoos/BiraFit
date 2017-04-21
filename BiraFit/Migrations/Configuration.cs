@@ -9,7 +9,8 @@ namespace BiraFit.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            //AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(BiraFit.Models.ApplicationDbContext context)
