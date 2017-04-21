@@ -7,13 +7,13 @@
 <h2 class="page-header">Bedarf bearbeiten</h2>
 @using (Html.BeginForm("Edit", "Bedarf"))
 {
-    <div class="container">
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4">
-            <div class="panel panel-info" style="border-color: black;">
-                <div class="panel-heading" style="background-color: black; border-color: black;">
-                    <div class="panel-title" style="color:orange">Bedarf bearbeiten</div>
+    <div class="container" id="loginForm">
+        <div id="loginbox" class="mainbox col-md-4 col-md-offset-4">
+            <div class="panel panel-info" id="logininnerbox">
+                <div class="panel-heading" id="loginHead">
+                    <div class="panel-title">Bedarf bearbeiten</div>
                 </div>
-                <div class="modal-body" style="padding:20px 50px; color:orange">
+                <div class="modal-body">
                     <form role="form">
                         <div class="form-group">
                             <label for="titel">Titel</label>
@@ -38,7 +38,7 @@
                             @Html.TextBoxFor(m => m.Ort, new { @class = "form-control", @id = "ort", @placeholder = "Ort" })
                             @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
                         </div>
-                        <button type="submit" class="btn btn-info btn-block" style="color:orange; background-color:black; border-color: black">Bedarf speichern</button>
+                        <button type="submit" id="loginButton" class="btn btn-block">Bedarf speichern</button>
                     </form>
                 </div>
             </div>

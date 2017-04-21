@@ -12,19 +12,12 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="container">
-                    <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-4 col-md-offset-4">
-                        <div class="panel panel-info" style="border-color: black;">
-                            <div class="panel-heading" style="background-color: black; border-color: black;">
-                                <div class="panel-title" style="color:orange">Einloggen</div>
-                                <div style="float:right; font-size: 80%; position: relative; top:-10px">
-                                    @* Diese Option aktivieren, nachdem Sie die Kontobestätigung für die Funktion zum Zurücksetzen des Kennworts aktiviert haben
-                                        <p>
-                                            @Html.ActionLink("Kennwort vergessen?", "ForgotPassword")
-                                        </p>
-                                    *@
-                                </div>
+                    <div id="loginbox" class="mainbox col-md-4 col-md-offset-4">
+                        <div class="panel panel-info" id="logininnerbox">
+                            <div class="panel-heading" id="loginHead">
+                                <div class="panel-title">Einloggen</div>
                             </div>
-                            <div class="modal-body" style="padding:40px 50px; color:orange">
+                            <div class="modal-body">
                                 <form role="form">
                                     <div class="form-group">
                                         <label for="usrname"><span class="glyphicon glyphicon-user"></span> E-Mail</label>
@@ -42,12 +35,12 @@
                                             @Html.LabelFor(m => m.RememberMe)
                                         </label>
                                     </div>
-                                    <div class="form-group" style="padding-top:15px;">
-                                    <button type="submit" class="btn btn-info btn-block" style="color:orange; background-color:black; border-color: black"><span class="glyphicon glyphicon-off" style="color:orange"></span> Anmelden</button>
-                                        <div class="col-md-12 control">
-                                            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                                    <div class="form-group">
+                                    <button type="submit" id="loginButton" class="btn btn-block"><span class="glyphicon glyphicon-off"></span> Anmelden</button>
+                                        <div class="col-md-12 control" id="noAccLink">
+                                            
                                                 @Html.ActionLink("Noch kein Account vorhanden?", "../Account/Register")
-                                            </div>
+               
                                         </div>
                                         </div>
                                 </form>

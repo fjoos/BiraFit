@@ -1,0 +1,51 @@
+﻿#loginbox {
+    margin-top: 50px;
+}
+
+#logininnerbox {
+    border-color: black;
+}
+
+#loginHead {
+    background-color: black;
+    border-color: black;
+    color: orange
+}
+
+#loginForm .panel-title {
+    color: orange;
+}
+
+#loginForm .modal-body {
+    padding: 40px 50px;
+    color: orange;
+}
+
+#loginForm .form-group {
+    padding-top: 15px;
+}
+
+#loginButton {
+    color: orange;
+    background-color: black;
+    border-color: black;
+}
+
+#noAccLink {
+    border-top: 1px solid#888;
+    padding-top: 15px;
+    font-size: 85%
+}
+.glyphicon glyphicon-off{
+    color: orange;
+}
+#angebotButton {
+    color: orange;
+    background-color: black;
+    border-color: black
+}
+.fa fa-reply {
+    color: orange;
+    background-color: black;
+    border-color: black
+}
