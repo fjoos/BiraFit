@@ -21,28 +21,19 @@ namespace BiraFit.Controllers.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            controller = new BedarfController();
-            Bedarf bedarf = new Bedarf();
-            bedarf.Titel = "TestBedarf";
-            //BedarfController.BedarfList.Add(bedarf);
-
-            /*
-            var controller = new ProductController();
-            var result = controller.Details(2) as ViewResult;
-            var product = (Product)result.ViewData.Model;
-            Assert.AreEqual("Laptop", product.Name);*/
+            controller = new BedarfController();          
         }
 
       
 [TestMethod()]
         public void IndexTestBed()
         {
-          /*  BedarfController controller = new BedarfController();
+         
             var result = controller.Index();
             //var model = result.Model as Model;
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             var viewResult = result as ViewResult;
-            Assert.AreEqual(typeof(BedarfViewModel), viewResult);*/
+            Assert.AreEqual(typeof(BedarfViewModel), viewResult);
         }
 
       

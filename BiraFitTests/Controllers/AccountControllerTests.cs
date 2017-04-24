@@ -16,31 +16,28 @@ namespace BiraFit.Controllers.Tests
     {
 
         private AccountController controller;
-    
+
 
         [TestInitialize]
         public void TestInitialize()
         {
             controller = new AccountController();
-         
-           }
 
+        }
 
-        /*
-         testuser: 
-        */
         [TestMethod()]
         public void LoginView()
         {
-        /*    ViewResult result = controller.Login("/login") as ViewResult;
-            var actualModel = result.Model as LoginViewModel;
-            Assert.IsNull(actualModel);*/
+                ViewResult result = controller.Login("/login") as ViewResult;
+                var actualModel = result.Model as LoginViewModel;
+                Assert.IsNull(actualModel);
         }
 
         [TestMethod()]
         public void LoginSuccess()
         {
-            LoginViewModel lvmodel = new LoginViewModel() {
+            LoginViewModel lvmodel = new LoginViewModel()
+            {
                 Sportler = true,
                 Email = "sportler@hotmail.com",
                 Password = "Hsr-123"
@@ -64,20 +61,13 @@ namespace BiraFit.Controllers.Tests
             Assert.IsNotNull(result);
         }
 
-        [TestMethod()]
-        public void RegisterView()
-        {
-         /* var result = controller.Register() as ViewResult;
-            Assert.IsNotNull(result);*/
-        }
 
         [TestMethod()]
         public void RegisterViewFull()
         {
-           RegisterViewModel rvm = new RegisterViewModel();
+            RegisterViewModel rvm = new RegisterViewModel();
             var result = controller.Register(rvm);
             Assert.IsNotNull(result);
         }
-
     }
 }
