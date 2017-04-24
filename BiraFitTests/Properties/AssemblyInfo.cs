@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BiraFit.Tests")]
+[assembly: AssemblyTitle("BiraFitTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BiraFit.Tests")]
+[assembly: AssemblyProduct("BiraFitTests")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("da36a5ec-4afe-481e-9468-0cd572a2a8c9")]
+[assembly: Guid("c1e804c2-fe98-4060-b4db-c9924b8524f8")]
 
 // Version information for an assembly consists of the following four values:
 //

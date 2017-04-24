@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using BiraFit.Models;
 using System.Web.Mvc;
 using System.Web;
-using Moq;
 
 namespace BiraFit.Controllers.Tests
 {
@@ -17,17 +16,13 @@ namespace BiraFit.Controllers.Tests
     {
 
         private AccountController controller;
-        private HttpContextBase rmContext;
-        private HttpRequestBase rmRequest;
-        private Mock<HttpContextBase> moqContext;
-        private Mock<HttpRequestBase> moqRequest;
+    
 
         [TestInitialize]
         public void TestInitialize()
         {
             controller = new AccountController();
-            moqContext = new Mock<HttpContextBase>();
-            moqRequest = new Mock<HttpRequestBase>();
+         
            }
 
 
