@@ -330,13 +330,7 @@ namespace BiraFit.Controllers
         // Wird für XSRF-Schutz beim Hinzufügen externer Anmeldungen verwendet.
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {

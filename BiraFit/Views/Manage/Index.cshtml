@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Verwalten";
-    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(this.User.Identity.Name).Result;
+    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
 }
 
 

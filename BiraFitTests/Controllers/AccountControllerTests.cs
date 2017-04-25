@@ -1,13 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BiraFit.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BiraFit.Models;
 using System.Web.Mvc;
-using System.Web;
 
 namespace BiraFit.Controllers.Tests
 {
@@ -15,20 +9,20 @@ namespace BiraFit.Controllers.Tests
     public class AccountControllerTests
     {
 
-        private AccountController controller;
+        private AccountController _controller;
 
 
         [TestInitialize]
         public void TestInitialize()
         {
-            controller = new AccountController();
+            _controller = new AccountController();
 
         }
 
         [TestMethod()]
         public void LoginView()
         {
-                ViewResult result = controller.Login("/login") as ViewResult;
+                ViewResult result = _controller.Login("/login") as ViewResult;
                 var actualModel = result.Model as LoginViewModel;
                 Assert.IsNull(actualModel);
         }
@@ -43,7 +37,7 @@ namespace BiraFit.Controllers.Tests
                 Password = "Hsr-123"
             };
             String returnUrl = "/";
-            var result = controller.Login(lvmodel, returnUrl);
+            var result = _controller.Login(lvmodel, returnUrl);
             Assert.IsNotNull(result);
         }
 
@@ -57,7 +51,7 @@ namespace BiraFit.Controllers.Tests
                 Password = "Fail"
             };
             String returnUrl = "/";
-            var result = controller.Login(lvmodel, returnUrl);
+            var result = _controller.Login(lvmodel, returnUrl);
             Assert.IsNotNull(result);
         }
 
@@ -66,7 +60,7 @@ namespace BiraFit.Controllers.Tests
         public void RegisterViewFull()
         {
             RegisterViewModel rvm = new RegisterViewModel();
-            var result = controller.Register(rvm);
+            var result = _controller.Register(rvm);
             Assert.IsNotNull(result);
         }
     }
