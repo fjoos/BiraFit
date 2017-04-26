@@ -53,7 +53,7 @@ namespace BiraFit.Models
 
         // : base("DefaultConnection", throwIfV1Schema: false)
         public ApplicationDbContext()
-            : base("birafit", throwIfV1Schema: false)
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
