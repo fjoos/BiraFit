@@ -1,11 +1,8 @@
 ﻿using BiraFit.Models;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Security.Claims;
 using BiraFit.ViewModel;
 using BiraFit.Controllers.Helpers;
 
@@ -13,36 +10,36 @@ namespace BiraFit.Controllers
 {
     public class NachrichtController : BaseController
     {
-        private int Id;
-        private bool IsSportler;
+        private int _id;
+        private bool _isSportler;
         public NachrichtController()
         {
-            IsSportler = true;
+            _isSportler = true;
 
         }
         // GET: Nachricht
         public ActionResult Index()
         {
-            Id = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            _id = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             //diesen bereich noch fixen!
-            if (Id == -1)
+            if (_id == -1)
             {
-                Id = AuthenticateTrainer();
-                IsSportler = false;
+                _id = AuthenticateTrainer();
+                _isSportler = false;
             }
             
-            if (IsSportler)
+            if (_isSportler)
             {
 
                 var SportlerKonversationen = from b in Context.Konversation
-                                             where b.Sportler_Id == Id
+                                             where b.Sportler_Id == _id
                                              select b;
                 List<Konversation> SportlerKonversationList = SportlerKonversationen.ToList<Konversation>();
                 return View(SportlerKonversationList);
             }
 
             var TrainerKonversationen = from b in Context.Konversation
-                                        where b.PersonalTrainer_Id == Id
+                                        where b.PersonalTrainer_Id == _id
                                         select b;
             return View(TrainerKonversationen);
         }

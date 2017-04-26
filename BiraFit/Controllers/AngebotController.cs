@@ -1,10 +1,7 @@
 ﻿using BiraFit.Controllers.Helpers;
 using BiraFit.Models;
-using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BiraFit.Controllers
@@ -14,27 +11,26 @@ namespace BiraFit.Controllers
         // GET: Angebot
         public ActionResult Index()
         {
-            var CurrentUserId = User.Identity.GetUserId();
-            var BedarfList = Context.Bedarf.ToList();
-            int CurrentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            List<Angebot> Angebote = new List<Angebot>();
+            var bedarfList = Context.Bedarf.ToList();
+            int currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            List<Angebot> angebote = new List<Angebot>();
 
-            if (CurrentSportlerId > 0)
+            if (currentSportlerId > 0)
             {
-                foreach (var Bedarf in BedarfList)
+                foreach (var bedarf in bedarfList)
                 {
-                    if(Bedarf.Sportler_Id == CurrentSportlerId && Bedarf.OpenBedarf)
+                    if(bedarf.Sportler_Id == currentSportlerId && bedarf.OpenBedarf)
                     {
-                        foreach (var Angebot in Context.Angebot.ToList())
+                        foreach (var angebot in Context.Angebot.ToList())
                         {
-                            if(Bedarf.Id == Angebot.Bedarf_Id)
+                            if(bedarf.Id == angebot.Bedarf_Id)
                             {
-                                Angebote.Add(Angebot);
+                                angebote.Add(angebot);
                             }
                         }
                     }
                 }
-                return View(Angebote);
+                return View(angebote);
             }
             return RedirectToAction("Index", "Home");
         }

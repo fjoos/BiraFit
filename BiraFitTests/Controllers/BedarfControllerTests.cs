@@ -1,13 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using BiraFit.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using BiraFit.Models;
-using BiraFit.ViewModel;
 
 namespace BiraFit.Controllers.Tests
 {
@@ -15,13 +6,13 @@ namespace BiraFit.Controllers.Tests
     public class BedarfControllerTests
     {
 
-        private BedarfController controller;
+        private BedarfController _controller;
 
 
         [TestInitialize]
         public void TestInitialize()
         {
-            controller = new BedarfController();          
+            _controller = new BedarfController();          
         }
 
       
