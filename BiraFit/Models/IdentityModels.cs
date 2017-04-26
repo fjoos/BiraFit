@@ -51,7 +51,7 @@ namespace BiraFit.Models
         public DbSet<Konversation> Konversation { get; set; }
         public DbSet<Nachricht> Nachricht { get; set; }
 
-        // : base("DefaultConnection", throwIfV1Schema: false)
+        // : base("birafit", throwIfV1Schema: false)
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

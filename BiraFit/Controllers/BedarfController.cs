@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BiraFit.Models;
@@ -25,15 +24,16 @@ namespace BiraFit.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Bedarf Bedarf)
+        public ActionResult Create(Bedarf bedarf)
         {
-            int SportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
 
-            if (!IsBedarfOpen(SportlerId))
+            if (!IsBedarfOpen(sportlerId))
             {
-                if (SportlerId > 0)
+                if (sportlerId > 0)
                 {
-                    string query = string.Format("INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{0}','{1}',{2},'{3}',{4},{5},'{6}')", Bedarf.Titel, Bedarf.Beschreibung, Bedarf.Preis, Bedarf.Ort, 1, SportlerId, DateTime.Now);
+                    string query =
+                        $"INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{bedarf.Titel}','{bedarf.Beschreibung}',{bedarf.Preis},'{bedarf.Ort}',{1},{sportlerId},'{DateTime.Now}')";
                     Context.Database.ExecuteSqlCommand(query);
                     return RedirectToAction("Index", "Bedarf");
                 }
@@ -44,31 +44,31 @@ namespace BiraFit.Controllers
             return RedirectToAction("New", "Bedarf");
         }
 
-        public ActionResult Edit(int Id)
+        public ActionResult Edit(int id)
         {
-            int SportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             
-            if (IsBedarfOwner(Id,SportlerId))
+            if (IsBedarfOwner(id,sportlerId))
             {
-                var Bedarf = Context.Bedarf.Single(b => b.Id == Id);
-                return View(Bedarf);
+                var bedarf = Context.Bedarf.Single(b => b.Id == id);
+                return View(bedarf);
             }
 
             return HttpNotFound();
         }
 
         [HttpPost]
-        public ActionResult Edit(Bedarf Bedarf)
+        public ActionResult Edit(Bedarf bedarf)
         {
-            var BedarfInDb = Context.Bedarf.Single(c => c.Id == Bedarf.Id);
-            TryUpdateModel(BedarfInDb);
+            var bedarfInDb = Context.Bedarf.Single(c => c.Id == bedarf.Id);
+            TryUpdateModel(bedarfInDb);
             Context.SaveChanges();
             return View();
         }
         
-        public bool IsBedarfOpen(int SportlerId)
+        public bool IsBedarfOpen(int sportlerId)
         {
-            return Context.Bedarf.Any(b => b.Sportler_Id == SportlerId 
+            return Context.Bedarf.Any(b => b.Sportler_Id == sportlerId 
                 && b.OpenBedarf);
         }
 

@@ -4,11 +4,11 @@
 
 @{
     ViewBag.Title = "Verwalten";
-    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(this.User.Identity.Name).Result;
+    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
 }
 
 
-<h2 class="page-header">Mein Profil</h2>
+<h2 class="page-header">Mein Account</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
