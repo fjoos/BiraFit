@@ -11,37 +11,40 @@ namespace BiraFit.Controllers
     public class NachrichtController : BaseController
     {
         private int _id;
-        private bool _isSportler;
-        public NachrichtController()
-        {
-            _isSportler = true;
+        private Sportler _sportler;
+        private PersonalTrainer _personalTrainer;
 
-        }
+
+
         // GET: Nachricht
         public ActionResult Index()
         {
-            _id = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            //diesen bereich noch fixen!
-            if (_id == -1)
+            _sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
+            if (_sportler == null)
             {
-                _id = AuthenticateTrainer();
-                _isSportler = false;
+                _personalTrainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
             }
-            
-            if (_isSportler)
+            _id = _sportler != null ? _sportler.Id : _personalTrainer.Id;
+
+            if (_sportler != null)
             {
+                
+                if (_id > 0)
+                {
+                    var sportlerKonversationen = from b in Context.Konversation
+                        where b.Sportler_Id == _id
+                        select b;
+                    List<Konversation> sportlerKonversationList = sportlerKonversationen.ToList<Konversation>();
+                    return View(sportlerKonversationList);
+                }
 
-                var SportlerKonversationen = from b in Context.Konversation
-                                             where b.Sportler_Id == _id
-                                             select b;
-                List<Konversation> SportlerKonversationList = SportlerKonversationen.ToList<Konversation>();
-                return View(SportlerKonversationList);
             }
 
-            var TrainerKonversationen = from b in Context.Konversation
+            var trainerKonversationen = from b in Context.Konversation
                                         where b.PersonalTrainer_Id == _id
                                         select b;
-            return View(TrainerKonversationen);
+            List<Konversation> trainerKonversationList = trainerKonversationen.ToList();
+            return View(trainerKonversationList);
         }
         
         public ActionResult Chat(int id)
@@ -52,16 +55,44 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var Chat = from k in Context.Konversation
+            var chat = from k in Context.Konversation
                        where k.Id == id
                        from m in k.Nachrichten
                        orderby m.Datum
                        select m;
-            List<Nachricht> ChatList = Chat.ToList();
+            List<Nachricht> chatList = chat.ToList();
             
-            return View(new ChatViewModel { nachricht = ChatList, id = User.Identity.GetUserId() });
+            return View(new ChatViewModel { nachricht = chatList, id = User.Identity.GetUserId() });
         }
 
+        [HttpPost]
+        public ActionResult SendMessage(Nachricht message)
+        {
+            //continue here
+            if (IsLoggedIn())
+            {
+                if (_sportler != null)
+                {
+                    var existingKonversation = from k in Context.Konversation
+                        from n in Context.Nachricht
+                        where k.Sportler_Id == _id
+                        select n;
+                    List<Nachricht> konversationList = existingKonversation.ToList();
+
+                }
+                else
+                {
+                    
+                }
+                
+                /*
+                string query =
+                    $"INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{bedarf.Titel}','{bedarf.Beschreibung}',{bedarf.Preis},'{bedarf.Ort}',{1},{sportlerId},'{DateTime.Now}')";
+                Context.Database.ExecuteSqlCommand(query);
+                return RedirectToAction("Index", "Bedarf"); */
+            }
+            return RedirectToAction("Chat/" + message.Id, "Nachricht");
+        }
         public int AuthenticateTrainer()
         {
             return 0;
