@@ -6,7 +6,6 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
 using BiraFit.Controllers.Helpers;
-using NUnit.Framework;
 
 namespace BiraFit.Controllers
 {
