@@ -24,11 +24,8 @@ namespace BiraFit.Controllers
 
         protected bool IsSportler()
         {
-            if (Context.Sportler.Any(i => i.User_Id == User.Identity.GetUserId()))
-            {
-                return true;
-            }
-            return false;
+            var id = User.Identity.GetUserId();
+            return Context.Sportler.Any(i => i.User_Id == id);
         }
 
         protected override void Dispose(bool disposing)
