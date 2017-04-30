@@ -12,33 +12,26 @@ namespace BiraFit.Controllers
 {
     public class NachrichtController : BaseController
     {
-        private int _id;
-        private Sportler _sportler;
-        private PersonalTrainer _personalTrainer;
-
-
-
         // GET: Nachricht
         public ActionResult Index()
         {
+            List<Konversation> konversationList;
             if (IsSportler())
             {
-                _sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
-                _id = _sportler.Id;
+                var sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
                 var sportlerKonversationen = from b in Context.Konversation
-                    where b.Sportler_Id == _id
+                    where b.Sportler_Id == sportler.Id
                     select b;
-                List<Konversation> sportlerKonversationList = sportlerKonversationen.ToList();
-                return View(sportlerKonversationList);
+                konversationList = sportlerKonversationen.ToList();
+                return View(konversationList);
             }
 
-            _personalTrainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
-            _id = _personalTrainer.Id;
+            var personalTrainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
             var trainerKonversationen = from b in Context.Konversation
-                where b.PersonalTrainer_Id == _id
+                where b.PersonalTrainer_Id == personalTrainer.Id
                 select b;
-            List<Konversation> trainerKonversationList = trainerKonversationen.ToList();
-            return View(trainerKonversationList);
+            konversationList = trainerKonversationen.ToList();
+            return View(konversationList);
 
         }
         
@@ -65,7 +58,6 @@ namespace BiraFit.Controllers
         public ActionResult SendMessage(ChatViewModel message)
         {
             var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
-
             string empfaengerId = User.Identity.GetUserId() == GetTrainerAspNetUserId(konversation.PersonalTrainer_Id) ? GetSportlerAspNetUserId(konversation.Sportler_Id) : GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
 
             /* funktioniert nicht ganz wegen Konversation_Id1
@@ -81,7 +73,6 @@ namespace BiraFit.Controllers
             Context.Nachricht.Add(nachricht);
             Context.SaveChanges();
             */
-
             string query =
                 $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
             Context.Database.ExecuteSqlCommand(query);
@@ -109,8 +100,5 @@ namespace BiraFit.Controllers
         {
             return Context.Konversation.Single(k => k.Id == konversationId);
         }
-
-
-
     }
 }
