@@ -22,5 +22,7 @@ namespace BiraFit.Models
 
         [Required]
         public DateTime Datum { get; set; }
+
+        public int Konversation_Id { get; set; }
     }
 }

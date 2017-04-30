@@ -5,9 +5,9 @@
 }
 
 <h2>Chat</h2>
-@foreach (var item in @Model.nachricht)
+@foreach (var item in @Model.Nachrichten)
 {
-    if(item.Sender_Id == @Model.id)
+    if(item.Sender_Id == @Model.Id)
     {
         //wie bei whatsapp rechtsbündig -> mein Text
         <p style="color:darkseagreen"><b>@item.Text</b></p>
@@ -17,6 +17,33 @@
         //wie bei whatsapp linksbündig -> Text des Chatpartners
         <p style="color:lightgray"><b>@item.Text</b></p>
     }
+}
+
+<h2 class="page-header">Nachricht senden</h2>
+@using (Html.BeginForm("SendMessage", "Nachricht"))
+{
+    <div class="container" id="loginForm">
+        <div id="loginbox" class="mainbox col-md-4 col-md-offset-4">
+            <div class="panel panel-info" id="logininnerbox">
+                <div class="panel-heading" id="loginHead">
+                    <div class="panel-title">Neue Nachricht erstellen</div>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+
+                        <div class="form-group">
+                            <label for="nachricht">Nachricht</label>
+                            @Html.TextAreaFor(m => m.Nachricht, new { @class = "form-control", @id = "SingleNachricht", @placeholder = "Ihre Nachricht.." })
+                            @Html.ValidationMessageFor(m => m.Nachricht, "", new { @class = "text-danger" })
+                            @Html.HiddenFor(k => k.KonversationId, new { @value = Model.KonversationId })
+                        </div>
+                        <button type="submit" id="sendButton" class="btn btn-info btn-block">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 }
 
 

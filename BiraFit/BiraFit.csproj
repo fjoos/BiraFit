@@ -235,29 +235,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704011530224_InitialModel.cs" />
-    <Compile Include="Migrations\201704011530224_InitialModel.Designer.cs">
-      <DependentUpon>201704011530224_InitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201704301154563_initialcreate.cs" />
+    <Compile Include="Migrations\201704301154563_initialcreate.Designer.cs">
+      <DependentUpon>201704301154563_initialcreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704021307101_AddingSportlerIDtoBedarfmanually.cs" />
-    <Compile Include="Migrations\201704021307101_AddingSportlerIDtoBedarfmanually.Designer.cs">
-      <DependentUpon>201704021307101_AddingSportlerIDtoBedarfmanually.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704022335158_AngebotBedarfIDField-add.cs" />
-    <Compile Include="Migrations\201704022335158_AngebotBedarfIDField-add.Designer.cs">
-      <DependentUpon>201704022335158_AngebotBedarfIDField-add.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.cs" />
-    <Compile Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.Designer.cs">
-      <DependentUpon>201704101041178_personaltrainerid-sportlerid-konversation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs" />
-    <Compile Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.Designer.cs">
-      <DependentUpon>201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs" />
-    <Compile Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.Designer.cs">
-      <DependentUpon>201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs</DependentUpon>
+    <Compile Include="Migrations\201704301212392_addedkonversationidfield2nachricht.cs" />
+    <Compile Include="Migrations\201704301212392_addedkonversationidfield2nachricht.Designer.cs">
+      <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -330,14 +314,11 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <EmbeddedResource Include="Migrations\201704101041178_personaltrainerid-sportlerid-konversation.resx">
-      <DependentUpon>201704101041178_personaltrainerid-sportlerid-konversation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704301154563_initialcreate.resx">
+      <DependentUpon>201704301154563_initialcreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.resx">
-      <DependentUpon>201704120917279_change_konversation_sportlerandpersonaltraineridtypetostring.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.resx">
-      <DependentUpon>201704120926043_addstringdatatypetonachrichtsenderandempfaengerid.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704301212392_addedkonversationidfield2nachricht.resx">
+      <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\BiraFitLogo.png" />
     <Content Include="Web.config" />
@@ -391,17 +372,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704011530224_InitialModel.resx">
-      <DependentUpon>201704011530224_InitialModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704021307101_AddingSportlerIDtoBedarfmanually.resx">
-      <DependentUpon>201704021307101_AddingSportlerIDtoBedarfmanually.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704022335158_AngebotBedarfIDField-add.resx">
-      <DependentUpon>201704022335158_AngebotBedarfIDField-add.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

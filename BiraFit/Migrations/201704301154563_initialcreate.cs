@@ -3,7 +3,7 @@ namespace BiraFit.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialModel : DbMigration
+    public partial class initialcreate : DbMigration
     {
         public override void Up()
         {
@@ -15,13 +15,14 @@ namespace BiraFit.Migrations
                         Beschreibung = c.String(nullable: false),
                         Preis = c.Int(nullable: false),
                         Datum = c.DateTime(nullable: false),
-                        Bedarf_Id = c.Int(),
+                        Bedarf_Id = c.Int(nullable: false),
+                        Bedarf_Id1 = c.Int(),
                         PersonalTrainer_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Bedarf", t => t.Bedarf_Id)
+                .ForeignKey("dbo.Bedarf", t => t.Bedarf_Id1)
                 .ForeignKey("dbo.Personaltrainer", t => t.PersonalTrainer_Id)
-                .Index(t => t.Bedarf_Id)
+                .Index(t => t.Bedarf_Id1)
                 .Index(t => t.PersonalTrainer_Id);
             
             CreateTable(
@@ -35,25 +36,28 @@ namespace BiraFit.Migrations
                         Preis = c.Int(nullable: false),
                         Ort = c.String(nullable: false),
                         Datum = c.DateTime(nullable: false),
-                        Sportler_Id = c.Int(),
+                        Sportler_Id = c.Int(nullable: false),
+                        Sportler_Id1 = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Sportler", t => t.Sportler_Id)
-                .Index(t => t.Sportler_Id);
+                .ForeignKey("dbo.Sportler", t => t.Sportler_Id1)
+                .Index(t => t.Sportler_Id1);
             
             CreateTable(
                 "dbo.Konversation",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        PersonalTrainer_Id = c.Int(),
-                        Sportler_Id = c.Int(),
+                        Sportler_Id = c.Int(nullable: false),
+                        PersonalTrainer_Id = c.Int(nullable: false),
+                        PersonalTrainer_Id1 = c.Int(),
+                        Sportler_Id1 = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Personaltrainer", t => t.PersonalTrainer_Id)
-                .ForeignKey("dbo.Sportler", t => t.Sportler_Id)
-                .Index(t => t.PersonalTrainer_Id)
-                .Index(t => t.Sportler_Id);
+                .ForeignKey("dbo.Personaltrainer", t => t.PersonalTrainer_Id1)
+                .ForeignKey("dbo.Sportler", t => t.Sportler_Id1)
+                .Index(t => t.PersonalTrainer_Id1)
+                .Index(t => t.Sportler_Id1);
             
             CreateTable(
                 "dbo.Nachricht",
@@ -61,8 +65,8 @@ namespace BiraFit.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Text = c.String(nullable: false),
-                        Sender_Id = c.Int(nullable: false),
-                        Empfaenger_Id = c.Int(nullable: false),
+                        Sender_Id = c.String(nullable: false),
+                        Empfaenger_Id = c.String(nullable: false),
                         Datum = c.DateTime(nullable: false),
                         Konversation_Id = c.Int(),
                     })
@@ -172,17 +176,17 @@ namespace BiraFit.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Sportler", "User_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Konversation", "Sportler_Id", "dbo.Sportler");
-            DropForeignKey("dbo.Bedarf", "Sportler_Id", "dbo.Sportler");
+            DropForeignKey("dbo.Konversation", "Sportler_Id1", "dbo.Sportler");
+            DropForeignKey("dbo.Bedarf", "Sportler_Id1", "dbo.Sportler");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Personaltrainer", "User_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Konversation", "PersonalTrainer_Id", "dbo.Personaltrainer");
+            DropForeignKey("dbo.Konversation", "PersonalTrainer_Id1", "dbo.Personaltrainer");
             DropForeignKey("dbo.Angebot", "PersonalTrainer_Id", "dbo.Personaltrainer");
             DropForeignKey("dbo.Nachricht", "Konversation_Id", "dbo.Konversation");
-            DropForeignKey("dbo.Angebot", "Bedarf_Id", "dbo.Bedarf");
+            DropForeignKey("dbo.Angebot", "Bedarf_Id1", "dbo.Bedarf");
             DropIndex("dbo.Sportler", new[] { "User_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
@@ -192,11 +196,11 @@ namespace BiraFit.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Personaltrainer", new[] { "User_Id" });
             DropIndex("dbo.Nachricht", new[] { "Konversation_Id" });
-            DropIndex("dbo.Konversation", new[] { "Sportler_Id" });
-            DropIndex("dbo.Konversation", new[] { "PersonalTrainer_Id" });
-            DropIndex("dbo.Bedarf", new[] { "Sportler_Id" });
+            DropIndex("dbo.Konversation", new[] { "Sportler_Id1" });
+            DropIndex("dbo.Konversation", new[] { "PersonalTrainer_Id1" });
+            DropIndex("dbo.Bedarf", new[] { "Sportler_Id1" });
             DropIndex("dbo.Angebot", new[] { "PersonalTrainer_Id" });
-            DropIndex("dbo.Angebot", new[] { "Bedarf_Id" });
+            DropIndex("dbo.Angebot", new[] { "Bedarf_Id1" });
             DropTable("dbo.Sportler");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
