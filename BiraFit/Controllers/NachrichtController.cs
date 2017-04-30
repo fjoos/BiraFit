@@ -18,21 +18,22 @@ namespace BiraFit.Controllers
             List<Konversation> konversationList;
             if (IsSportler())
             {
-                var sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
-                var sportlerKonversationen = from b in Context.Konversation
-                    where b.Sportler_Id == sportler.Id
+                var user = AuthentificationHelper.AuthenticateSportler(User, Context);
+                var konversationen = from b in Context.Konversation
+                    where b.Sportler_Id == user.Id
                     select b;
-                konversationList = sportlerKonversationen.ToList();
-                return View(konversationList);
+                konversationList = konversationen.ToList();
             }
-
-            var personalTrainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
-            var trainerKonversationen = from b in Context.Konversation
-                where b.PersonalTrainer_Id == personalTrainer.Id
-                select b;
-            konversationList = trainerKonversationen.ToList();
+            else
+            {
+                var user = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
+                var konversationen = from b in Context.Konversation
+                    where b.PersonalTrainer_Id == user.Id
+                    select b;
+                konversationList = konversationen.ToList();
+            }
+            
             return View(konversationList);
-
         }
         
         // GET: Nachricht/Chat/<id>
@@ -59,20 +60,6 @@ namespace BiraFit.Controllers
         {
             var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
             string empfaengerId = User.Identity.GetUserId() == GetTrainerAspNetUserId(konversation.PersonalTrainer_Id) ? GetSportlerAspNetUserId(konversation.Sportler_Id) : GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
-
-            /* funktioniert nicht ganz wegen Konversation_Id1
-            Nachricht nachricht = new Nachricht()
-            {
-                Datum = DateTime.Now,
-                Empfaenger_Id = empfaengerId,
-                Sender_Id = User.Identity.GetUserId(),
-                Text = message.Nachricht,
-                Konversation_Id = message.KonversationId,
-                
-            };
-            Context.Nachricht.Add(nachricht);
-            Context.SaveChanges();
-            */
             string query =
                 $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
             Context.Database.ExecuteSqlCommand(query);
