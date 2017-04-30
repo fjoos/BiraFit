@@ -1,15 +1,22 @@
-﻿@model List<BiraFit.Models.Konversation>
+﻿@model BiraFit.ViewModel.NachrichtViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Meine Chats</h2>
-@foreach (var item in @Model)
-{
-    <p>KonversationID:</p> @item.Id
-    
 
+@{
+    int counter = 0;
+    foreach (var item in @Model.Konversationen)
+    {
+        <p>Konversation:</p> <a href="Nachricht/Chat/@item.Id">@Model.LastMessages[counter]</a>
+        counter++;
+    }    
 }
+
+
+
+
 
 

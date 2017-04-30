@@ -17,22 +17,27 @@ namespace BiraFit.Controllers
             List<Konversation> konversationList;
             if (IsSportler())
             {
-                var user = AuthentificationHelper.AuthenticateSportler(User, Context);
+                Sportler sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
                 var konversationen = from b in Context.Konversation
-                    where b.Sportler_Id == user.Id
+                    where b.Sportler_Id == sportler.Id
                     select b;
                 konversationList = konversationen.ToList();
             }
             else
             {
-                var user = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
+                PersonalTrainer trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
                 var konversationen = from b in Context.Konversation
-                    where b.PersonalTrainer_Id == user.Id
+                    where b.PersonalTrainer_Id == trainer.Id
                     select b;
                 konversationList = konversationen.ToList();
             }
-            
-            return View(konversationList);
+
+            List<string> lastMessages = new List<string>();
+            foreach (var konversation in konversationList)
+            {
+                lastMessages.Add(GetLastMessage(konversation.Id));
+            }
+            return View(new NachrichtViewModel() { Konversationen = konversationList, LastMessages =lastMessages } );
         }
         
         // GET: Nachricht/Chat/<id>
@@ -85,6 +90,17 @@ namespace BiraFit.Controllers
         public Konversation GetKonversation(int konversationId)
         {
             return Context.Konversation.Single(k => k.Id == konversationId);
+        }
+
+        public string GetLastMessage(int konversationId)
+        {
+            var nachrichten = Context.Nachricht.Where(n => n.Konversation_Id == konversationId).OrderBy(m => m.Datum);
+            string lastMessage = "";
+            foreach (var nachricht in nachrichten)
+            {
+                lastMessage = nachricht.Text;
+            }
+            return lastMessage;
         }
     }
 }
