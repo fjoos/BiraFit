@@ -76,7 +76,7 @@ namespace BiraFit.Controllers
             var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
 
             string empfaengerId = User.Identity.GetUserId() == GetTrainerAspNetUserId(konversation.PersonalTrainer_Id) ? GetSportlerAspNetUserId(konversation.Sportler_Id) : GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
-           
+
             /* funktioniert nicht ganz wegen Konversation_Id1
             Nachricht nachricht = new Nachricht()
             {
@@ -87,14 +87,16 @@ namespace BiraFit.Controllers
                 Konversation_Id = message.KonversationId,
                 
             };
-            Context.Nachricht.Add(nachricht); */
+            Context.Nachricht.Add(nachricht);
+            Context.SaveChanges();
+            */
 
             string query =
-                $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}',{empfaengerId},'{DateTime.Now}',{message.KonversationId},{message.KonversationId})";
+                $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
             Context.Database.ExecuteSqlCommand(query);
 
             
-            Context.SaveChanges();
+            
 
             return RedirectToAction("Chat/" + message.KonversationId, "Nachricht");
         }
