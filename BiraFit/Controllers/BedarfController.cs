@@ -53,7 +53,6 @@ namespace BiraFit.Controllers
                 var bedarf = Context.Bedarf.Single(b => b.Id == id);
                 return View(bedarf);
             }
-
             return HttpNotFound();
         }
 

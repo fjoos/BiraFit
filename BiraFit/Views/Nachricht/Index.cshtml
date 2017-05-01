@@ -10,9 +10,12 @@
     int counter = 0;
     foreach (var item in @Model.Konversationen)
     {
-        <p>Konversation:</p> <a href="Nachricht/Chat/@item.Id">@Model.LastMessages[counter]</a>
+        <p>Konversation:
+            <a href="Nachricht/Chat/@item.Id">@Model.LastMessages[counter]</a>
+            Image: @Model.ProfileImages[counter]
+        </p>
         counter++;
-    }    
+    }
 }
 
 
