@@ -15,12 +15,12 @@ namespace BiraFit.Controllers
 
         public ActionResult New()
         {
-            if (AuthentificationHelper.AuthenticateSportler(User, Context).Id > 0)
+            if (!IsSportler() || !IsLoggedIn())
             {
-                return View();
+                return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [HttpPost]
