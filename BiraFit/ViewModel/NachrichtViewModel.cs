@@ -10,6 +10,6 @@ namespace BiraFit.ViewModel
     {
         public List<Konversation> Konversationen { get; set; }
         public List<string> LastMessages { get; set; }
-
+        public List<string> ProfileImages { get; set; }
     }
 }

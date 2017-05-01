@@ -33,11 +33,30 @@ namespace BiraFit.Controllers
             }
 
             List<string> lastMessages = new List<string>();
+            List<string> profileImages = new List<string>();
             foreach (var konversation in konversationList)
             {
                 lastMessages.Add(GetLastMessage(konversation.Id));
+                
+                if (IsSportler())
+                {
+                    string trainerId = GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
+                    var profileImage = Context.Users.Single(i => i.Id == trainerId).ProfilBild ??
+                                          "standardprofilbild.jpg";
+                    profileImages.Add(profileImage);
+                }
+                else
+                {
+                    string sportlerId = GetSportlerAspNetUserId(konversation.Sportler_Id);
+                    var profileImage = Context.Users.Single(i => i.Id == sportlerId ).ProfilBild ??
+                                          "standardprofilbild.jpg";
+                    profileImages.Add(profileImage);
+                }
+                
+
             }
-            return View(new NachrichtViewModel() { Konversationen = konversationList, LastMessages =lastMessages } );
+
+            return View(new NachrichtViewModel() { Konversationen = konversationList, LastMessages =lastMessages,ProfileImages = profileImages} );
         }
         
         // GET: Nachricht/Chat/<id>
