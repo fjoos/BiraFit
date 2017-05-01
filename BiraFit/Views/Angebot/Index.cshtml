@@ -1,4 +1,4 @@
-﻿@model List<BiraFit.Models.Angebot>
+﻿@model BiraFit.ViewModel.AngebotViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -9,15 +9,17 @@
 
 <div class="container">
     <div class="row">
+        <h2>Mein Bedarf</h2>
+        @Model.bedarf.Beschreibung
         <h2 class="page-header">Angebote</h2>
         <section class="comment-list">
-            @foreach (var item in @Model)
+            @foreach (var item in @Model.angebote)
             {
                 <article class="row">
                     <div class="col-md-2 col-sm-2"></div>
                     <div class="col-md-1 col-sm-1">
                         <figure class="thumbnail">
-                            <img class="img-responsive" width="75" height="75" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                            <img class="img-responsive" width="75" height="75" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
                         </figure>
                     </div>
                     <div class="col-md-7 col-sm-7">
@@ -52,10 +54,10 @@
 
                                 <div class="input-group">
                                     <span class="input-group-btn" onclick="">
-                                        <a href="" class="btn btn-primary btn-sm">Annehmen</a>
+                                       <a href="" class="btn btn-primary btn-sm">Annehmen</a>
                                     </span>
                                     <span class="input-group-btn" onclick="">
-                                        <a href="" class="btn btn-primary btn-sm">Ablehnen</a>
+                                        <a href="" class="btn btn-primary btn-sm">Ablehnen</a> 
                                     </span>
                                 </div>
                             </div>

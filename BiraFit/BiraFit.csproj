@@ -254,6 +254,7 @@
     <Compile Include="Models\Bedarf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Konversation.cs" />
+    <Compile Include="ViewModel\AngebotViewModel.cs" />
     <Compile Include="ViewModel\ChatViewModel.cs" />
     <Compile Include="ViewModel\ManageViewModels.cs" />
     <Compile Include="Models\Nachricht.cs" />

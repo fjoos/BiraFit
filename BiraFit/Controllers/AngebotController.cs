@@ -3,6 +3,7 @@ using BiraFit.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using BiraFit.ViewModel;
 
 namespace BiraFit.Controllers
 {
@@ -15,13 +16,35 @@ namespace BiraFit.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            
-            int currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            var currentBedarf = Context.Bedarf.Single(s => s.Sportler_Id == currentSportlerId && s.OpenBedarf);
-            List<Angebot> angebotList = new List<Angebot>(Context.Angebot.Where(b => b.Bedarf_Id == currentBedarf.Id));
-           
-            return View(angebotList);
-            
+
+
+            var currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
+
+            foreach (var bedarf in currentBedarf)
+            {
+                if (bedarf.OpenBedarf)
+                {
+                    //return View();
+                    return View(new AngebotViewModel() { angebote = Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList(),bedarf = bedarf });
+                }
+            }
+
+            //wird keine Angebote Meldung anzeigen redirect entfernen!
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public ActionResult Create(Angebot angebot)
+        {
+            Context.Angebot.Add(angebot);
+            Context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Accept(int angebotId)
+        {
+            return RedirectToAction("Index", "Home");
         }
     }
 }
