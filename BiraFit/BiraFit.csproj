@@ -363,7 +363,6 @@
     <Content Include="Views\Bedarf\New.cshtml" />
     <Content Include="Views\Bedarf\Edit.cshtml" />
     <Content Include="Views\Angebot\Index.cshtml" />
-    <Content Include="Views\Angebot\AngebotTable.cshtml" />
     <Content Include="Views\Nachricht\Index.cshtml" />
     <Content Include="Views\Nachricht\Chat.cshtml" />
   </ItemGroup>

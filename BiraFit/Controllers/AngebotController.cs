@@ -11,12 +11,14 @@ namespace BiraFit.Controllers
         // GET: Angebot
         public ActionResult Index()
         {
+            if (!IsSportler() || !IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var bedarfList = Context.Bedarf.ToList();
             int currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             List<Angebot> angebote = new List<Angebot>();
 
-            if (currentSportlerId > 0)
-            {
                 foreach (var bedarf in bedarfList)
                 {
                     if(bedarf.Sportler_Id == currentSportlerId && bedarf.OpenBedarf)
@@ -31,8 +33,7 @@ namespace BiraFit.Controllers
                     }
                 }
                 return View(angebote);
-            }
-            return RedirectToAction("Index", "Home");
+            
         }
     }
 }
