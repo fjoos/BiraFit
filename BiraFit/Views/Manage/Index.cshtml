@@ -7,6 +7,9 @@
     var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
 }
 
+
+<h2 class="page-header">Mein Account</h2>
+
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
         @*
@@ -20,12 +23,13 @@
         *@
 
         <div class="container" id="loginForm">
-                <div id="mybox" class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-info" id="innerbox">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-md-offset-3">
+                    <div class="panel panel-info" id="logininnerbox">
                         <div class="panel-heading" id="loginHead">
                             <h3 class="panel-title">Benutzername</h3>
                         </div>
-                        <div class="modal-body">
+                        <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3 col-lg-3 " align="center"> <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" /></div>
 
@@ -39,10 +43,6 @@
                                             <tr>
                                                 <td>Nachname:</td>
                                                 <td>@user.Name</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Geburtstag:</td>
-                                                <td>31.31.2031</td>
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
@@ -69,12 +69,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <a href="#" class="btn btn-primary pull-left" id="loginButton">Profil bearbeiten</a>
+                        <div class="panel-footer">
+                            <a href="#" class="btn btn-primary" id="loginButton">Profil bearbeiten</a>
+                            @Html.ActionLink("Profil löschen", "Delete")
                         </div>
 
                     </div>
                 </div>
+            </div>
         </div>
 
 

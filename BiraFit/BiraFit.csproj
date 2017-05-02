@@ -254,6 +254,7 @@
     <Compile Include="Models\Bedarf.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Konversation.cs" />
+    <Compile Include="ViewModel\AngebotViewModel.cs" />
     <Compile Include="ViewModel\ChatViewModel.cs" />
     <Compile Include="ViewModel\ManageViewModels.cs" />
     <Compile Include="Models\Nachricht.cs" />
@@ -363,9 +364,10 @@
     <Content Include="Views\Bedarf\New.cshtml" />
     <Content Include="Views\Bedarf\Edit.cshtml" />
     <Content Include="Views\Angebot\Index.cshtml" />
-    <Content Include="Views\Angebot\AngebotTable.cshtml" />
     <Content Include="Views\Nachricht\Index.cshtml" />
     <Content Include="Views\Nachricht\Chat.cshtml" />
+    <Content Include="Views\Manage\Delete.cshtml" />
+    <Content Include="Views\Manage\DeleteConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

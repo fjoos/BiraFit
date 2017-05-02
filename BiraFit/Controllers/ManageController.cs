@@ -97,6 +97,16 @@ namespace BiraFit.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
+        // GET: /Manage/Delete
+        public ActionResult Delete()
+        {
+            return View();
+        }
+        // GET: /Manage/Delete/Conf
+        public ActionResult DeleteConfirmation()
+        {
+            return View();
+        }
 
         //
         // GET: /Manage/AddPhoneNumber

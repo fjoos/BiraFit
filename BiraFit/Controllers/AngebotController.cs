@@ -3,6 +3,7 @@ using BiraFit.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using BiraFit.ViewModel;
 
 namespace BiraFit.Controllers
 {
@@ -11,27 +12,38 @@ namespace BiraFit.Controllers
         // GET: Angebot
         public ActionResult Index()
         {
-            var bedarfList = Context.Bedarf.ToList();
-            int currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            List<Angebot> angebote = new List<Angebot>();
-
-            if (currentSportlerId > 0)
+            if (!IsSportler() || !IsLoggedIn())
             {
-                foreach (var bedarf in bedarfList)
-                {
-                    if(bedarf.Sportler_Id == currentSportlerId && bedarf.OpenBedarf)
-                    {
-                        foreach (var angebot in Context.Angebot.ToList())
-                        {
-                            if(bedarf.Id == angebot.Bedarf_Id)
-                            {
-                                angebote.Add(angebot);
-                            }
-                        }
-                    }
-                }
-                return View(angebote);
+                return RedirectToAction("Index", "Home");
             }
+
+
+            var currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
+
+            foreach (var bedarf in currentBedarf)
+            {
+                if (bedarf.OpenBedarf)
+                {
+                    //return View();
+                    return View(new AngebotViewModel() { angebote = Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList(),bedarf = bedarf });
+                }
+            }
+
+            //wird keine Angebote Meldung anzeigen redirect entfernen!
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public ActionResult Create(Angebot angebot)
+        {
+            Context.Angebot.Add(angebot);
+            Context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Accept(int angebotId)
+        {
             return RedirectToAction("Index", "Home");
         }
     }
