@@ -11,22 +11,7 @@ namespace BiraFit.Controllers
     {
         public ActionResult Index()
         {
-            if (!IsLoggedIn())
-            {
-                return View(new BedarfViewModel() { BedarfList = Context.Bedarf.ToList(), Sportler = null, Trainer = null });
-            }
-            if (IsSportler())
-            {
-                return View(new BedarfViewModel() { BedarfList = Context.Bedarf.ToList(), Sportler = AuthentificationHelper.AuthenticateSportler(User,Context), Trainer = null});
-            }
-
-            return View(new BedarfViewModel()
-            {
-                BedarfList = Context.Bedarf.ToList(),
-                Sportler = null,
-                Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context)
-            });
-
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult New()

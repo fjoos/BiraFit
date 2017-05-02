@@ -1,4 +1,8 @@
-﻿
+﻿@model List<BiraFit.ViewModel.BedarfViewModel>
+
+@{
+    ViewBag.Title = "Bedarf";
+}
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -7,7 +11,7 @@
     <div class="row">
         <h2 class="page-header">Bedürfnisse</h2>
         <section class="comment-list">
-            @foreach (var item in @Model.BedarfList)
+            @foreach (var item in @Model)
             {
                 <article class="row">
                     <div class="col-md-2 col-sm-2"></div>
@@ -22,28 +26,28 @@
                                 <div class="row">
                                     <div class="col-md-5 col-sm-5">
                                         <div class="comment-user">
-                                            <b>@item.Titel</b>
+                                            <b>@item.Bedarf.Titel</b>
                                         </div>
                                     </div>
                                     <div class="col-md-7 col-sm-7">
                                         <time class="comment-date pull-right">
                                             <i class="fa fa-clock-o"></i>
-                                            erstellt am: @item.Datum.Day.@item.Datum.Month.@item.Datum.Year von <b>Benutzername</b>
+                                            erstellt am: @item.Bedarf.Datum.Day.@item.Bedarf.Datum.Month.@item.Bedarf.Datum.Year von <b>Benutzername</b>
                                         </time>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">@item.Beschreibung</p>
+                                        <p class="text-left">@item.Bedarf.Beschreibung</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">Umgebung: @item.Ort</p>
-                                        <p class="text-left">Preisvorstellung: @item.Preis.- pro Woche</p>
+                                        <p class="text-left">Umgebung: @item.Bedarf.Ort</p>
+                                        <p class="text-left">Preisvorstellung: @item.Bedarf.Preis.- pro Woche</p>
                                     </div>
                                 </div>
-                                @if (@Model.Trainer != null)
+                                @if (@item.Trainer != null)
                                 {
                                     <div class="input-group">
                                         <input type="number" id="angebot" class="form-control input-sm chat-input" placeholder="Mein Angebot"/>
@@ -52,6 +56,11 @@
                                             <a href="" class="btn btn-primary btn-sm" id="angebotButton"><span class="fa fa-reply"></span> Angebot abgeben</a>
                                         </span>
                                     </div>
+                                }
+                                @if (@item.IsOwner)
+                                {
+                                    <h3><a href="Bedarf/Edit/@item.Bedarf.Id">Bedarf bearbeiten</a></h3>
+                                    <h3><a href="Bedarf/Delete/@item.Bedarf.Id">Bedarf löschen</a></h3>
                                 }
                             </div>
                         </div>

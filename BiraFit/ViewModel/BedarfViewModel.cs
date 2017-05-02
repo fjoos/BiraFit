@@ -7,6 +7,7 @@ namespace BiraFit.ViewModel
     {
         public Sportler Sportler { get; set; }
         public PersonalTrainer Trainer { get; set; }
-        public List<Bedarf> BedarfList { get; set; }
+        public Bedarf Bedarf { get; set; }
+        public bool IsOwner { get; set; }
     }
 }
