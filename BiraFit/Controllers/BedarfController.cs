@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
+using BiraFit.ViewModel;
 
 namespace BiraFit.Controllers
 {
@@ -10,7 +11,22 @@ namespace BiraFit.Controllers
     {
         public ActionResult Index()
         {
-            return View(Context.Bedarf.ToList());
+            if (!IsLoggedIn())
+            {
+                return View(new BedarfViewModel() { BedarfList = Context.Bedarf.ToList(), Sportler = null, Trainer = null });
+            }
+            if (IsSportler())
+            {
+                return View(new BedarfViewModel() { BedarfList = Context.Bedarf.ToList(), Sportler = AuthentificationHelper.AuthenticateSportler(User,Context), Trainer = null});
+            }
+
+            return View(new BedarfViewModel()
+            {
+                BedarfList = Context.Bedarf.ToList(),
+                Sportler = null,
+                Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context)
+            });
+
         }
 
         public ActionResult New()
