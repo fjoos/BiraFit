@@ -4,15 +4,13 @@
     ViewBag.Title = "Neuer Bedarf";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2 class="page-header">Bedarf erstellen</h2>
 @using (Html.BeginForm("Create", "Bedarf"))
 {
  <div class="container" id="loginForm">
-        <div id="loginbox" class="mainbox col-md-4 col-md-offset-4">
-            <div class="panel panel-info" id="logininnerbox">
+        <div id="mybox" class="mainbox col-md-4 col-md-offset-4">
+            <div class="panel panel-info" id="innerbox">
                 <div class="panel-heading" id="loginHead">
-                    <div class="panel-title">Neuen Bedarf erstellen</div>
+                    <div class="panel-title">Bedarf erstellen</div>
                 </div>
                 <div class="modal-body">
                     <form role="form">

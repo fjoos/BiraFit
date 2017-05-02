@@ -1,34 +1,39 @@
-﻿#loginbox {
+﻿#menuBar{
+    border-color: orange;
+    background-color: white;
+}
+
+#mybox {
     margin-top: 50px;
 }
 
-#logininnerbox {
-    border-color: black;
+#innerbox {
+    border-color: orange;
 }
 
 #loginHead {
-    background-color: black;
-    border-color: black;
+    background-color: white;
+    border-color: orange;
     color: orange
 }
 
-#loginForm .panel-title {
+#loginForm {
     color: orange;
 }
 
-#loginForm .modal-body {
-    padding: 40px 50px;
+#loginForm {
+    padding: 10px;
     color: orange;
 }
 
-#loginForm .form-group {
-    padding-top: 15px;
+#loginForm {
+    padding-top: 5px;
 }
 
 #loginButton {
     color: orange;
-    background-color: black;
-    border-color: black;
+    background-color: white;
+    border-color: orange;
 }
 
 #noAccLink {
@@ -41,11 +46,78 @@
 }
 #angebotButton {
     color: orange;
-    background-color: black;
-    border-color: black
+    background-color: white;
+    border-color: orange
 }
 .fa fa-reply {
     color: orange;
-    background-color: black;
-    border-color: black
+    background-color: white;
+    border-color: orange
+}
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 0.5px dotted;
+        border-color: orange
+    }
+
+        .chat li.left .chat-body {
+            margin-left: 60px;
+        }
+
+
+        .chat li.right .chat-body {
+            margin-right: 60px;
+        }
+
+
+
+        .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
+
+    .modal .slidedown .glyphicon, .chat .glyphicon {
+        margin-right: 5px;
+    }
+
+#scrollBody {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+
+.form-group .form-control {
+    width: 100%;
+    max-width: none !important;
+}
+
+#link, #registerLink, #loginLink {
+    color: grey;
+}
+
+#SingleNachricht {
+    max-width: 100% !important;
+    min-width: 100% !important;
 }
