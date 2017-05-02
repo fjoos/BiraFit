@@ -1,4 +1,4 @@
-﻿@model List<BiraFit.Models.Bedarf>
+﻿@model BiraFit.ViewModel.BedarfViewModel
 
 @{
     ViewBag.Title = "Homepage";
@@ -7,7 +7,7 @@
 
 @if (Model != null)
 {
-    @Html.Partial("~/views/bedarf/bedarftable.cshtml",Model)
+    @Html.Partial("~/views/bedarf/Index.cshtml",Model)
 }
 
 
