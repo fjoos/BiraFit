@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 
 namespace BiraFit.Controllers
 {
@@ -6,7 +7,7 @@ namespace BiraFit.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(Context.Bedarf.ToList());
         }
 
         public ActionResult About()
