@@ -51,16 +51,24 @@ namespace BiraFit.Controllers
         // GET: Accept
         public ActionResult Accept(int id)
         {
+            var currentAngebot = Context.Angebot.Single(i => i.Id == id);
+            var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var personalTrainerId = currentAngebot.PersonalTrainer_Id;
 
-            int sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
-            int personalTrainerId = Context.Angebot.Single(i => i.Id == id).PersonalTrainer_Id;
             Context.Konversation.Add(new Konversation()
             {
                 Sportler_Id = sportlerId,
                 PersonalTrainer_Id = personalTrainerId
             });
-             
-            int bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf == true).Id;
+
+            var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+
+            foreach (var angebot in angeboteToRemove)
+            {
+                Context.Angebot.Remove(angebot);
+            }
+
+            var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id;
             Context.Bedarf.Single(i => i.Id == bedarfId).OpenBedarf = false;
             Context.SaveChanges();
             return RedirectToAction("Chat/" + Context.Konversation
