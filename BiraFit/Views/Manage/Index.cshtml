@@ -8,7 +8,6 @@
 }
 
 
-<h2 class="page-header">Mein Account</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
@@ -23,11 +22,10 @@
         *@
 
         <div class="container" id="loginForm">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 col-md-offset-3">
-                    <div class="panel panel-info" id="logininnerbox">
+                <div id="mybox" class="col-md-6 col-md-offset-3  modal-content">
+                    <div class="panel panel-info" id="innerbox">
                         <div class="panel-heading" id="loginHead">
-                            <h3 class="panel-title">Benutzername</h3>
+                            <h3 class="panel-title">Mein Account</h3>
                         </div>
                         <div class="panel-body">
                             <div class="row">
@@ -46,20 +44,13 @@
                                             </tr>
                                             <tr>
                                                 <td>Email</td>
-                                                <td><a href="mailto:@User.Identity.Name">@user.Email</a></td>
+                                                <td><a href="mailto:@User.Identity.Name" id="link">@user.Email</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Kennwort</td>
                                                 <td>
                                                     [
-                                                    @if (Model.HasPassword)
-            {
-                                                        @Html.ActionLink("Kennwort ändern", "ChangePassword")
-                                                    }
-                                                    else
-                                                    {
-                                                        @Html.ActionLink("Erstellen", "SetPassword")
-                                                    }
+                                                        @Html.ActionLink("Kennwort ändern", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { id = "link" })  
                                                     ]
                                                 </td>
                                             </tr>
@@ -71,12 +62,11 @@
                         </div>
                         <div class="panel-footer">
                             <a href="#" class="btn btn-primary" id="loginButton">Profil bearbeiten</a>
-                            @Html.ActionLink("Profil löschen", "Delete")
+                            <a href="/Manage/Delete" class="btn btn-primary" id="delButton">Profil löschen</a>
                         </div>
 
                     </div>
                 </div>
-            </div>
         </div>
 
 

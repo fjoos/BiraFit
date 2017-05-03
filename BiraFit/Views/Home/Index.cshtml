@@ -1,14 +1,24 @@
 ﻿@model List<BiraFit.Models.Bedarf>
 
 @{
-    ViewBag.Title = "Homepage";
+    ViewBag.Title = "BiraFit";
 }
 
-
-@if (Model != null)
+@if (!Request.IsAuthenticated && Model!= null)
 {
-    @Html.Partial("~/views/bedarf/bedarftable.cshtml",Model)
+    @Html.Partial("~/views/bedarf/bedarftableNichtTrainer.cshtml", Model)
+    @*
+        Bedarftable für anonymen user    
+    *@
 }
+else if(Request.IsAuthenticated && Model != null)
+{
+    @Html.Partial("~/views/bedarf/bedarftable.cshtml", Model)
+    @*
+        Bedarftable für user
+    *@
+}
+
 
 
 

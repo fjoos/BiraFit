@@ -7,10 +7,9 @@
 <div class="row">
     <section id="loginForm">
         <div class="container">
-            <div id="mybox" class="mainbox col-md-8 col-md-offset-2">
-                <div class="panel panel-info" id="innerbox">
+            <div class="mainbox col-md-8 col-md-offset-2">
                     <div class="panel-heading" id="loginHead">
-                        <div class="panel-title">Meine Chats</div>
+                        <div class="panel-title"><h2>Meine Chats</h2></div>
                     </div>
                     <div class="modal-body">
                         <ul class="chat">
@@ -18,30 +17,41 @@
                                 int counter = 0;
                                 foreach (var item in @Model.Konversationen)
                                 {
-                                    <li class="left clearfix">
-                                        <div class="col-md-12">
-                                            <span class="chat-img pull-left">
-                                                <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="@Model.ProfileImages[counter]" class="img-circle" />
-                                            </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong class="primary-font">Chatpartner</strong>
-                                                    <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                                    </small>
+                                    <li class="left clearfix" id="chatList">
+                                        <a href="Nachricht/Chat/@item.Id">
+                                            <div class="col-md-12">
+                                                <span class="chat-img pull-left">
+                                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="@Model.ProfileImages[counter]" class="img-circle" />
+                                                </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <strong class="primary-font">Chatpartner</strong>
+                                                        <small class="pull-right text-muted">
+                                                            <span class="glyphicon glyphicon-time"></span>14 mins ago
+                                                        </small>
+                                                    </div>
+                                                    @if (@Model.LastMessages[counter].Length > 40)
+                                                    {
+                                                        <p>
+                                                            @Model.LastMessages[counter].Remove(40)...
+                                                        </p>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>
+                                                            @Model.LastMessages[counter]
+                                                        </p>
+                                                    }
                                                 </div>
-                                                <p>
-                                                    <a href="Nachricht/Chat/@item.Id" id="link">@Model.LastMessages[counter]</a>
-                                                </p>
                                             </div>
-                                        </div>
+                                        </a>
                                     </li>
                                     counter++;
                                 }
                             }
                         </ul>
                     </div>
-                </div>
             </div>
             </div>
     </section>

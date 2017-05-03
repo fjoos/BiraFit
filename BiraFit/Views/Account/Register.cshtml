@@ -12,7 +12,7 @@
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
         <div class="container" id="loginForm">
-            <div id="mybox" class="mainbox col-md-6 col-md-offset-3">
+            <div id="mybox" class="mainbox col-md-6 col-md-offset-3 modal-content">
                 <div class="panel panel-info" id="innerbox">
                     <div class="panel-heading" id="loginHead">
                         <div class="panel-title">Neuen Account erstellen</div>
@@ -20,74 +20,60 @@
 
                     <div class="modal-body">
                         <form role="form">
-                            <div class="form-group">
-                                <label for="fname">Vorname</label>
-                                @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control", @id = "fname", @placeholder = "Vorname" })
-                                @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="nname">Nachname</label>
-                                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", @id = "nname", @placeholder = "Nachname" })
-                                @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
-                            </div>
-
-                            @*
-                            <div class="form-group">
-                                <label for="datepicker">Geburtsdatum</label>
-                                @Html.TextBoxFor(m => m.Birthdate, new { @class = "form-control date", @id = "datepicker", @placeholder = "Geburtsdatum" })
-                                @Html.ValidationMessageFor(m => m.Birthdate, "", new { @class = "text-danger" })
-                            </div>
-                            *@
-                            
-                            <div class="form-group">
-                                <label for="email">E-Mail</label>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @placeholder = "E-Mail" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="psw">Kennwort</label>
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "psw", @placeholder = "Kennwort" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <label for="pswc">Kennwort Wiederholen</label>
-                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "pswc", @placeholder = "Kennwort" })
-                                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    @Html.RadioButtonFor(model => model.Sportler, true, new { id = "sportler" })
-                                    @Html.Label("sportler", "Sportler")
-                                    </div>
-                                <div class="col-md-6">
-                                    @Html.RadioButtonFor(model => model.Sportler, false, new { id = "trainer" })
-                                    @Html.Label("trainer", "Trainer")
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Firstname, new { @class = "form-control", @id = "fname", @placeholder = "Vorname" })
+                                    @Html.ValidationMessageFor(m => m.Firstname, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-block" id="loginButton"><span class="glyphicon glyphicon-off"></span> Registrieren</button>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control", @id = "nname", @placeholder = "Nachname" })
+                                    @Html.ValidationMessageFor(m => m.Lastname, "", new { @class = "text-danger" })
+                                </div>
                             </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @placeholder = "E-Mail" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                                </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "psw", @placeholder = "Kennwort" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @id = "pswc", @placeholder = "Kennwort wiederholen" })
+                                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        @Html.RadioButtonFor(model => model.Sportler, true, new { id = "sportler" })
+                                        @Html.Label("sportler", "Sportler")
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.RadioButtonFor(model => model.Sportler, false, new { id = "trainer" })
+                                        @Html.Label("trainer", "Trainer")
+                                    </div>
+                                </div>
+                            
                             <div class="form-group">
-                                @Html.ActionLink("Bereits ein Account vorhanden?", "../Account/Login")
+                                <button type="submit" class="btn btn-block" id="loginButton">Registrieren</button>
                             </div>
                         </form>
                     </div>
-
-
-
                 </div>
             </div>
-
         </div>
-
-
-
 }
 
-        @section Scripts {
-            @Scripts.Render("~/bundles/jqueryval")
-        }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

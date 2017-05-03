@@ -1,4 +1,5 @@
 ﻿#menuBar{
+    border-bottom: 3px solid;
     border-color: orange;
     background-color: white;
 }
@@ -8,6 +9,7 @@
 }
 
 #innerbox {
+    border: none;
     border-color: orange;
 }
 
@@ -18,23 +20,43 @@
 }
 
 #loginForm {
-    color: orange;
-}
-
-#loginForm {
-    padding: 10px;
-    color: orange;
-}
-
-#loginForm {
     padding-top: 5px;
+    color: orange;
+}
+#descriptionText{
+    color: black !important;
 }
 
 #loginButton {
     color: orange;
     background-color: white;
-    border-color: orange;
+    border: 2px solid orange;
 }
+    #loginButton:hover {
+        box-shadow: 0px 0px 3px 3px orange;
+    }
+
+
+#bewerbButton {
+    color: orange;
+    background-color: white;
+    border: 2px solid orange;
+    height: 50px;    
+}
+    #bewerbButton:hover {
+        box-shadow: 0px 0px 3px 3px orange;
+    }
+
+#delButton {
+    color: red;
+    background-color: white;
+    border: 2px solid red;
+}
+
+    #delButton:hover {
+        box-shadow: 0px 0px 3px 3px red;
+    }
+
 
 #noAccLink {
     border-top: 1px solid#888;
@@ -54,6 +76,23 @@
     background-color: white;
     border-color: orange
 }
+
+#chatHim {
+    border: solid;
+    border-color: aqua;
+    background-color: aquamarine;
+}
+
+#chatMe {
+    border: solid;
+    border-color: lawngreen;
+    background-color: greenyellow;
+}
+
+#chatList {
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
 .chat {
     list-style: none;
     margin: 0;
@@ -63,8 +102,6 @@
     .chat li {
         margin-bottom: 10px;
         padding-bottom: 5px;
-        border-bottom: 0.5px dotted;
-        border-color: orange
     }
 
         .chat li.left .chat-body {
@@ -113,11 +150,86 @@
     max-width: none !important;
 }
 
-#link, #registerLink, #loginLink {
+#chatList {
+    color: orange;
+}
+    #chatList:hover {
+        text-decoration: none;
+        box-shadow: 0px 0px 3px 3px orange;
+    }
+
+#titleLink {
+    color:orange;
+}
+    #titleLink:hover, #titleLink:after{
+        text-decoration: none;
+        color:darkorange;
+    }
+#link, #registerLink, #loginLink, #navlink {
     color: grey;
 }
+    #link:hover {
+        color: orange;
+        text-decoration: none;
+    }
+    #registerLink:hover, #registerLink:after, #loginLink:hover, #loginLink:after, #navlink:hover, #navlink:after {
+        text-decoration: none;
+        background-color: white;
+        color: orange;
+        box-shadow: 0px 3px 0px 0px orange;
+    }
+
 
 #SingleNachricht {
     max-width: 100% !important;
     min-width: 100% !important;
+}
+
+.form-control {
+    height: 50px;
+    font-size: 14px;
+    color: black;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 15px;
+}
+
+    #textarea:focus, .form-control:focus {
+        border-color: orange;
+        box-shadow: none;
+    }
+
+.control-label {
+    font-size: 17px;
+    color: orange;
+    position: absolute;
+    top: 5px;
+    left: 27px;
+    text-align: center;
+}
+
+textarea.form-control {
+    resize: vertical;
+    height: 130px;
+    transition: all 0.5s ease 0s;
+}
+
+.modal-content {
+    box-shadow: 0px 0px 3px 3px orange;
+}
+
+#textarea, #SingleNachricht {
+    border: 2px solid #ccc;
+    min-height: 50px;
+    height: 50px;
+}
+
+#postTime{
+    background-color: orange
+}
+.img-circle{
+    height: 50px;
+    width: 50px;
 }
