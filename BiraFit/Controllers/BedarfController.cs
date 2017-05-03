@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
+using BiraFit.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace BiraFit.Controllers
 {
@@ -10,7 +12,7 @@ namespace BiraFit.Controllers
     {
         public ActionResult Index()
         {
-            return View(Context.Bedarf.ToList());
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult New()
@@ -53,7 +55,26 @@ namespace BiraFit.Controllers
                 var bedarf = Context.Bedarf.Single(b => b.Id == id);
                 return View(bedarf);
             }
+
             return HttpNotFound();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            if (!IsSportler() || !IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
+
+            if (GetSportlerAspNetUserId(bedarf.Sportler_Id) == User.Identity.GetUserId())
+            {
+                Context.Bedarf.Remove(bedarf);
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

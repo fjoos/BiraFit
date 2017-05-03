@@ -1,4 +1,4 @@
-﻿@model BiraFit.ViewModel.AngebotViewModel
+﻿@model List<BiraFit.ViewModel.AngebotViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -10,10 +10,10 @@
 <div class="container">
     <div class="row">
         <h2>Mein Bedarf</h2>
-        @Model.bedarf.Beschreibung
+        @Model[0].Bedarf.Beschreibung
         <h2 class="page-header">Angebote</h2>
         <section class="comment-list">
-            @foreach (var item in @Model.angebote)
+            @foreach (var item in @Model)
             {
                 <article class="row">
                     <div class="col-md-2 col-sm-2"></div>
@@ -35,29 +35,29 @@
                                     <div class="col-md-7 col-sm-7">
                                         <time class="comment-date pull-right">
                                             <i class="fa fa-clock-o"></i>
-                                            erstellt am: @item.Datum.Day.@item.Datum.Month.@item.Datum.Year
+                                            erstellt am: @item.Angebot.Datum.Day.@item.Angebot.Datum.Month.@item.Angebot.Datum.Year
                                         </time>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">@item.Beschreibung</p>
+                                        <p class="text-left">@item.Angebot.Beschreibung</p>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">Preisangebot @item.Preis.- pro Woche</p>
+                                        <p class="text-left">Preisangebot @item.Angebot.Preis.- pro Woche</p>
                                     </div>
                                 </div>
 
                                 <div class="input-group">
                                     <span class="input-group-btn" onclick="">
-                                       <a href="" class="btn btn-primary btn-sm">Annehmen</a>
+                                       <a href="/Angebot/Accept/@item.Angebot.Id" class="btn btn-primary btn-sm">Annehmen</a>
                                     </span>
                                     <span class="input-group-btn" onclick="">
-                                        <a href="" class="btn btn-primary btn-sm">Ablehnen</a> 
+                                        <a href="/Angebot/Reject/@item.Angebot.Id" class="btn btn-primary btn-sm">Ablehnen</a> 
                                     </span>
                                 </div>
                             </div>

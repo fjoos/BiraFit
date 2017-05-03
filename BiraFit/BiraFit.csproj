@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201704301212392_addedkonversationidfield2nachricht.Designer.cs">
       <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705030834367_personaltraineridtoangebottable.cs" />
+    <Compile Include="Migrations\201705030834367_personaltraineridtoangebottable.Designer.cs">
+      <DependentUpon>201705030834367_personaltraineridtoangebottable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -322,6 +326,9 @@
     <EmbeddedResource Include="Migrations\201704301212392_addedkonversationidfield2nachricht.resx">
       <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705030834367_personaltraineridtoangebottable.resx">
+      <DependentUpon>201705030834367_personaltraineridtoangebottable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\BiraFitLogo.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -358,7 +365,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Bedarf\Index.cshtml" />
-    <Content Include="Views\Bedarf\BedarfTable.cshtml" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Bedarf\New.cshtml" />
