@@ -4,19 +4,9 @@
     ViewBag.Title = "BiraFit";
 }
 
-@if (!Request.IsAuthenticated && Model!= null)
+@if (Model!= null)
 {
-    @Html.Partial("~/views/bedarf/bedarftableNichtTrainer.cshtml", Model)
-    @*
-        Bedarftable für anonymen user    
-    *@
-}
-else if(Request.IsAuthenticated && Model != null)
-{
-    @Html.Partial("~/views/bedarf/bedarftable.cshtml", Model)
-    @*
-        Bedarftable für user
-    *@
+    @Html.Partial("~/views/bedarf/index.cshtml", Model)
 }
 
 
