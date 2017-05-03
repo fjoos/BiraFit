@@ -23,5 +23,7 @@ namespace BiraFit.Models
         public DateTime Datum { get; set; }
 
         public int Bedarf_Id { get; set; }
+
+        public int PersonalTrainer_Id { get; set; }
     }
 }

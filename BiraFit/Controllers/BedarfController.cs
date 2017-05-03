@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
+using BiraFit.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace BiraFit.Controllers
 {
@@ -10,7 +12,7 @@ namespace BiraFit.Controllers
     {
         public ActionResult Index()
         {
-            return View(Context.Bedarf.ToList());
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult New()
@@ -26,7 +28,7 @@ namespace BiraFit.Controllers
         [HttpPost]
         public ActionResult Create(Bedarf bedarf)
         {
-            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
 
             if (!IsBedarfOpen(sportlerId))
             {
@@ -46,14 +48,33 @@ namespace BiraFit.Controllers
 
         public ActionResult Edit(int id)
         {
-            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             
             if (IsBedarfOwner(id,sportlerId))
             {
                 var bedarf = Context.Bedarf.Single(b => b.Id == id);
                 return View(bedarf);
             }
+
             return HttpNotFound();
+        }
+
+        public ActionResult Delete(int id)
+        {
+            if (!IsSportler() || !IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
+
+            if (GetSportlerAspNetUserId(bedarf.Sportler_Id) == User.Identity.GetUserId())
+            {
+                Context.Bedarf.Remove(bedarf);
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -63,6 +84,20 @@ namespace BiraFit.Controllers
             TryUpdateModel(bedarfInDb);
             Context.SaveChanges();
             return View();
+        }
+
+        public ActionResult Withdraw(int id)
+        {
+            //id => BedarfID
+            var angebotToRemove = Context.Angebot.Single(i => i.Bedarf_Id == id);
+            
+            if (!IsSportler() && IsLoggedIn() && angebotToRemove.PersonalTrainer_Id == GetUserIdbyAspNetUserId(User.Identity.GetUserId()))
+            {
+                Context.Angebot.Remove(angebotToRemove);
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
         
         public bool IsBedarfOpen(int sportlerId)

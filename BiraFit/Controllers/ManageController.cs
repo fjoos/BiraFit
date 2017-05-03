@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
+using BiraFit.Controllers.Helpers;
 
 namespace BiraFit.Controllers
 {
@@ -97,13 +98,9 @@ namespace BiraFit.Controllers
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
+
         // GET: /Manage/Delete
         public ActionResult Delete()
-        {
-            return View();
-        }
-        // GET: /Manage/Delete/Conf
-        public ActionResult DeleteConfirmation()
         {
             return View();
         }
@@ -330,6 +327,33 @@ namespace BiraFit.Controllers
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
+
+
+        // GET: /Account/Edit/34
+        public ActionResult Edit()
+        {
+            string username = User.Identity.GetUserId();
+            var user = Context.Users.Where(s => s.Id == username).FirstOrDefault();
+
+            return View(new EditViewModel
+            {
+                Vorname = user.Vorname,
+                Name = user.Name,
+                Email = user.Email,
+                Adresse = user.Adresse,
+                ProfilBild = user.ProfilBild
+            });
+        }
+
+        [HttpPost]
+        public ActionResult Edit(EditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+            }
+            return View();
+        }
+
 
         protected override void Dispose(bool disposing)
         {
