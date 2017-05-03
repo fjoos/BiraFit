@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
+using System.Net;
 
 namespace BiraFit.Controllers
 {
@@ -422,6 +423,31 @@ namespace BiraFit.Controllers
             }
 
             base.Dispose(disposing);
+        }
+
+        // POST: /Account/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(string id)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+
+                var user = await UserManager.FindByIdAsync(id);
+                var result = await UserManager.DeleteAsync(user);
+
+                if (result.Succeeded)
+                {
+                    LogOff();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View();
+
         }
 
         public void AllocateUser(ApplicationUser user, RegisterViewModel model)
