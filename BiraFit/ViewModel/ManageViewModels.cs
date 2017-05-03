@@ -83,4 +83,21 @@ namespace BiraFit.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+
+    public class EditViewModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Vorname { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+        
+        public string Adresse { get; set; }
+
+        public string ProfilBild { get; set; }
+    }
 }
