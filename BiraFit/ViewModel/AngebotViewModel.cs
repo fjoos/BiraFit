@@ -8,7 +8,7 @@ namespace BiraFit.ViewModel
 {
     public class AngebotViewModel
     {
-        public List<Angebot> angebote;
-        public Bedarf bedarf;
+        public Angebot Angebot;
+        public Bedarf Bedarf;
     }
 }

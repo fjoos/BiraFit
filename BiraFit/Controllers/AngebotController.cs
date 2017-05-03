@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace BiraFit.Controllers
 {
@@ -17,16 +18,22 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-
             var currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
-
+            List <AngebotViewModel> angebotList = new List<AngebotViewModel>();
             foreach (var bedarf in currentBedarf)
             {
                 if (bedarf.OpenBedarf)
                 {
-                    //return View();
-                    return View(new AngebotViewModel() { angebote = Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList(),bedarf = bedarf });
+                    foreach (var angebot in Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList())
+                    {
+                        angebotList.Add(new AngebotViewModel()
+                        {
+                            Angebot = angebot,
+                            Bedarf = bedarf
+                        });
+                    }
+                    return View(angebotList);
                 }
             }
 
@@ -41,10 +48,29 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public ActionResult Accept(int angebotId)
+        // GET: Accept
+        public ActionResult Accept(int id)
         {
-            return RedirectToAction("Index", "Home");
+
+            int sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            int personalTrainerId = Context.Angebot.Single(i => i.Id == id).PersonalTrainer_Id;
+            Context.Konversation.Add(new Konversation()
+            {
+                Sportler_Id = sportlerId,
+                PersonalTrainer_Id = personalTrainerId
+            });
+             
+            int bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf == true).Id;
+            Context.Bedarf.Single(i => i.Id == bedarfId).OpenBedarf = false;
+            Context.SaveChanges();
+            return RedirectToAction("Chat/" + Context.Konversation
+                                        .Single(i => i.Sportler_Id == sportlerId && i.PersonalTrainer_Id == personalTrainerId)
+                                        .Id, "Nachricht");
+        }
+
+        public ActionResult Reject(int id)
+        {
+            return RedirectToAction("Index", "Angebot");
         }
     }
 }

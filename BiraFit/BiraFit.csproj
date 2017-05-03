@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201704301212392_addedkonversationidfield2nachricht.Designer.cs">
       <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705030834367_personaltraineridtoangebottable.cs" />
+    <Compile Include="Migrations\201705030834367_personaltraineridtoangebottable.Designer.cs">
+      <DependentUpon>201705030834367_personaltraineridtoangebottable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -321,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704301212392_addedkonversationidfield2nachricht.resx">
       <DependentUpon>201704301212392_addedkonversationidfield2nachricht.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705030834367_personaltraineridtoangebottable.resx">
+      <DependentUpon>201705030834367_personaltraineridtoangebottable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\BiraFitLogo.png" />
     <Content Include="Web.config" />
