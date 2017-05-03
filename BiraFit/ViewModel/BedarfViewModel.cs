@@ -9,5 +9,6 @@ namespace BiraFit.ViewModel
         public PersonalTrainer Trainer { get; set; }
         public Bedarf Bedarf { get; set; }
         public bool IsOwner { get; set; }
+        public bool OfferMade { get; set; }
     }
 }

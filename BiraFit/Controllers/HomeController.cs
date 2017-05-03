@@ -17,7 +17,7 @@ namespace BiraFit.Controllers
             {
                 foreach (var bedarf in bedarfList)
                 {
-                    bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = null, Trainer = null, IsOwner = false });
+                    bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = null, Trainer = null, IsOwner = false,OfferMade = false});
                 }
 
                 return View(bedarfViewModelList);
@@ -36,12 +36,14 @@ namespace BiraFit.Controllers
                             Bedarf = bedarf,
                             Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
                             Trainer = null,
-                            IsOwner = true
+                            IsOwner = true,
+                            OfferMade = false
                         });
                     }
                     else
                     {
-                        bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = AuthentificationHelper.AuthenticateSportler(User, Context), Trainer = null, IsOwner = false });
+
+                        bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = AuthentificationHelper.AuthenticateSportler(User, Context), Trainer = null, IsOwner = false,OfferMade = false });
                     }
                 }
                 return View(bedarfViewModelList);
@@ -49,13 +51,32 @@ namespace BiraFit.Controllers
 
             foreach (var bedarf in bedarfList)
             {
-                bedarfViewModelList.Add(new BedarfViewModel()
+                var personalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+
+                if (Context.Angebot.Any(i => i.Bedarf_Id == bedarf.Id && i.PersonalTrainer_Id == personalTrainerId))
                 {
-                    Bedarf = bedarf,
-                    Sportler = null,
-                    Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
-                    IsOwner = false
-                });
+                    bedarfViewModelList.Add(new BedarfViewModel()
+                    {
+                        Bedarf = bedarf,
+                        Sportler = null,
+                        Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
+                        IsOwner = false,
+                        OfferMade = true
+                    });
+                }
+                else
+                {
+                    bedarfViewModelList.Add(new BedarfViewModel()
+                    {
+                        Bedarf = bedarf,
+                        Sportler = null,
+                        Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
+                        IsOwner = false,
+                        OfferMade = false
+                    });
+                }
+
+                
             }
             return View(bedarfViewModelList);
            

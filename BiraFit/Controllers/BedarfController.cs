@@ -28,7 +28,7 @@ namespace BiraFit.Controllers
         [HttpPost]
         public ActionResult Create(Bedarf bedarf)
         {
-            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
 
             if (!IsBedarfOpen(sportlerId))
             {
@@ -48,7 +48,7 @@ namespace BiraFit.Controllers
 
         public ActionResult Edit(int id)
         {
-            int sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             
             if (IsBedarfOwner(id,sportlerId))
             {
@@ -84,6 +84,20 @@ namespace BiraFit.Controllers
             TryUpdateModel(bedarfInDb);
             Context.SaveChanges();
             return View();
+        }
+
+        public ActionResult Withdraw(int id)
+        {
+            //id => BedarfID
+            var angebotToRemove = Context.Angebot.Single(i => i.Bedarf_Id == id);
+            
+            if (!IsSportler() && IsLoggedIn() && angebotToRemove.PersonalTrainer_Id == GetUserIdbyAspNetUserId(User.Identity.GetUserId()))
+            {
+                Context.Angebot.Remove(angebotToRemove);
+                Context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Home");
         }
         
         public bool IsBedarfOpen(int sportlerId)

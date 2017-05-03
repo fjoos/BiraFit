@@ -53,14 +53,23 @@
                                      </div>
                                      @if (@item.Trainer != null)
                                      {
-                                         <div class="input-group">
-                                             <input type="number" id="angebot" class="form-control input-sm chat-input" placeholder="Mein Angebot"/>
-                                             <input type="text" id="angebotsBeschreibung" class="form-control input-sm chat-input" placeholder="Beschriebung..."/>
-                                             <span class="input-group-btn" onclick="">
-                                                 <a href="" class="btn btn-primary btn-sm" id="angebotButton"><span class="fa fa-reply"></span> Angebot abgeben</a>
-                                             </span>
-                                         </div>
+                                         if (@item.OfferMade)
+                                         {
+                                             <p>Sie haben schon ein Angebot gemacht.</p>
+                                             <a href="/Bedarf/Withdraw/@item.Bedarf.Id">Angebot zurückziehen</a>
+                                         }
+                                         else
+                                         {
+                                             <div class="input-group">
+                                                 <input type="number" id="angebot" class="form-control input-sm chat-input" placeholder="Mein Angebot"/>
+                                                 <input type="text" id="angebotsBeschreibung" class="form-control input-sm chat-input" placeholder="Beschriebung..."/>
+                                                 <span class="input-group-btn" onclick="">
+                                                     <a href="" class="btn btn-primary btn-sm" id="angebotButton"><span class="fa fa-reply"></span> Angebot abgeben</a>
+                                                 </span>
+                                             </div>
+                                         }
                                      }
+
                                      @if (@item.IsOwner)
                                      {
                                          <h3><a href="Bedarf/Edit/@item.Bedarf.Id">Bedarf bearbeiten</a></h3>
