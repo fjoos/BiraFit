@@ -70,6 +70,10 @@ namespace BiraFit.Controllers
 
         public ActionResult Reject(int id)
         {
+            var angebot = Context.Angebot.Single(i => i.Id == id);
+            Context.Angebot.Remove(angebot);
+            Context.SaveChanges();
+
             return RedirectToAction("Index", "Angebot");
         }
     }
