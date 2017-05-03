@@ -102,11 +102,6 @@ namespace BiraFit.Controllers
         {
             return View();
         }
-        // GET: /Manage/Delete/Conf
-        public ActionResult DeleteConfirmation()
-        {
-            return View();
-        }
 
         //
         // GET: /Manage/AddPhoneNumber
