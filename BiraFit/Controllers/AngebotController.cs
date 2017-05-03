@@ -2,6 +2,7 @@
 using BiraFit.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
 using Microsoft.AspNet.Identity;
@@ -50,10 +51,20 @@ namespace BiraFit.Controllers
 
         // GET: Accept
         public ActionResult Accept(int id)
-        {
+        {   
+            if (!IsSportler() || !IsLoggedIn() || !AuthenticateOwner(id))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var currentAngebot = Context.Angebot.Single(i => i.Id == id);
             var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
             var personalTrainerId = currentAngebot.PersonalTrainer_Id;
+
+            if (Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id != currentAngebot.Bedarf_Id)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             Context.Konversation.Add(new Konversation()
             {
@@ -78,11 +89,27 @@ namespace BiraFit.Controllers
 
         public ActionResult Reject(int id)
         {
+            if (!IsSportler() || !IsLoggedIn() || !AuthenticateOwner(id))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var angebot = Context.Angebot.Single(i => i.Id == id);
             Context.Angebot.Remove(angebot);
             Context.SaveChanges();
 
             return RedirectToAction("Index", "Angebot");
+        }
+
+        public bool AuthenticateOwner(int angebotId)
+        {
+            var currentAngebot = Context.Angebot.Single(i => i.Id == angebotId);
+            var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            if (!Context.Bedarf.Any(i => i.Sportler_Id == sportlerId))
+            {
+                return false;
+            }
+            return Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id == currentAngebot.Bedarf_Id;
         }
     }
 }
