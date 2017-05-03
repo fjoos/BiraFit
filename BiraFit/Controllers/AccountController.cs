@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
 using System.Net;
+using BiraFit.Controllers.Helpers;
+using System.Collections.Generic;
 
 namespace BiraFit.Controllers
 {
@@ -443,11 +445,77 @@ namespace BiraFit.Controllers
                 if (result.Succeeded)
                 {
                     LogOff();
+                    DeleteOpenStock(id);
                     return RedirectToAction("Index", "Home");
                 }
+                return RedirectToAction("Index", "Home");
             }
             return View();
 
+        }
+
+        private void DeleteOpenStock(string id)
+        {
+            int userId = GetUserIdbyAspNetUserId(id);
+            if (IsSportler())
+            {             
+                deleteOpenStockForSportler(id, userId);
+            }
+            else
+            {
+                deleteOpenStockForPersonaltrainer(id, userId);
+            }
+
+            var queryNachricht = from d in Context.Nachricht
+                                 where d.Sender_Id == id || d.Empfaenger_Id == id
+                                 select d;
+            foreach (Nachricht openNachricht in queryNachricht)
+            {
+                Context.Nachricht.Remove(openNachricht);
+            }
+
+            Context.SaveChanges();
+        }
+
+       
+
+        private void deleteOpenStockForSportler(string id, int userId)
+        {
+            BedarfController bc = new BedarfController();
+            if (bc.IsBedarfOpen(userId))
+            {
+                var queryBedarf = from d in Context.Bedarf
+                                  where d.Sportler_Id == userId
+                                  select d;
+                var openBedarf = queryBedarf.FirstOrDefault<Bedarf>();
+                Context.Bedarf.Remove(openBedarf);
+            }
+            var queryKonversation = from d in Context.Konversation
+                                    where d.Sportler_Id == userId
+                                    select d;
+            foreach (Konversation openKonversation in queryKonversation)
+            {
+                Context.Konversation.Remove(openKonversation);
+            }
+        }
+
+        private void deleteOpenStockForPersonaltrainer(string id, int userId)
+        {
+            var queryAngebot = from d in Context.Angebot
+                               where d.PersonalTrainer_Id == userId
+                               select d;
+            foreach (Angebot openAngebot in queryAngebot)
+            {
+                Context.Angebot.Remove(openAngebot);
+            }
+
+            var queryKonversation = from d in Context.Konversation
+                                    where d.PersonalTrainer_Id == userId
+                                    select d;
+            foreach (Konversation openKonversation in queryKonversation)
+            {
+                Context.Konversation.Remove(openKonversation);
+            }
         }
 
         public void AllocateUser(ApplicationUser user, RegisterViewModel model)
