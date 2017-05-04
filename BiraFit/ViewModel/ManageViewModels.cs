@@ -109,5 +109,11 @@ namespace BiraFit.Models
         [Required]
         public string Vorname { get; set; }
 
+        [Required]
+        public string Beschreibung { get; set; }
+        [Required]
+        public int Bewertung { get; set; }
+
+
     }
 }

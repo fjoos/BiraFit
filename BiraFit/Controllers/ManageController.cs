@@ -358,31 +358,23 @@ namespace BiraFit.Controllers
         // GET: /Manage/Show/34
         public ActionResult Show(string id)
         {
-
-            /*
-              
-        Movie movie = db.Movies.Find(id);
-        if (movie == null)
-        {
-            return HttpNotFound();
-        }
-        return View(movie);
-                 */
-
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var user = Context.Users.Where(s => s.Id == id).FirstOrDefault();
-            var asdf = GetTrainerAspNetUserId(user.Id);
-            if(user == null)
+           var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == user.Id);
+            if(user == null || personalTrainer == null)
             {
                 return HttpNotFound();
             }
+            
             return View(new ShowViewModel
             {
                 Vorname = user.Vorname,
-                Name = user.Name
+                Name = user.Name,
+                Beschreibung = personalTrainer.Beschreibung,
+                Bewertung = personalTrainer.Bewertung
             });
         }
 
