@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
+using System.Net;
 
 namespace BiraFit.Controllers
 {
@@ -354,6 +355,36 @@ namespace BiraFit.Controllers
             return View();
         }
 
+        // GET: /Manage/Show/34
+        public ActionResult Show(string id)
+        {
+
+            /*
+              
+        Movie movie = db.Movies.Find(id);
+        if (movie == null)
+        {
+            return HttpNotFound();
+        }
+        return View(movie);
+                 */
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = Context.Users.Where(s => s.Id == id).FirstOrDefault();
+            var asdf = GetTrainerAspNetUserId(user.Id);
+            if(user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new ShowViewModel
+            {
+                Vorname = user.Vorname,
+                Name = user.Name
+            });
+        }
 
         protected override void Dispose(bool disposing)
         {

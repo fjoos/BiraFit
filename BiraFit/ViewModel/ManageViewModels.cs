@@ -100,4 +100,14 @@ namespace BiraFit.Models
 
         public string ProfilBild { get; set; }
     }
+
+    public class ShowViewModel
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Vorname { get; set; }
+
+    }
 }
