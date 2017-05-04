@@ -6,9 +6,20 @@
 
 #mybox {
     margin-top: 50px;
-    background: none;
     border: 2px solid orange;
+    background: black;
+    opacity: 0.8;
 }
+#chatbox {
+    margin-top: 50px;
+    border: none;
+}
+
+    #chatbox #boxbody {
+        background: black;
+        opacity: 0.8;
+    }
+
 #footerBox {
     background: none;
     border-top: 2px solid orange;
@@ -29,6 +40,7 @@
     background: none;
     color: orange;
 }
+
 #boxbody {
     background: none;
 }
@@ -90,6 +102,7 @@
 }
 
 #usrName {
+    color: orange !important;
     padding: 5px 5px 5px 5px;
 }
 .fa fa-reply {
@@ -114,6 +127,10 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
 }
+    #chatList * {
+        color: white;
+    }
+
 .chat {
     list-style: none;
     margin: 0;
@@ -134,11 +151,9 @@
             margin-right: 60px;
         }
 
-
-
         .chat li .chat-body p {
             margin: 0;
-            color: #777777;
+            color: black;
         }
 
     .modal .slidedown .glyphicon, .chat .glyphicon {
@@ -147,7 +162,7 @@
 
 #scrollBody {
     overflow-y: scroll;
-    height: 250px;
+    height: 300px;
 }
 
 ::-webkit-scrollbar-track {
@@ -218,7 +233,7 @@
     margin-bottom: 15px;
 }
 
-    #textareaEdit:focus, #textarea:focus, .form-control:focus {
+    #textareaEdit:focus, #textarea:focus, .form-control:focus, #SingleNachricht:focus {
         border-color: orange;
         box-shadow: none;
     }
@@ -259,14 +274,27 @@ textarea.form-control {
 
 #bedarf {
     margin-top: 20px;
-    background: none;
     box-shadow: none;
     border: 2px solid orange;
+    background: black;
+    opacity: 0.8;
 }
-body {
-    background: url('../resources/male-fitness-models  liquid ketone drops.jpg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+#mainBack {
+    background: url('../resources/BackgroundMain.jpg') no-repeat center center fixed;
     background-size: cover;
+}
+#loginRegBack {
+    background: url('../resources/BackgroundLoginRegister.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#profileBack {
+    background: url('../resources/BackgroundProfile.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#chatBack {
+    background: url('../resources/BackgroundChat.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#logregText {
+    color: lightgray;
 }

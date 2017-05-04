@@ -4,9 +4,11 @@
     ViewBag.Title = "BiraFit";
 }
 
-@if (Model!= null)
+@if (Model != null)
 {
-    @Html.Partial("~/views/bedarf/index.cshtml", Model)
+    <body id="mainBack">
+        @Html.Partial("~/views/bedarf/index.cshtml", Model)
+    </body>
 }
 
 

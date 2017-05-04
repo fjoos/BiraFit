@@ -3,15 +3,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<body id="chatBack">
 <div class="row">
-    <section id="loginForm">
-        <div class="container">
-            <div class="mainbox col-md-8 col-md-offset-2">
-                    <div class="panel-heading" id="loginHead">
+        <div class="container" id="boxForm">
+            <div class="mainbox col-md-8 col-md-offset-2" id="chatbox">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
                         <div class="panel-title"><h2>Meine Chats</h2></div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="boxbody">
                         <ul class="chat">
                             @{
                                 int counter = 0;
@@ -25,9 +25,9 @@
                                                 </span>
                                                 <div class="chat-body clearfix">
                                                     <div class="header">
-                                                        <strong>Chatpartner</strong>
-                                                        <small class="pull-right text-muted">
-                                                            <span class="glyphicon glyphicon-time"></span>
+                                                        <strong id="usrName">Chatpartner</strong>
+                                                        <small class="pull-right">
+                                                            <span class="glyphicon glyphicon-time"></span>14 mins ago
                                                         </small>
                                                     </div>
                                                     @if (@Model.LastMessages[counter].Length > 40)
@@ -52,11 +52,13 @@
                             }
                         </ul>
                     </div>
+                    <div class="panel-footer" id="footerBox">
+                    </div>
+                    </div>
+                </div>
             </div>
-            </div>
-    </section>
 </div>
-
+</body>
 
 
 

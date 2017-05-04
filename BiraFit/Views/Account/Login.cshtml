@@ -3,8 +3,7 @@
 @{
     ViewBag.Title = "Anmelden";
 }
-
-
+<body id="loginRegBack">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
@@ -12,7 +11,7 @@
                 <div class="container" id="loginForm">
                     <div id="mybox" class="mainbox col-md-6 col-md-offset-3 modal-content">
                         <div class="panel panel-info" id="innerbox">
-                            <div class="panel-heading" id="loginHead">
+                            <div class="panel-heading" id="boxHead">
                                 <div class="panel-title"><h4>Anmelden</h4></div>
                             </div>
 
@@ -27,7 +26,7 @@
                                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "psw", @placeholder = "Kennwort" })
                                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group checkbox">
+                                        <div class="form-group checkbox" id="logregText">
                                             <label>
                                                 @Html.CheckBoxFor(m => m.RememberMe)
                                                 @Html.LabelFor(m => m.RememberMe)
@@ -44,6 +43,8 @@
                 </div>
 
             }
+
+</body>
 
 
 
