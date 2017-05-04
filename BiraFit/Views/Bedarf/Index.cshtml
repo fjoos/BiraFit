@@ -47,25 +47,31 @@
                                     }
                                     else
                                     {
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="col-md-7">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="textarea" placeholder="Meine Beschreibung, was kann ich dir bieten..." />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <input pattern="[1-9]{1}\d*" class="form-control" placeholder="Mein Preis" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <button type="submit" class="btn btn-block" id="bewerbButton">Bewerben</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                         using (Html.BeginForm("Create", "Angebot"))
+                                         {
+                                             <div class="row">
+                                                 <div class="col-md-12">
+                                                     <div class="col-md-7">
+                                                         <div class="form-group">
+                                                             <!-- <input type="text" class="form-control" id="textarea" placeholder="Meine Beschreibung"/>-->
+                                                             @Html.TextBoxFor(i => i[0].Angebot.Beschreibung, new { @class = "form-control", @placeholder = "Beschreibung", @id = "Beschreibung" })
+                                                             @Html.ValidationMessageFor(i => i[0].Angebot.Beschreibung, "", new { @class = "text-danger" })
+                                                         </div>
+                                                     </div>
+                                                     <div class="col-md-2">
+                                                         <div class="form-group">
+                                                             <!--<input pattern="[1-9]{1}\d*" class="form-control" placeholder="Mein Preis"/>-->
+                                                             @Html.TextBoxFor(i => i[0].Angebot.Preis, new { @class = "form-control", @placeholder = "Mein Preis", @id = "Preis" })
+                                                         </div>
+                                                     </div>
+                                                     <div class="col-md-3">
+                                                         <div class="form-group">
+                                                             <input type="submit" class="btn btn-block" id="bewerbButton" />
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         }
                                     }
                                 }
                                 @if (@item.IsOwner)

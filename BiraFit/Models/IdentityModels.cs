@@ -23,13 +23,14 @@ namespace BiraFit.Models
         [Required]
         public string Vorname { get; set; }
 
-        [Required]
         public string Adresse { get; set; }
 
         public string ProfilBild { get; set; }
 
         [Required]
         public int Aktiv { get; set; }
+
+        public override string UserName { get; set; }
 
 
 
