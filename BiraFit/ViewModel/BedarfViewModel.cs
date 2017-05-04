@@ -11,7 +11,7 @@ namespace BiraFit.ViewModel
         public bool IsOwner { get; set; }
         public bool OfferMade { get; set; }
         public int Preis { get; set; }
-        public string Beschreibung { get; set; } 
+        public string Beschreibung { get; set; }
         public int Id { get; set; }
     }
 }

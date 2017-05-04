@@ -12,10 +12,7 @@ namespace BiraFit.Controllers
             Context = new ApplicationDbContext();
         }
 
-        protected ApplicationDbContext Context
-        {
-            get;
-        }
+        protected ApplicationDbContext Context { get; }
 
         protected bool IsLoggedIn()
         {
@@ -52,7 +49,5 @@ namespace BiraFit.Controllers
 
             return Context.PersonalTrainer.First(i => i.User_Id == id).Id;
         }
-
-
     }
 }

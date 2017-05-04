@@ -8,101 +8,101 @@
 
 <body id="chatBack">
 <div class="row">
-        <section id="boxForm">
-            <div class="container">
-                <div id="mybox" class="mainbox col-md-8 col-md-offset-2 modal-content">
-                    <div class="panel panel-info" id="innerbox">
-                        <div class="panel-heading" id="boxHead">
-                            <div class="panel-title"><h4>Konversation</h4></div>
+    <section id="boxForm">
+        <div class="container">
+            <div id="mybox" class="mainbox col-md-8 col-md-offset-2 modal-content">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
+                        <div class="panel-title">
+                            <h4>Konversation</h4>
                         </div>
-                        <div class="modal-body" id="scrollBody">                          
-                            <ul class="chat">
-                                @foreach (var item in @Model.Nachrichten)
-                                {
-                                    if (item.Sender_Id == @Model.Id)
-                                    {
-                                        
-                                        <li class="right clearfix">
-                                            <div class="col-md-9 col-md-offset-3" >
-
-                                                @if (!activeWriterMe)
-                                                {
-                                                    <div class="header">
-                                                        <span class="chat-img pull-right">
-                                                            <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle" />
-                                                        </span>
-                                                        <strong class="pull-right primary-font">Ich Name</strong>
-                                                        <small class=" text-muted">
-                                                            <span class="glyphicon glyphicon-time"></span>13 mins ago
-                                                        </small>
-                                                    </div>
-                                                }
-
-                                                <div class="chat-body clearfix" id="chatMe">
-                                                    
-                                                    <p>
-                                                        @item.Text
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        activeWriterMe = true;
-                                        activeWriterHim = false;
-                                    }
-                                    else
-                                    {
-
-                                        <li class="left clearfix">
-                                            <div class="col-md-9">
-                                                @if (!activeWriterHim)
-                                                {
-                                                    <div class="header">
-                                                        <span class="chat-img pull-left">
-                                                            <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle" />
-
-                                                        </span>
-                                                        <strong class="primary-font">Er Name</strong>
-                                                        <small class="pull-right text-muted">
-                                                            <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                                        </small>
-                                                    </div>
-                                                }
-
-                                                <div class="chat-body clearfix" id="chatHim">
-                                                    <p>
-                                                        @item.Text
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3"></div>
-                                        </li>
-                                        activeWriterHim = true;
-                                        activeWriterMe = false;
-                                    }
-                                }
-
-                            </ul>
-                            </div>
-                            @using (Html.BeginForm("SendMessage", "Nachricht"))
-                            {
-                                <div class="modal-footer">
-                                    <div class="form-group">
-                                        <div class="col-md-10">
-                                            @Html.TextAreaFor(m => m.Nachricht, new { @class = "form-control", @id = "SingleNachricht", @placeholder = "Ihre Nachricht.." })
-                                            @Html.ValidationMessageFor(m => m.Nachricht, "", new { @class = "text-danger" })
-                                            @Html.HiddenFor(k => k.KonversationId, new { @value = Model.KonversationId })
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span class="input-group-btn">
-                                                <button type="submit" id="loginButton" class="btn btn-block">senden</button>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
                     </div>
+                    <div class="modal-body" id="scrollBody">
+                        <ul class="chat">
+                            @foreach (var item in @Model.Nachrichten)
+                            {
+                                if (item.Sender_Id == @Model.Id)
+                                {
+                                    <li class="right clearfix">
+                                        <div class="col-md-9 col-md-offset-3">
+
+                                            @if (!activeWriterMe)
+                                            {
+                                                <div class="header">
+                                                    <span class="chat-img pull-right">
+                                                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle"/>
+                                                    </span>
+                                                    <strong class="pull-right primary-font">Ich Name</strong>
+                                                    <small class=" text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>13 mins ago
+                                                    </small>
+                                                </div>
+                                            }
+
+                                            <div class="chat-body clearfix" id="chatMe">
+
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    activeWriterMe = true;
+                                    activeWriterHim = false;
+                                }
+                                else
+                                {
+                                    <li class="left clearfix">
+                                        <div class="col-md-9">
+                                            @if (!activeWriterHim)
+                                            {
+                                                <div class="header">
+                                                    <span class="chat-img pull-left">
+                                                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle"/>
+
+                                                    </span>
+                                                    <strong class="primary-font">Er Name</strong>
+                                                    <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
+                                                    </small>
+                                                </div>
+                                            }
+
+                                            <div class="chat-body clearfix" id="chatHim">
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </li>
+                                    activeWriterHim = true;
+                                    activeWriterMe = false;
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                    @using (Html.BeginForm("SendMessage", "Nachricht"))
+                    {
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(m => m.Nachricht, new {@class = "form-control", @id = "SingleNachricht", @placeholder = "Ihre Nachricht.."})
+                                    @Html.ValidationMessageFor(m => m.Nachricht, "", new {@class = "text-danger"})
+                                    @Html.HiddenFor(k => k.KonversationId, new {@value = Model.KonversationId})
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="input-group-btn">
+                                        <button type="submit" id="loginButton" class="btn btn-block">senden</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 </body>

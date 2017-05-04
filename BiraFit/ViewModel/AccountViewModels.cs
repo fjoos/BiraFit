@@ -31,6 +31,7 @@ namespace BiraFit.Models
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Diesen Browser merken?")]
@@ -64,8 +65,6 @@ namespace BiraFit.Models
 
         [Display(Name = "Speichern?")]
         public bool RememberMe { get; set; }
-
-        
     }
 
     public class RegisterViewModel
@@ -117,7 +116,7 @@ namespace BiraFit.Models
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort")]
         public string Password { get; set; }
-        
+
         [DataType(DataType.Password)]
         [Display(Name = "Kennwort bestätigen")]
         [Compare("Password", ErrorMessage = "Die Kennwörter sind nicht identisch.")]

@@ -3,7 +3,6 @@ using BiraFit.Controllers.Helpers;
 using BiraFit.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
 using Microsoft.AspNet.Identity;
@@ -22,7 +21,7 @@ namespace BiraFit.Controllers
 
             var currentSportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
             var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
-            List <AngebotViewModel> angebotList = new List<AngebotViewModel>();
+            List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
             foreach (var bedarf in currentBedarf)
             {
                 if (bedarf.OpenBedarf)
@@ -38,30 +37,27 @@ namespace BiraFit.Controllers
                     return View(angebotList);
                 }
             }
-
-            //wird keine Angebote Meldung anzeigen redirect entfernen!
             return RedirectToAction("Index", "Home");
         }
+
         [HttpPost]
         public ActionResult Create(BedarfViewModel bedarfviewmodel)
         {
-            
-            Angebot angebot = new Angebot()
+            Context.Angebot.Add(new Angebot()
             {
                 Beschreibung = bedarfviewmodel.Beschreibung,
                 Datum = DateTime.Now,
                 PersonalTrainer_Id = GetUserIdbyAspNetUserId(User.Identity.GetUserId()),
                 Preis = bedarfviewmodel.Preis,
                 Bedarf_Id = bedarfviewmodel.Id
-            };
-            Context.Angebot.Add(angebot);
+            });
             Context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-        
+
         // GET: Accept
         public ActionResult Accept(int id)
-        {   
+        {
             if (!IsSportler() || !IsLoggedIn() || !AuthenticateOwner(id))
             {
                 return RedirectToAction("Index", "Home");
@@ -82,7 +78,8 @@ namespace BiraFit.Controllers
                 PersonalTrainer_Id = personalTrainerId
             });
 
-            var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+            var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id)
+                .ToList();
 
             foreach (var angebot in angeboteToRemove)
             {
@@ -93,7 +90,8 @@ namespace BiraFit.Controllers
             Context.Bedarf.Single(i => i.Id == bedarfId).OpenBedarf = false;
             Context.SaveChanges();
             return RedirectToAction("Chat/" + Context.Konversation
-                                        .Single(i => i.Sportler_Id == sportlerId && i.PersonalTrainer_Id == personalTrainerId)
+                                        .Single(i => i.Sportler_Id == sportlerId &&
+                                                     i.PersonalTrainer_Id == personalTrainerId)
                                         .Id, "Nachricht");
         }
 
@@ -119,7 +117,8 @@ namespace BiraFit.Controllers
             {
                 return false;
             }
-            return Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id == currentAngebot.Bedarf_Id;
+            return Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id ==
+                   currentAngebot.Bedarf_Id;
         }
     }
 }

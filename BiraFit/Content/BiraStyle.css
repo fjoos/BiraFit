@@ -1,4 +1,4 @@
-﻿#menuBar{
+﻿#menuBar {
     border-bottom: 3px solid;
     border-color: orange;
     background-color: black;
@@ -10,20 +10,22 @@
     background: black;
     opacity: 0.8;
 }
+
 #chatbox {
     margin-top: 50px;
     border: none;
 }
 
-    #chatbox #boxbody {
-        background: black;
-        opacity: 0.8;
-    }
+#chatbox #boxbody {
+    background: black;
+    opacity: 0.8;
+}
 
 #footerBox {
     background: none;
     border-top: 2px solid orange;
 }
+
 #innerbox {
     background: none;
     border: none;
@@ -41,60 +43,52 @@
     color: orange;
 }
 
-#boxbody {
-    background: none;
-}
-#descriptionText {
-    color: white !important;
-}
+#boxbody { background: none; }
+
+#descriptionText { color: white !important; }
 
 #loginButton {
     color: orange;
     background: none;
     border: 2px solid orange;
 }
-    #loginButton:hover {
-        box-shadow: 0px 0px 3px 3px orange;
-    }
+
+#loginButton:hover { box-shadow: 0px 0px 3px 3px orange; }
 
 
 #bewerbButton {
     color: orange;
     background: none;
     border: 2px solid orange;
-    height: 50px;    
+    height: 50px;
 }
-    #bewerbButton:hover {
-        box-shadow: 0px 0px 3px 3px orange;
-    }
+
+#bewerbButton:hover { box-shadow: 0px 0px 3px 3px orange; }
 
 #editButton {
     color: orange;
     background: none;
     border: 2px solid orange;
 }
-    #editButton:hover {
-        box-shadow: 0px 0px 3px 3px orange;
-    }
-    
+
+#editButton:hover { box-shadow: 0px 0px 3px 3px orange; }
+
 #delButton {
-        color: red;
-        background: none;
-        border: 2px solid red;
+    color: red;
+    background: none;
+    border: 2px solid red;
 }
 
-    #delButton:hover {
-        box-shadow: 0px 0px 3px 3px red;
-    }
+#delButton:hover { box-shadow: 0px 0px 3px 3px red; }
 
-#profileImg{
+#profileImg {
     width: 100px;
     height: 100px;
     padding: 5px 5px 5px 5px;
 }
-.glyphicon glyphicon-off {
-    color: orange;
-}
+
+.glyphicon glyphicon-off { color: orange; }
+
 #angebotButton {
     color: orange;
     background: none;
@@ -105,6 +99,7 @@
     color: orange !important;
     padding: 5px 5px 5px 5px;
 }
+
 .fa fa-reply {
     color: orange;
     background: none;
@@ -127,9 +122,8 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
 }
-    #chatList * {
-        color: white;
-    }
+
+#chatList * { color: white; }
 
 .chat {
     list-style: none;
@@ -137,28 +131,22 @@
     padding: 0;
 }
 
-    .chat li {
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-    }
+.chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
 
-        .chat li.left .chat-body {
-            margin-left: 60px;
-        }
+.chat li.left .chat-body { margin-left: 60px; }
 
 
-        .chat li.right .chat-body {
-            margin-right: 60px;
-        }
+.chat li.right .chat-body { margin-right: 60px; }
 
-        .chat li .chat-body p {
-            margin: 0;
-            color: black;
-        }
+.chat li .chat-body p {
+    margin: 0;
+    color: black;
+}
 
-    .modal .slidedown .glyphicon, .chat .glyphicon {
-        margin-right: 5px;
-    }
+.modal .slidedown .glyphicon, .chat .glyphicon { margin-right: 5px; }
 
 #scrollBody {
     overflow-y: scroll;
@@ -166,7 +154,7 @@
 }
 
 ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #F5F5F5;
 }
 
@@ -176,7 +164,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #555;
 }
 
@@ -186,34 +174,33 @@
     max-width: none !important;
 }
 
-#chatList {
-    color: orange;
-}
-    #chatList:hover {
-        text-decoration: none;
-        box-shadow: 0px 0px 3px 3px orange;
-    }
+#chatList { color: orange; }
 
-#titleLink {
-    color:orange;
+#chatList:hover {
+    text-decoration: none;
+    box-shadow: 0px 0px 3px 3px orange;
 }
-    #titleLink:hover, #titleLink:focus {
-        text-decoration: none;
-        color: darkorange;
-    }
-#link, #registerLink, #loginLink, #navlink {
-    color: grey;
+
+#titleLink { color: orange; }
+
+#titleLink:hover, #titleLink:focus {
+    text-decoration: none;
+    color: darkorange;
 }
-    #link:hover {
-        color: orange;
-        text-decoration: none;
-    }
-    #registerLink:hover, #registerLink:focus, #loginLink:hover, #loginLink:focus, #navlink:hover, #navlink:focus {
-        text-decoration: none;
-        background-color: black;
-        color: orange;
-        box-shadow: 0px 3px 0px 0px orange;
-    }
+
+#link, #registerLink, #loginLink, #navlink { color: grey; }
+
+#link:hover {
+    color: orange;
+    text-decoration: none;
+}
+
+#registerLink:hover, #registerLink:focus, #loginLink:hover, #loginLink:focus, #navlink:hover, #navlink:focus {
+    text-decoration: none;
+    background-color: black;
+    color: orange;
+    box-shadow: 0px 3px 0px 0px orange;
+}
 
 
 #SingleNachricht {
@@ -233,10 +220,10 @@
     margin-bottom: 15px;
 }
 
-    #textareaEdit:focus, #textarea:focus, .form-control:focus, #SingleNachricht:focus {
-        border-color: orange;
-        box-shadow: none;
-    }
+#textareaEdit:focus, #textarea:focus, .form-control:focus, #SingleNachricht:focus {
+    border-color: orange;
+    box-shadow: none;
+}
 
 .control-label {
     font-size: 17px;
@@ -246,6 +233,7 @@
     left: 27px;
     text-align: center;
 }
+
 textarea.form-control {
     resize: vertical;
     height: 130px;
@@ -263,11 +251,12 @@ textarea.form-control {
     height: 50px;
 }
 
-#postTime{
+#postTime {
     background-color: orange;
     color: black;
 }
-.img-circle{
+
+.img-circle {
     height: 50px;
     width: 50px;
 }
@@ -279,22 +268,25 @@ textarea.form-control {
     background: black;
     opacity: 0.8;
 }
+
 #mainBack {
     background: url('../resources/BackgroundMain.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+
 #loginRegBack {
     background: url('../resources/BackgroundLoginRegister.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+
 #profileBack {
     background: url('../resources/BackgroundProfile.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+
 #chatBack {
     background: url('../resources/BackgroundChat.jpg') no-repeat center center fixed;
     background-size: cover;
 }
-#logregText {
-    color: lightgray;
-}
+
+#logregText { color: lightgray; }

@@ -7,7 +7,6 @@ namespace BiraFit.Controllers.Helpers
 {
     public static class AuthentificationHelper
     {
-       
         public static Sportler AuthenticateSportler(IPrincipal user, ApplicationDbContext context)
         {
             var currentUserId = user.Identity.GetUserId();
@@ -24,9 +23,6 @@ namespace BiraFit.Controllers.Helpers
             return context.PersonalTrainer
                 .Where(p => p.User_Id == currentUserId)
                 .FirstOrDefault();
-
         }
-
-        
     }
 }

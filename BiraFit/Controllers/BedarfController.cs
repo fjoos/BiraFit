@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
-using BiraFit.ViewModel;
 using Microsoft.AspNet.Identity;
 
 namespace BiraFit.Controllers
@@ -41,16 +40,14 @@ namespace BiraFit.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-
-            //Redirect Fehler wegen Offenem Bedarf des Users -> Fehlermeldung ausgeben
             return RedirectToAction("New", "Bedarf");
         }
 
         public ActionResult Edit(int id)
         {
             var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            
-            if (IsBedarfOwner(id,sportlerId))
+
+            if (IsBedarfOwner(id, sportlerId))
             {
                 var bedarf = Context.Bedarf.Single(b => b.Id == id);
                 return View(bedarf);
@@ -90,8 +87,9 @@ namespace BiraFit.Controllers
         {
             //id => BedarfID
             var angebotToRemove = Context.Angebot.Single(i => i.Bedarf_Id == id);
-            
-            if (!IsSportler() && IsLoggedIn() && angebotToRemove.PersonalTrainer_Id == GetUserIdbyAspNetUserId(User.Identity.GetUserId()))
+
+            if (!IsSportler() && IsLoggedIn() && angebotToRemove.PersonalTrainer_Id ==
+                GetUserIdbyAspNetUserId(User.Identity.GetUserId()))
             {
                 Context.Angebot.Remove(angebotToRemove);
                 Context.SaveChanges();
@@ -99,17 +97,17 @@ namespace BiraFit.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        
+
         public bool IsBedarfOpen(int sportlerId)
         {
-            return Context.Bedarf.Any(b => b.Sportler_Id == sportlerId 
-                && b.OpenBedarf);
+            return Context.Bedarf.Any(b => b.Sportler_Id == sportlerId
+                                           && b.OpenBedarf);
         }
 
         public bool IsBedarfOwner(int bedarfId, int sportlerId)
         {
-            return Context.Bedarf.Any(b => b.Id == bedarfId && 
-                b.Sportler_Id == sportlerId);
+            return Context.Bedarf.Any(b => b.Id == bedarfId &&
+                                           b.Sportler_Id == sportlerId);
         }
     }
 }

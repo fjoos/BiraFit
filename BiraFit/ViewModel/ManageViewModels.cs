@@ -95,7 +95,7 @@ namespace BiraFit.Models
 
         [Required]
         public string Email { get; set; }
-        
+
         public string Adresse { get; set; }
 
         public string ProfilBild { get; set; }
@@ -111,9 +111,8 @@ namespace BiraFit.Models
 
         [Required]
         public string Beschreibung { get; set; }
+
         [Required]
         public int Bewertung { get; set; }
-
-
     }
 }

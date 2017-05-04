@@ -9,7 +9,9 @@
         <div class="container">
             <div class="mainbox col-md-8 col-md-offset-2">
                 <div class="panel-heading" id="boxHead">
-                    <div class="panel-title"><h2>Bedürfnisse</h2></div>
+                    <div class="panel-title">
+                        <h2>Bedürfnisse</h2>
+                    </div>
                 </div>
                 @foreach (var item in @Model)
                 {
@@ -20,14 +22,16 @@
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
                                         <figure>
-                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
                                         </figure>
                                         <p id="usrName">
                                             Benutzername
                                         </p>
                                     </div>
                                     <div class="col-sm-6 col-md-8">
-                                        <h4><b>@item.Bedarf.Titel</b></h4>
+                                        <h4>
+                                            <b>@item.Bedarf.Titel</b>
+                                        </h4>
                                         <p id="descriptionText">@item.Bedarf.Beschreibung</p>
                                         <section>
                                             <small>Preisvorstellung: <b id="descriptionText">@item.Bedarf.Preis.- / Woche</b></small>
@@ -49,33 +53,33 @@
                                     }
                                     else
                                     {
-                                         using (Html.BeginForm("Create", "Angebot"))
-                                         {
-                                             <div class="row">
-                                                 <div class="col-md-12">
-                                                     <div class="col-md-7">
-                                                         <div class="form-group">
-                                                             
-                                                             @Html.TextBox("Beschreibung",item.Beschreibung, new { @class = "form-control", @placeholder = "Beschreibung", @id = "Beschreibung",name= "Beschreibung" })
-                                                             
-                                                         </div>
-                                                     </div>
-                                                     <div class="col-md-2">
-                                                         <div class="form-group">
-                                                             
-                                                             @Html.TextBox("Preis", item.Preis, new { @class = "form-control", @placeholder = "Preis", @id = "Preis", name = "Preis" })
-                                                         </div>
-                                                     </div>
-                                                     
-                                                     @Html.Hidden("Id", item.Bedarf.Id, new { @value = item.Bedarf.Id })
-                                                     <div class="col-md-3"> 
-                                                         <div class="form-group">
-                                                             <input type="submit" class="btn btn-block" id="bewerbButton" />
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         }
+                                        using (Html.BeginForm("Create", "Angebot"))
+                                        {
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+
+                                                            @Html.TextBox("Beschreibung", item.Beschreibung, new {@class = "form-control", @placeholder = "Beschreibung", @id = "Beschreibung", name = "Beschreibung"})
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+
+                                                            @Html.TextBox("Preis", item.Preis, new {@class = "form-control", @placeholder = "Preis", @id = "Preis", name = "Preis"})
+                                                        </div>
+                                                    </div>
+
+                                                    @Html.Hidden("Id", item.Bedarf.Id, new {@value = item.Bedarf.Id})
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-block" id="bewerbButton"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                     }
                                 }
                                 @if (@item.IsOwner)
@@ -94,7 +98,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 }
                             </article>
                         </div>

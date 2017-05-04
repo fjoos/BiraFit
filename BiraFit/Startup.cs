@@ -2,6 +2,7 @@
 using Owin;
 
 [assembly: OwinStartupAttribute(typeof(BiraFit.Startup))]
+
 namespace BiraFit
 {
     public partial class Startup
