@@ -1,35 +1,44 @@
 ﻿#menuBar{
     border-bottom: 3px solid;
     border-color: orange;
-    background-color: white;
+    background-color: black;
 }
 
 #mybox {
     margin-top: 50px;
+    background: none;
+    border: 2px solid orange;
 }
-
+#footerBox {
+    background: none;
+    border-top: 2px solid orange;
+}
 #innerbox {
+    background: none;
     border: none;
-    border-color: orange;
 }
 
-#loginHead {
-    background-color: white;
-    border-color: orange;
+#boxHead {
+    background: none;
+    border-bottom: 2px solid orange;
     color: orange
 }
 
-#loginForm {
+#boxForm {
     padding-top: 5px;
+    background: none;
     color: orange;
 }
-#descriptionText{
-    color: black !important;
+#boxbody {
+    background: none;
+}
+#descriptionText {
+    color: white !important;
 }
 
 #loginButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
 }
     #loginButton:hover {
@@ -39,7 +48,7 @@
 
 #bewerbButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
     height: 50px;    
 }
@@ -49,7 +58,7 @@
 
 #editButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
 }
     #editButton:hover {
@@ -58,7 +67,7 @@
     
 #delButton {
         color: red;
-        background-color: white;
+        background: none;
         border: 2px solid red;
 }
 
@@ -66,17 +75,26 @@
         box-shadow: 0px 0px 3px 3px red;
     }
 
-.glyphicon glyphicon-off{
+#profileImg{
+    width: 100px;
+    height: 100px;
+    padding: 5px 5px 5px 5px;
+}
+.glyphicon glyphicon-off {
     color: orange;
 }
 #angebotButton {
     color: orange;
-    background-color: white;
+    background: none;
     border-color: orange
+}
+
+#usrName {
+    padding: 5px 5px 5px 5px;
 }
 .fa fa-reply {
     color: orange;
-    background-color: white;
+    background: none;
     border-color: orange
 }
 
@@ -164,9 +182,9 @@
 #titleLink {
     color:orange;
 }
-    #titleLink:hover, #titleLink:active{
+    #titleLink:hover, #titleLink:focus {
         text-decoration: none;
-        color:darkorange;
+        color: darkorange;
     }
 #link, #registerLink, #loginLink, #navlink {
     color: grey;
@@ -175,9 +193,9 @@
         color: orange;
         text-decoration: none;
     }
-    #registerLink:hover, #registerLink:active, #loginLink:hover, #loginLink:active, #navlink:hover, #navlink:active {
+    #registerLink:hover, #registerLink:focus, #loginLink:hover, #loginLink:focus, #navlink:hover, #navlink:focus {
         text-decoration: none;
-        background-color: white;
+        background-color: black;
         color: orange;
         box-shadow: 0px 3px 0px 0px orange;
     }
@@ -191,15 +209,16 @@
 .form-control {
     height: 50px;
     font-size: 14px;
-    color: black;
+    color: white;
     border: none;
+    background: none;
     border-bottom: 2px solid #ccc;
     border-radius: 0;
     box-shadow: none;
     margin-bottom: 15px;
 }
 
-    #textarea:focus, .form-control:focus {
+    #textareaEdit:focus, #textarea:focus, .form-control:focus {
         border-color: orange;
         box-shadow: none;
     }
@@ -212,7 +231,6 @@
     left: 27px;
     text-align: center;
 }
-
 textarea.form-control {
     resize: vertical;
     height: 130px;
@@ -220,7 +238,8 @@ textarea.form-control {
 }
 
 .modal-content {
-    box-shadow: 0px 0px 3px 3px orange;
+    background: none;
+    border: 2px solid orange;
 }
 
 #textarea, #SingleNachricht {
@@ -230,9 +249,24 @@ textarea.form-control {
 }
 
 #postTime{
-    background-color: orange
+    background-color: orange;
+    color: black;
 }
 .img-circle{
     height: 50px;
     width: 50px;
+}
+
+#bedarf {
+    margin-top: 20px;
+    background: none;
+    box-shadow: none;
+    border: 2px solid orange;
+}
+body {
+    background: url('../resources/male-fitness-models  liquid ketone drops.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }

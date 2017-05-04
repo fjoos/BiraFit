@@ -288,6 +288,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Resources\BiraFitNavBarLogo.png" />
+    <Content Include="Resources\Male-Fitness-Models  Liquid Ketone Drops.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -382,6 +383,7 @@
     <Content Include="Views\Nachricht\Index.cshtml" />
     <Content Include="Views\Nachricht\Chat.cshtml" />
     <Content Include="Views\Manage\Delete.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
