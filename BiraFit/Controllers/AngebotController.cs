@@ -1,4 +1,5 @@
-﻿using BiraFit.Controllers.Helpers;
+﻿using System;
+using BiraFit.Controllers.Helpers;
 using BiraFit.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,13 +43,22 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public ActionResult Create(Angebot angebot)
+        public ActionResult Create(BedarfViewModel bedarfviewmodel)
         {
+            
+            Angebot angebot = new Angebot()
+            {
+                Beschreibung = bedarfviewmodel.Beschreibung,
+                Datum = DateTime.Now,
+                PersonalTrainer_Id = GetUserIdbyAspNetUserId(User.Identity.GetUserId()),
+                Preis = bedarfviewmodel.Preis,
+                Bedarf_Id = bedarfviewmodel.Id
+            };
             Context.Angebot.Add(angebot);
             Context.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
-
+        
         // GET: Accept
         public ActionResult Accept(int id)
         {   
