@@ -1,74 +1,65 @@
 ﻿@model BiraFit.Models.IndexViewModel
 @using Microsoft.AspNet.Identity.Owin;
- 
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Verwalten";
     var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
 }
 
-
-
-<p class="text-success">@ViewBag.StatusMessage</p>
+<body id="profileBack">
 <div>
-        @*
-                <dt>Externe Anmeldungen:</dt>
-            <dd>
-                @Model.Logins.Count [
-                @Html.ActionLink("Verwalten", "ManageLogins") ]
-            </dd>
+    <div class="container" id="boxForm">
+        <div id="mybox" class="col-md-6 col-md-offset-3  modal-content">
+            <div class="panel panel-info" id="innerbox">
+                <div class="panel-heading" id="boxHead">
+                    <div class="panel-title"><h4>Mein Account</h4></div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3" align="center"> <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" /></div>
 
-
-        *@
-
-        <div class="container" id="loginForm">
-                <div id="mybox" class="col-md-6 col-md-offset-3  modal-content">
-                    <div class="panel panel-info" id="innerbox">
-                        <div class="panel-heading" id="loginHead">
-                            <h3 class="panel-title">Mein Account</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-3 col-lg-3 " align="center"> <img class="img-responsive" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" /></div>
-
-                                <div class="col-md-9 col-lg-9">
-                                    <table class="table table-user-information">
-                                        <tbody>
-                                            <tr>
-                                                <td>Vorname:</td>
-                                                <td>@user.Vorname</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Nachname:</td>
-                                                <td>@user.Name</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email</td>
-                                                <td><a href="mailto:@User.Identity.Name" id="link">@user.Email</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kennwort</td>
-                                                <td>
-                                                    [
-                                                        @Html.ActionLink("Kennwort ändern", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { id = "link" })  
-                                                    ]
-                                                </td>
-                                            </tr>
+                        <div class="col-md-9 col-lg-9">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Vorname:</td>
+                                        <td>@user.Vorname</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nachname:</td>
+                                        <td>@user.Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td><a href="mailto:@User.Identity.Name" id="link">@user.Email</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kennwort</td>
+                                        <td>
+                                            [
+                                            @Html.ActionLink("Kennwort ändern", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { id = "link" })
+                                            ]
+                                        </td>
+                                    </tr>
 
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-footer">
+                        <div class="panel-footer" id="footerBox">
                             <a href="/Manage/Edit" class="btn btn-primary" id="loginButton">Profil bearbeiten</a>
-                            <a href="/Manage/Delete" class="btn btn-primary" id="delButton">Profil löschen</a>
+                            <a href="/Manage/Delete" class="btn btn-primary" id="delButton">Profil löschen</a> 
+                            @Html.ActionLink("Show Profile", "Show", new { id = "285f8200-6809-4898-ac27-475e4c167ecb" })
+     
                         </div>
 
-                    </div>
-                </div>
+            </div>
         </div>
-
+    </div>
+</div>
+    </body>
 
 
 
@@ -137,4 +128,3 @@
                     </text>
                 }
             }*@
-</div>

@@ -6,20 +6,21 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
     {
         @Html.AntiForgeryToken()
+            <ul class="nav navbar-nav">
 
-        <ul class="nav navbar-nav">
-            <li><h1 class="modal-title" style="color:orange"><a id="titleLink" href="/">BiraFit</a></h1></li>
-            <li>@Html.ActionLink("Nachrichten", "Index", "Nachricht", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
-            <li>@Html.ActionLink("Neuen Bedarf", "New", "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { id = "navlink", title = "Manage" })
-            </li>
-            <li>
-            <a href="javascript:document.getElementById('logoutForm').submit()" id="navlink">Abmelden</a>
-            </li>
-        </ul>
+                <li><h1 class="modal-title" style="color:orange"><a id="titleLink" href="/">BiraFit</a></h1></li>
+                <li>@Html.ActionLink("Nachrichten", "Index", "Nachricht", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+                <li>@Html.ActionLink("Neuen Bedarf", "New", "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { id = "navlink", title = "Manage" })
+                </li>
+                <li>
+                    <a href="javascript:document.getElementById('logoutForm').submit()" id="navlink">Abmelden</a>
+                </li>
+            </ul>
+
     }
 }
 else

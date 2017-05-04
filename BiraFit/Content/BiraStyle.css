@@ -1,35 +1,56 @@
 ﻿#menuBar{
     border-bottom: 3px solid;
     border-color: orange;
-    background-color: white;
+    background-color: black;
 }
 
 #mybox {
     margin-top: 50px;
+    border: 2px solid orange;
+    background: black;
+    opacity: 0.8;
 }
-
-#innerbox {
+#chatbox {
+    margin-top: 50px;
     border: none;
-    border-color: orange;
 }
 
-#loginHead {
-    background-color: white;
-    border-color: orange;
+    #chatbox #boxbody {
+        background: black;
+        opacity: 0.8;
+    }
+
+#footerBox {
+    background: none;
+    border-top: 2px solid orange;
+}
+#innerbox {
+    background: none;
+    border: none;
+}
+
+#boxHead {
+    background: none;
+    border-bottom: 2px solid orange;
     color: orange
 }
 
-#loginForm {
+#boxForm {
     padding-top: 5px;
+    background: none;
     color: orange;
 }
-#descriptionText{
-    color: black !important;
+
+#boxbody {
+    background: none;
+}
+#descriptionText {
+    color: white !important;
 }
 
 #loginButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
 }
     #loginButton:hover {
@@ -39,7 +60,7 @@
 
 #bewerbButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
     height: 50px;    
 }
@@ -49,7 +70,7 @@
 
 #editButton {
     color: orange;
-    background-color: white;
+    background: none;
     border: 2px solid orange;
 }
     #editButton:hover {
@@ -58,7 +79,7 @@
     
 #delButton {
         color: red;
-        background-color: white;
+        background: none;
         border: 2px solid red;
 }
 
@@ -66,17 +87,27 @@
         box-shadow: 0px 0px 3px 3px red;
     }
 
-.glyphicon glyphicon-off{
+#profileImg{
+    width: 100px;
+    height: 100px;
+    padding: 5px 5px 5px 5px;
+}
+.glyphicon glyphicon-off {
     color: orange;
 }
 #angebotButton {
     color: orange;
-    background-color: white;
+    background: none;
     border-color: orange
+}
+
+#usrName {
+    color: orange !important;
+    padding: 5px 5px 5px 5px;
 }
 .fa fa-reply {
     color: orange;
-    background-color: white;
+    background: none;
     border-color: orange
 }
 
@@ -96,6 +127,10 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
 }
+    #chatList * {
+        color: white;
+    }
+
 .chat {
     list-style: none;
     margin: 0;
@@ -116,11 +151,9 @@
             margin-right: 60px;
         }
 
-
-
         .chat li .chat-body p {
             margin: 0;
-            color: #777777;
+            color: black;
         }
 
     .modal .slidedown .glyphicon, .chat .glyphicon {
@@ -129,7 +162,7 @@
 
 #scrollBody {
     overflow-y: scroll;
-    height: 250px;
+    height: 300px;
 }
 
 ::-webkit-scrollbar-track {
@@ -164,9 +197,9 @@
 #titleLink {
     color:orange;
 }
-    #titleLink:hover, #titleLink:active{
+    #titleLink:hover, #titleLink:focus {
         text-decoration: none;
-        color:darkorange;
+        color: darkorange;
     }
 #link, #registerLink, #loginLink, #navlink {
     color: grey;
@@ -175,9 +208,9 @@
         color: orange;
         text-decoration: none;
     }
-    #registerLink:hover, #registerLink:active, #loginLink:hover, #loginLink:active, #navlink:hover, #navlink:active {
+    #registerLink:hover, #registerLink:focus, #loginLink:hover, #loginLink:focus, #navlink:hover, #navlink:focus {
         text-decoration: none;
-        background-color: white;
+        background-color: black;
         color: orange;
         box-shadow: 0px 3px 0px 0px orange;
     }
@@ -191,15 +224,16 @@
 .form-control {
     height: 50px;
     font-size: 14px;
-    color: black;
+    color: white;
     border: none;
+    background: none;
     border-bottom: 2px solid #ccc;
     border-radius: 0;
     box-shadow: none;
     margin-bottom: 15px;
 }
 
-    #textarea:focus, .form-control:focus {
+    #textareaEdit:focus, #textarea:focus, .form-control:focus, #SingleNachricht:focus {
         border-color: orange;
         box-shadow: none;
     }
@@ -212,7 +246,6 @@
     left: 27px;
     text-align: center;
 }
-
 textarea.form-control {
     resize: vertical;
     height: 130px;
@@ -220,7 +253,8 @@ textarea.form-control {
 }
 
 .modal-content {
-    box-shadow: 0px 0px 3px 3px orange;
+    background: none;
+    border: 2px solid orange;
 }
 
 #textarea, #SingleNachricht {
@@ -230,9 +264,37 @@ textarea.form-control {
 }
 
 #postTime{
-    background-color: orange
+    background-color: orange;
+    color: black;
 }
 .img-circle{
     height: 50px;
     width: 50px;
+}
+
+#bedarf {
+    margin-top: 20px;
+    box-shadow: none;
+    border: 2px solid orange;
+    background: black;
+    opacity: 0.8;
+}
+#mainBack {
+    background: url('../resources/BackgroundMain.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#loginRegBack {
+    background: url('../resources/BackgroundLoginRegister.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#profileBack {
+    background: url('../resources/BackgroundProfile.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#chatBack {
+    background: url('../resources/BackgroundChat.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+#logregText {
+    color: lightgray;
 }

@@ -3,15 +3,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<body id="chatBack">
 <div class="row">
-    <section id="loginForm">
-        <div class="container">
-            <div class="mainbox col-md-8 col-md-offset-2">
-                    <div class="panel-heading" id="loginHead">
+        <div class="container" id="boxForm">
+            <div class="mainbox col-md-8 col-md-offset-2" id="chatbox">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
                         <div class="panel-title"><h2>Meine Chats</h2></div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="boxbody">
                         <ul class="chat">
                             @{
                                 int counter = 0;
@@ -21,12 +21,12 @@
                                         <a href="Nachricht/Chat/@item.Id">
                                             <div class="col-md-12">
                                                 <span class="chat-img pull-left">
-                                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="@Model.ProfileImages[counter]" class="img-circle" />
+                                                    <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="@Model.ProfileImages[counter]" class="img-circle" />
                                                 </span>
                                                 <div class="chat-body clearfix">
                                                     <div class="header">
-                                                        <strong class="primary-font">Chatpartner</strong>
-                                                        <small class="pull-right text-muted">
+                                                        <strong id="usrName">Chatpartner</strong>
+                                                        <small class="pull-right">
                                                             <span class="glyphicon glyphicon-time"></span>14 mins ago
                                                         </small>
                                                     </div>
@@ -52,11 +52,13 @@
                             }
                         </ul>
                     </div>
+                    <div class="panel-footer" id="footerBox">
+                    </div>
+                    </div>
+                </div>
             </div>
-            </div>
-    </section>
 </div>
-
+</body>
 
 
 

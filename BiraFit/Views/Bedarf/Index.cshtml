@@ -5,24 +5,26 @@
 }
 
 <div class="row">
-    <section id="loginForm">
+    <section id="boxForm">
         <div class="container">
             <div class="mainbox col-md-8 col-md-offset-2">
-                <div class="panel-heading" id="loginHead">
+                <div class="panel-heading" id="boxHead">
                     <div class="panel-title"><h2>Bedürfnisse</h2></div>
                 </div>
                 @foreach (var item in @Model)
                 {
                     if (item.Bedarf.OpenBedarf)
                     {
-                        <div class="modal-content" id="bedarf" style="margin-top: 20px">
+                        <div class="modal-content" id="bedarf">
                             <article>
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
                                         <figure>
-                                            <img class="img-responsive" width="100" height="100" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
                                         </figure>
-                                        Benutzername
+                                        <p id="usrName">
+                                            Benutzername
+                                        </p>
                                     </div>
                                     <div class="col-sm-6 col-md-8">
                                         <h4><b>@item.Bedarf.Titel</b></h4>
@@ -79,14 +81,16 @@
                                 @if (@item.IsOwner)
                                 {
                                     <div class="row">
-                                        <div class="col-md-3 col-md-offset-6">
-                                            <div class="form-group">
-                                                <a class="btn btn-block" id="editButton" href="Bedarf/Edit/@item.Bedarf.Id">Bedarf bearbeiten</a>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <div class="col-md-3 col-md-offset-6">
+                                                <div class="form-group">
+                                                    <a class="btn btn-block" id="editButton" href="Bedarf/Edit/@item.Bedarf.Id">Bearbeiten</a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <a class="btn btn-block" id="delButton" href="Bedarf/Delete/@item.Bedarf.Id">Bedarf löschen</a>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <a class="btn btn-block" id="delButton" href="Bedarf/Delete/@item.Bedarf.Id">Löschen</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
