@@ -297,11 +297,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Properties\PublishProfiles\bira.pubxml" />
-    <None Include="Properties\PublishProfiles\birafit - FTP %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\birafit - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\birafit - Web Deploy %282%29.pubxml" />
-    <None Include="Properties\PublishProfiles\birafit - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -380,10 +375,10 @@
     <Content Include="Views\Nachricht\Index.cshtml" />
     <Content Include="Views\Nachricht\Chat.cshtml" />
     <Content Include="Views\Manage\Delete.cshtml" />
-    <Content Include="Views\Manage\DeleteConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

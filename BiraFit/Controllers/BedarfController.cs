@@ -83,7 +83,7 @@ namespace BiraFit.Controllers
             var bedarfInDb = Context.Bedarf.Single(c => c.Id == bedarf.Id);
             TryUpdateModel(bedarfInDb);
             Context.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Withdraw(int id)

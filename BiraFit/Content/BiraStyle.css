@@ -66,12 +66,6 @@
         box-shadow: 0px 0px 3px 3px red;
     }
 
-
-#noAccLink {
-    border-top: 1px solid#888;
-    padding-top: 15px;
-    font-size: 85%
-}
 .glyphicon glyphicon-off{
     color: orange;
 }
@@ -170,7 +164,7 @@
 #titleLink {
     color:orange;
 }
-    #titleLink:hover, #titleLink:after{
+    #titleLink:hover, #titleLink:active{
         text-decoration: none;
         color:darkorange;
     }
@@ -181,7 +175,7 @@
         color: orange;
         text-decoration: none;
     }
-    #registerLink:hover, #registerLink:after, #loginLink:hover, #loginLink:after, #navlink:hover, #navlink:after {
+    #registerLink:hover, #registerLink:active, #loginLink:hover, #loginLink:active, #navlink:hover, #navlink:active {
         text-decoration: none;
         background-color: white;
         color: orange;
