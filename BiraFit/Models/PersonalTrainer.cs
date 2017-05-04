@@ -23,5 +23,7 @@ namespace BiraFit.Models
 
         public List<Konversation> Konversationen { get; set; }
 
+        public string Beschreibung { get; set; }
+
     }
 }

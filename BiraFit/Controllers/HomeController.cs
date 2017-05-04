@@ -17,7 +17,7 @@ namespace BiraFit.Controllers
             {
                 foreach (var bedarf in bedarfList)
                 {
-                    bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = null, Trainer = null, IsOwner = false,OfferMade = false});
+                    bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = null, Trainer = null, IsOwner = false,OfferMade = false, Angebot = null});
                 }
 
                 return View(bedarfViewModelList);
@@ -37,13 +37,14 @@ namespace BiraFit.Controllers
                             Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
                             Trainer = null,
                             IsOwner = true,
-                            OfferMade = false
+                            OfferMade = false,
+                            Angebot = null
                         });
                     }
                     else
                     {
 
-                        bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = AuthentificationHelper.AuthenticateSportler(User, Context), Trainer = null, IsOwner = false,OfferMade = false });
+                        bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = AuthentificationHelper.AuthenticateSportler(User, Context), Trainer = null, IsOwner = false,OfferMade = false, Angebot = null });
                     }
                 }
                 return View(bedarfViewModelList);
@@ -61,7 +62,8 @@ namespace BiraFit.Controllers
                         Sportler = null,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
-                        OfferMade = true
+                        OfferMade = true,
+                        Angebot =  null
                     });
                 }
                 else
@@ -72,7 +74,8 @@ namespace BiraFit.Controllers
                         Sportler = null,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
-                        OfferMade = false
+                        OfferMade = false,
+                        Angebot = null
                     });
                 }
 
