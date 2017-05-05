@@ -8,8 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
 using System.Net;
-using BiraFit.Controllers.Helpers;
-using System.Collections.Generic;
+
 
 namespace BiraFit.Controllers
 {

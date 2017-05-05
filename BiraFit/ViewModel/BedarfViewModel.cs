@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiraFit.Models;
+﻿using BiraFit.Models;
 
 namespace BiraFit.ViewModel
 {

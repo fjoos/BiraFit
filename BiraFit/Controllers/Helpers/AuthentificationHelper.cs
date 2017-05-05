@@ -12,8 +12,7 @@ namespace BiraFit.Controllers.Helpers
             var currentUserId = user.Identity.GetUserId();
 
             return context.Sportler
-                .Where(s => s.User_Id == currentUserId)
-                .FirstOrDefault();
+                .FirstOrDefault(s => s.User_Id == currentUserId);
         }
 
         public static PersonalTrainer AuthenticatePersonalTrainer(IPrincipal user, ApplicationDbContext context)
@@ -21,8 +20,7 @@ namespace BiraFit.Controllers.Helpers
             var currentUserId = user.Identity.GetUserId();
 
             return context.PersonalTrainer
-                .Where(p => p.User_Id == currentUserId)
-                .FirstOrDefault();
+                .FirstOrDefault(p => p.User_Id == currentUserId);
         }
     }
 }
