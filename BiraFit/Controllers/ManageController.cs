@@ -340,7 +340,7 @@ namespace BiraFit.Controllers
         public ActionResult Edit()
         {
             string username = User.Identity.GetUserId();
-            var user = Context.Users.Where(s => s.Id == username).FirstOrDefault();
+            var user = Context.Users.FirstOrDefault(s => s.Id == username);
 
             return View(new EditViewModel
             {
@@ -368,7 +368,7 @@ namespace BiraFit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = Context.Users.Where(s => s.Id == id).FirstOrDefault();
+            var user = Context.Users.FirstOrDefault(s => s.Id == id);
             var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == user.Id);
             if (user == null || personalTrainer == null)
             {
