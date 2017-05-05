@@ -83,21 +83,6 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Withdraw(int id)
-        {
-            //id => BedarfID
-            var angebotToRemove = Context.Angebot.Single(i => i.Bedarf_Id == id);
-
-            if (!IsSportler() && IsLoggedIn() && angebotToRemove.PersonalTrainer_Id ==
-                GetUserIdbyAspNetUserId(User.Identity.GetUserId()))
-            {
-                Context.Angebot.Remove(angebotToRemove);
-                Context.SaveChanges();
-            }
-
-            return RedirectToAction("Index", "Home");
-        }
-
         public bool IsBedarfOpen(int sportlerId)
         {
             return Context.Bedarf.Any(b => b.Sportler_Id == sportlerId

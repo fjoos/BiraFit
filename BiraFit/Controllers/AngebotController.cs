@@ -120,5 +120,20 @@ namespace BiraFit.Controllers
             return Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id ==
                    currentAngebot.Bedarf_Id;
         }
+
+        public ActionResult Withdraw(int id)
+        {
+            if (IsSportler() || !IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var personalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var angebotToRemove = Context.Angebot.Single(
+                i => i.Bedarf_Id == id && i.PersonalTrainer_Id == personalTrainerId);
+            Context.Angebot.Remove(angebotToRemove);
+            Context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
