@@ -5,6 +5,7 @@
 @{
     ViewBag.Title = "Verwalten";
     var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
+    var image = "~/Resources/AccountPicture/" + user.ProfilBild;
 }
 
 <body id="profileBack">
@@ -20,7 +21,16 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3 col-lg-3" align="center">
-                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
+                            <a href="/Manage/UploadFile">
+                                @if (user.ProfilBild != null)
+                                {
+                                    <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                }
+                                else
+                                {
+                                    <img class="img-circle" id="profileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                }
+                                </a>
                         </div>
 
                         <div class="col-md-9 col-lg-9">
@@ -35,6 +45,7 @@
                                     <td>@user.Name</td>
                                 </tr>
                                 <tr>
+
                                     <td>Email</td>
                                     <td>
                                         <a href="mailto:@User.Identity.Name" id="link">@user.Email</a>
@@ -48,8 +59,7 @@
                                         ]
                                     </td>
                                 </tr>
-
-                                </tbody>
+                               </tbody>
                             </table>
                         </div>
                     </div>

@@ -9,6 +9,7 @@ using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
 using System.Net;
 using System.Data.Entity;
+using System.IO;
 
 namespace BiraFit.Controllers
 {
@@ -369,6 +370,47 @@ namespace BiraFit.Controllers
             }
 
             return View(model);
+        }
+
+        // GET: /Manage/UploadFile
+        public ActionResult UploadFile()
+        {
+            return View();
+        }
+
+        //POST /Manage/UploadFile
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase file)
+        {
+            try
+            {
+                string extension = Path.GetExtension(file.FileName);
+                if (file.ContentLength > 0 && extension == ".jpg" || extension == ".png")
+                {
+                    string serverPath = "~/Resources/AccountPicture/";
+                    string userId = User.Identity.GetUserId();
+                    ApplicationUser user = Context.Users.Single(s => s.Id == userId);
+                    if (user.ProfilBild != null)
+                    {
+                        string fullPath = Request.MapPath(serverPath + user.ProfilBild);
+                        if ((System.IO.File.Exists(fullPath)))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+                    string fileName = System.Guid.NewGuid() + userId + file.FileName;
+                    string path = Path.Combine(Server.MapPath(serverPath), fileName);
+                    file.SaveAs(path);
+
+                    user.ProfilBild = fileName;
+                    Context.SaveChanges();
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: /Manage/Show/34
