@@ -361,11 +361,11 @@ namespace BiraFit.Controllers
             {
   
                 string username = User.Identity.GetUserId();
-                Users user = Context.Users.Single(s => s.Id == username);
+                ApplicationUser user = Context.Users.Single(s => s.Id == username);
 
                 TryUpdateModel(user);
                 Context.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Manage");
             }
 
             return View(model);
