@@ -446,24 +446,22 @@ namespace BiraFit.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
+                int userId = GetUserIdbyAspNetUserId(id);
                 var user = await UserManager.FindByIdAsync(id);
                 var result = await UserManager.DeleteAsync(user);
-
                 if (result.Succeeded)
                 {
                     LogOff();
-                    DeleteOpenStock(id);
-                    return RedirectToAction("Index", "Home");
+                    DeleteOpenStock(id, userId);
                 }
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
 
-        private void DeleteOpenStock(string id)
+        private void DeleteOpenStock(string id, int userId)
         {
-            int userId = GetUserIdbyAspNetUserId(id);
-            if (IsSportler())
+           if (IsSportler())
             {
                 deleteOpenStockForSportler(id, userId);
             }
