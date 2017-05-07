@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "UploadFile";
+}
+
+<h2>Profilbild Hochladen</h2>
+@using (Html.BeginForm("UploadFile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div>
+        @Html.TextBox("file", "", new { type = "file" }) <br />
+        <input type="submit" value="Upload" />
+    </div>
+}

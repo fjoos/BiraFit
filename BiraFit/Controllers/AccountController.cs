@@ -8,8 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
 using System.Net;
-using BiraFit.Controllers.Helpers;
-using System.Collections.Generic;
+
 
 namespace BiraFit.Controllers
 {
@@ -25,7 +24,7 @@ namespace BiraFit.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -33,26 +32,14 @@ namespace BiraFit.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -78,7 +65,8 @@ namespace BiraFit.Controllers
 
             // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.
             // Wenn Sie aktivieren möchten, dass Kennwortfehler eine Sperre auslösen, ändern Sie in "shouldLockout: true".
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -86,7 +74,7 @@ namespace BiraFit.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = model.RememberMe});
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
@@ -104,7 +92,7 @@ namespace BiraFit.Controllers
             {
                 return View("Error");
             }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View(new VerifyCodeViewModel {Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
 
         //
@@ -123,7 +111,8 @@ namespace BiraFit.Controllers
             // Wenn ein Benutzer in einem angegebenen Zeitraum falsche Codes eingibt, wird das Benutzerkonto 
             // für einen bestimmten Zeitraum gesperrt. 
             // Sie können die Einstellungen für Kontosperren in "IdentityConfig" konfigurieren.
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code,
+                isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -154,11 +143,19 @@ namespace BiraFit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, AnmeldeDatum = DateTime.Now, Name = model.Lastname, Vorname=model.Firstname,Aktiv = 1 };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    AnmeldeDatum = DateTime.Now,
+                    Name = model.Lastname,
+                    Vorname = model.Firstname,
+                    Aktiv = 1
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     AllocateUser(user, model);
 
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
@@ -283,7 +280,8 @@ namespace BiraFit.Controllers
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Umleitung an den externen Anmeldeanbieter anfordern
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
+            return new ChallengeResult(provider,
+                Url.Action("ExternalLoginCallback", "Account", new {ReturnUrl = returnUrl}));
         }
 
         //
@@ -297,8 +295,14 @@ namespace BiraFit.Controllers
                 return View("Error");
             }
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            var factorOptions = userFactors.Select(purpose => new SelectListItem {Text = purpose, Value = purpose})
+                .ToList();
+            return View(new SendCodeViewModel
+            {
+                Providers = factorOptions,
+                ReturnUrl = returnUrl,
+                RememberMe = rememberMe
+            });
         }
 
         //
@@ -318,7 +322,8 @@ namespace BiraFit.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode",
+                new {Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe});
         }
 
         //
@@ -341,13 +346,14 @@ namespace BiraFit.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
                 case SignInStatus.Failure:
                 default:
                     // Benutzer auffordern, ein Konto zu erstellen, wenn er kein Konto besitzt
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation",
+                        new ExternalLoginConfirmationViewModel {Email = loginInfo.Email});
             }
         }
 
@@ -356,7 +362,8 @@ namespace BiraFit.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,
+            string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -371,7 +378,7 @@ namespace BiraFit.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -439,26 +446,23 @@ namespace BiraFit.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
+                int userId = GetUserIdbyAspNetUserId(id);
                 var user = await UserManager.FindByIdAsync(id);
                 var result = await UserManager.DeleteAsync(user);
-
                 if (result.Succeeded)
                 {
                     LogOff();
-                    DeleteOpenStock(id);
-                    return RedirectToAction("Index", "Home");
+                    DeleteOpenStock(id, userId);
                 }
                 return RedirectToAction("Index", "Home");
             }
             return View();
-
         }
 
-        private void DeleteOpenStock(string id)
+        private void DeleteOpenStock(string id, int userId)
         {
-            int userId = GetUserIdbyAspNetUserId(id);
-            if (IsSportler())
-            {             
+           if (IsSportler())
+            {
                 deleteOpenStockForSportler(id, userId);
             }
             else
@@ -467,8 +471,8 @@ namespace BiraFit.Controllers
             }
 
             var queryNachricht = from d in Context.Nachricht
-                                 where d.Sender_Id == id || d.Empfaenger_Id == id
-                                 select d;
+                where d.Sender_Id == id || d.Empfaenger_Id == id
+                select d;
             foreach (Nachricht openNachricht in queryNachricht)
             {
                 Context.Nachricht.Remove(openNachricht);
@@ -477,7 +481,6 @@ namespace BiraFit.Controllers
             Context.SaveChanges();
         }
 
-       
 
         private void deleteOpenStockForSportler(string id, int userId)
         {
@@ -485,14 +488,14 @@ namespace BiraFit.Controllers
             if (bc.IsBedarfOpen(userId))
             {
                 var queryBedarf = from d in Context.Bedarf
-                                  where d.Sportler_Id == userId
-                                  select d;
+                    where d.Sportler_Id == userId
+                    select d;
                 var openBedarf = queryBedarf.FirstOrDefault<Bedarf>();
                 Context.Bedarf.Remove(openBedarf);
             }
             var queryKonversation = from d in Context.Konversation
-                                    where d.Sportler_Id == userId
-                                    select d;
+                where d.Sportler_Id == userId
+                select d;
             foreach (Konversation openKonversation in queryKonversation)
             {
                 Context.Konversation.Remove(openKonversation);
@@ -502,16 +505,16 @@ namespace BiraFit.Controllers
         private void deleteOpenStockForPersonaltrainer(string id, int userId)
         {
             var queryAngebot = from d in Context.Angebot
-                               where d.PersonalTrainer_Id == userId
-                               select d;
+                where d.PersonalTrainer_Id == userId
+                select d;
             foreach (Angebot openAngebot in queryAngebot)
             {
                 Context.Angebot.Remove(openAngebot);
             }
 
             var queryKonversation = from d in Context.Konversation
-                                    where d.PersonalTrainer_Id == userId
-                                    select d;
+                where d.PersonalTrainer_Id == userId
+                select d;
             foreach (Konversation openKonversation in queryKonversation)
             {
                 Context.Konversation.Remove(openKonversation);
@@ -522,17 +525,18 @@ namespace BiraFit.Controllers
         {
             if (model.Sportler)
             {
-                _context.Sportler.Add(new Sportler { User_Id = user.Id });
+                _context.Sportler.Add(new Sportler {User_Id = user.Id});
                 _context.SaveChanges();
                 return;
             }
 
-            _context.PersonalTrainer.Add(new PersonalTrainer { User_Id = user.Id });
+            _context.PersonalTrainer.Add(new PersonalTrainer {User_Id = user.Id});
             _context.SaveChanges();
         }
 
 
         #region Hilfsprogramme
+
         // Wird für XSRF-Schutz beim Hinzufügen externer Anmeldungen verwendet
         private const string XsrfKey = "XsrfId";
 
@@ -575,7 +579,7 @@ namespace BiraFit.Controllers
 
             public override void ExecuteResult(ControllerContext context)
             {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
+                var properties = new AuthenticationProperties {RedirectUri = RedirectUri};
                 if (UserId != null)
                 {
                     properties.Dictionary[XsrfKey] = UserId;
@@ -583,6 +587,7 @@ namespace BiraFit.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
+
         #endregion
     }
 }

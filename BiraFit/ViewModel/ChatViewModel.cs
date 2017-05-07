@@ -9,7 +9,5 @@ namespace BiraFit.ViewModel
         public string Nachricht { get; set; }
         public string Id { get; set; }
         public int KonversationId { get; set; }
-
-
     }
 }

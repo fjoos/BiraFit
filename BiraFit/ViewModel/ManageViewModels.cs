@@ -84,18 +84,25 @@ namespace BiraFit.Models
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
 
-
     public class EditViewModel
     {
         [Required]
+        [StringLength(20, ErrorMessage = "\"{0}\" darf maximal {2} Zeichen lang sein.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nachname")]
         public string Name { get; set; }
 
         [Required]
+        [StringLength(20, ErrorMessage = "\"{0}\" darf maximal {2} Zeichen lang sein.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Vorname")]
         public string Vorname { get; set; }
 
         [Required]
+        [EmailAddress]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
-        
+
         public string Adresse { get; set; }
 
         public string ProfilBild { get; set; }
@@ -111,9 +118,8 @@ namespace BiraFit.Models
 
         [Required]
         public string Beschreibung { get; set; }
+
         [Required]
         public int Bewertung { get; set; }
-
-
     }
 }

@@ -8,7 +8,6 @@ namespace BiraFit.Controllers.Tests
     [TestClass()]
     public class AccountControllerTests
     {
-
         private AccountController _controller;
 
 
@@ -16,15 +15,14 @@ namespace BiraFit.Controllers.Tests
         public void TestInitialize()
         {
             _controller = new AccountController();
-
         }
 
         [TestMethod()]
         public void LoginView()
         {
-                ViewResult result = _controller.Login("/login") as ViewResult;
-                var actualModel = result.Model as LoginViewModel;
-                Assert.IsNull(actualModel);
+            ViewResult result = _controller.Login("/login") as ViewResult;
+            var actualModel = result.Model as LoginViewModel;
+            Assert.IsNull(actualModel);
         }
 
         [TestMethod()]

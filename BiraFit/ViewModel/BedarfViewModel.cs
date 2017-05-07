@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using BiraFit.Models;
+﻿using BiraFit.Models;
 
 namespace BiraFit.ViewModel
 {
@@ -10,6 +9,8 @@ namespace BiraFit.ViewModel
         public Bedarf Bedarf { get; set; }
         public bool IsOwner { get; set; }
         public bool OfferMade { get; set; }
-        public Angebot Angebot { get; set; }
+        public int Preis { get; set; }
+        public string Beschreibung { get; set; }
+        public int Id { get; set; }
     }
 }

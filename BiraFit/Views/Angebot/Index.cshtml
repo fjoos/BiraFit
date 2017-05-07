@@ -10,66 +10,66 @@
 <div class="container">
     <div class="row">
         <h2>Mein Bedarf</h2>
-        @Model[0].Bedarf.Beschreibung
-        <h2 class="page-header">Angebote</h2>
-        <section class="comment-list">
-            @foreach (var item in @Model)
-            {
-                <article class="row">
-                    <div class="col-md-2 col-sm-2"></div>
-                    <div class="col-md-1 col-sm-1">
-                        <figure class="thumbnail">
-                            <img class="img-responsive" width="75" height="75" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
-                        </figure>
-                    </div>
-                    <div class="col-md-7 col-sm-7">
-                        <div class="panel panel-default arrow left">
-                            <div class="panel-body">
+        @if (@Model.Count > 0)
+        {
+            @Model[0].Bedarf.Beschreibung
+            <h2 class="page-header">Angebote</h2>
+            <section class="comment-list">
+                @foreach (var item in @Model)
+                {
+                    <article class="row">
+                        <div class="col-md-2 col-sm-2"></div>
+                        <div class="col-md-1 col-sm-1">
+                            <figure class="thumbnail">
+                                <img class="img-responsive" width="75" height="75" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg"/>
+                            </figure>
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <div class="panel panel-default arrow left">
+                                <div class="panel-body">
 
-                                <div class="row">
-                                    <div class="col-md-5 col-sm-5">
-                                        <div class="comment-user">
-                                            <b>Benutzername</b>
+                                    <div class="row">
+                                        <div class="col-md-5 col-sm-5">
+                                            <div class="comment-user">
+                                                <b>Benutzername</b>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 col-sm-7">
+                                            <time class="comment-date pull-right">
+                                                <i class="fa fa-clock-o"></i>
+                                                erstellt am: @item.Angebot.Datum.Day.@item.Angebot.Datum.Month.@item.Angebot.Datum.Year
+                                            </time>
                                         </div>
                                     </div>
-                                    <div class="col-md-7 col-sm-7">
-                                        <time class="comment-date pull-right">
-                                            <i class="fa fa-clock-o"></i>
-                                            erstellt am: @item.Angebot.Datum.Day.@item.Angebot.Datum.Month.@item.Angebot.Datum.Year
-                                        </time>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">@item.Angebot.Beschreibung</p>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p class="text-left">@item.Angebot.Beschreibung</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <p class="text-left">Preisangebot @item.Angebot.Preis.- pro Woche</p>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <p class="text-left">Preisangebot @item.Angebot.Preis.- pro Woche</p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="input-group">
-                                    <span class="input-group-btn" onclick="">
-                                       <a href="/Angebot/Accept/@item.Angebot.Id" class="btn btn-primary btn-sm">Annehmen</a>
-                                    </span>
-                                    <span class="input-group-btn" onclick="">
-                                        <a href="/Angebot/Reject/@item.Angebot.Id" class="btn btn-primary btn-sm">Ablehnen</a> 
-                                    </span>
+                                    <div class="input-group">
+                                        <span class="input-group-btn" onclick="">
+                                            <a href="/Angebot/Accept/@item.Angebot.Id" class="btn btn-primary btn-sm">Annehmen</a>
+                                        </span>
+                                        <span class="input-group-btn" onclick="">
+                                            <a href="/Angebot/Reject/@item.Angebot.Id" class="btn btn-primary btn-sm">Ablehnen</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-2 col-sm-2"></div>
-                </article>
-            }
-        </section>
+                        <div class="col-md-2 col-sm-2"></div>
+                    </article>
+                }
+            </section>   
+        }
+        
     </div>
 </div>
-
-
-
-

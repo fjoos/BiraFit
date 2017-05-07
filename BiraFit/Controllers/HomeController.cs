@@ -17,7 +17,14 @@ namespace BiraFit.Controllers
             {
                 foreach (var bedarf in bedarfList)
                 {
-                    bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = null, Trainer = null, IsOwner = false,OfferMade = false, Angebot = null});
+                    bedarfViewModelList.Add(new BedarfViewModel()
+                    {
+                        Bedarf = bedarf,
+                        Sportler = null,
+                        Trainer = null,
+                        IsOwner = false,
+                        OfferMade = false
+                    });
                 }
 
                 return View(bedarfViewModelList);
@@ -38,13 +45,18 @@ namespace BiraFit.Controllers
                             Trainer = null,
                             IsOwner = true,
                             OfferMade = false,
-                            Angebot = null
                         });
                     }
                     else
                     {
-
-                        bedarfViewModelList.Add(new BedarfViewModel() { Bedarf = bedarf, Sportler = AuthentificationHelper.AuthenticateSportler(User, Context), Trainer = null, IsOwner = false,OfferMade = false, Angebot = null });
+                        bedarfViewModelList.Add(new BedarfViewModel()
+                        {
+                            Bedarf = bedarf,
+                            Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
+                            Trainer = null,
+                            IsOwner = false,
+                            OfferMade = false,
+                        });
                     }
                 }
                 return View(bedarfViewModelList);
@@ -62,8 +74,7 @@ namespace BiraFit.Controllers
                         Sportler = null,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
-                        OfferMade = true,
-                        Angebot =  null
+                        OfferMade = true
                     });
                 }
                 else
@@ -75,14 +86,10 @@ namespace BiraFit.Controllers
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
                         OfferMade = false,
-                        Angebot = null
                     });
                 }
-
-                
             }
             return View(bedarfViewModelList);
-           
         }
 
         public ActionResult About()

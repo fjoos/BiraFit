@@ -26,6 +26,5 @@ namespace BiraFit.Models
         public string Beschreibung { get; set; }
 
         public int AnzahlBewertungen { get; set; }
-
     }
 }

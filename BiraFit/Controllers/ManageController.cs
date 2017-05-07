@@ -8,6 +8,8 @@ using Microsoft.Owin.Security;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
 using System.Net;
+using System.Data.Entity;
+using System.IO;
 
 namespace BiraFit.Controllers
 {
@@ -29,26 +31,14 @@ namespace BiraFit.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
         }
 
         //
@@ -56,13 +46,19 @@ namespace BiraFit.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Ihr Kennwort wurde geändert."
-                : message == ManageMessageId.SetPasswordSuccess ? "Ihr Kennwort wurde festgelegt."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Ihr Anbieter für zweistufige Authentifizierung wurde festgelegt."
-                : message == ManageMessageId.Error ? "Fehler"
-                : message == ManageMessageId.AddPhoneSuccess ? "Ihre Telefonnummer wurde hinzugefügt."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Ihre Telefonnummer wurde entfernt."
-                : "";
+                message == ManageMessageId.ChangePasswordSuccess
+                    ? "Ihr Kennwort wurde geändert."
+                    : message == ManageMessageId.SetPasswordSuccess
+                        ? "Ihr Kennwort wurde festgelegt."
+                        : message == ManageMessageId.SetTwoFactorSuccess
+                            ? "Ihr Anbieter für zweistufige Authentifizierung wurde festgelegt."
+                            : message == ManageMessageId.Error
+                                ? "Fehler"
+                                : message == ManageMessageId.AddPhoneSuccess
+                                    ? "Ihre Telefonnummer wurde hinzugefügt."
+                                    : message == ManageMessageId.RemovePhoneSuccess
+                                        ? "Ihre Telefonnummer wurde entfernt."
+                                        : "";
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -83,7 +79,8 @@ namespace BiraFit.Controllers
         public async Task<ActionResult> RemoveLogin(string loginProvider, string providerKey)
         {
             ManageMessageId? message;
-            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(), new UserLoginInfo(loginProvider, providerKey));
+            var result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
+                new UserLoginInfo(loginProvider, providerKey));
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -97,7 +94,7 @@ namespace BiraFit.Controllers
             {
                 message = ManageMessageId.Error;
             }
-            return RedirectToAction("ManageLogins", new { Message = message });
+            return RedirectToAction("ManageLogins", new {Message = message});
         }
 
         // GET: /Manage/Delete
@@ -134,7 +131,7 @@ namespace BiraFit.Controllers
                 };
                 await UserManager.SmsService.SendAsync(message);
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            return RedirectToAction("VerifyPhoneNumber", new {PhoneNumber = model.Number});
         }
 
         //
@@ -173,7 +170,9 @@ namespace BiraFit.Controllers
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
             // Eine SMS über den SMS-Anbieter senden, um die Telefonnummer zu überprüfen.
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
+            return phoneNumber == null
+                ? View("Error")
+                : View(new VerifyPhoneNumberViewModel {PhoneNumber = phoneNumber});
         }
 
         //
@@ -186,7 +185,8 @@ namespace BiraFit.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+            var result =
+                await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -194,7 +194,7 @@ namespace BiraFit.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
+                return RedirectToAction("Index", new {Message = ManageMessageId.AddPhoneSuccess});
             }
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten. Formular erneut anzeigen.
             ModelState.AddModelError("", "Fehler beim Überprüfen des Telefons.");
@@ -210,14 +210,14 @@ namespace BiraFit.Controllers
             var result = await UserManager.SetPhoneNumberAsync(User.Identity.GetUserId(), null);
             if (!result.Succeeded)
             {
-                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+                return RedirectToAction("Index", new {Message = ManageMessageId.Error});
             }
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user != null)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
-            return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
+            return RedirectToAction("Index", new {Message = ManageMessageId.RemovePhoneSuccess});
         }
 
         //
@@ -237,7 +237,8 @@ namespace BiraFit.Controllers
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            var result =
+                await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -245,7 +246,7 @@ namespace BiraFit.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", new {Message = ManageMessageId.ChangePasswordSuccess});
             }
             AddErrors(result);
             return View(model);
@@ -274,7 +275,7 @@ namespace BiraFit.Controllers
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     }
-                    return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+                    return RedirectToAction("Index", new {Message = ManageMessageId.SetPasswordSuccess});
                 }
                 AddErrors(result);
             }
@@ -288,16 +289,20 @@ namespace BiraFit.Controllers
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.RemoveLoginSuccess ? "Die externe Anmeldung wurde entfernt."
-                : message == ManageMessageId.Error ? "Fehler"
-                : "";
+                message == ManageMessageId.RemoveLoginSuccess
+                    ? "Die externe Anmeldung wurde entfernt."
+                    : message == ManageMessageId.Error
+                        ? "Fehler"
+                        : "";
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
                 return View("Error");
             }
             var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+            var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes()
+                .Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider))
+                .ToList();
             ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
@@ -313,7 +318,8 @@ namespace BiraFit.Controllers
         public ActionResult LinkLogin(string provider)
         {
             // Umleitung an den externen Anmeldeanbieter anfordern, um eine Anmeldung für den aktuellen Benutzer zu verknüpfen.
-            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+            return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"),
+                User.Identity.GetUserId());
         }
 
         //
@@ -323,18 +329,20 @@ namespace BiraFit.Controllers
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
             if (loginInfo == null)
             {
-                return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+                return RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
             }
             var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-            return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+            return result.Succeeded
+                ? RedirectToAction("ManageLogins")
+                : RedirectToAction("ManageLogins", new {Message = ManageMessageId.Error});
         }
 
 
-        // GET: /Account/Edit/34
+        // GET: /Manage/Edit/34
         public ActionResult Edit()
         {
             string username = User.Identity.GetUserId();
-            var user = Context.Users.Where(s => s.Id == username).FirstOrDefault();
+            var user = Context.Users.Single(s => s.Id == username);
 
             return View(new EditViewModel
             {
@@ -346,13 +354,63 @@ namespace BiraFit.Controllers
             });
         }
 
+        // POST: /Manage/Edit/34
         [HttpPost]
         public ActionResult Edit(EditViewModel model)
         {
             if (ModelState.IsValid)
             {
+  
+                string username = User.Identity.GetUserId();
+                ApplicationUser user = Context.Users.Single(s => s.Id == username);
+
+                TryUpdateModel(user);
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Manage");
             }
+
+            return View(model);
+        }
+
+        // GET: /Manage/UploadFile
+        public ActionResult UploadFile()
+        {
             return View();
+        }
+
+        //POST /Manage/UploadFile
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase file)
+        {
+            try
+            {
+                string extension = Path.GetExtension(file.FileName);
+                if (file.ContentLength > 0 && extension == ".jpg" || extension == ".png")
+                {
+                    string serverPath = "~/Resources/AccountPicture/";
+                    string userId = User.Identity.GetUserId();
+                    ApplicationUser user = Context.Users.Single(s => s.Id == userId);
+                    if (user.ProfilBild != null)
+                    {
+                        string fullPath = Request.MapPath(serverPath + user.ProfilBild);
+                        if ((System.IO.File.Exists(fullPath)))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+                    string fileName = System.Guid.NewGuid() + userId + file.FileName;
+                    string path = Path.Combine(Server.MapPath(serverPath), fileName);
+                    file.SaveAs(path);
+
+                    user.ProfilBild = fileName;
+                    Context.SaveChanges();
+                }
+                return RedirectToAction("Index", "Manage");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         // GET: /Manage/Show/34
@@ -362,13 +420,13 @@ namespace BiraFit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = Context.Users.Where(s => s.Id == id).FirstOrDefault();
-           var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == user.Id);
-            if(user == null || personalTrainer == null)
+            var user = Context.Users.FirstOrDefault(s => s.Id == id);
+            var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == user.Id);
+            if (user == null || personalTrainer == null)
             {
                 return HttpNotFound();
             }
-            
+
             return View(new ShowViewModel
             {
                 Vorname = user.Vorname,
@@ -389,7 +447,8 @@ namespace BiraFit.Controllers
             base.Dispose(disposing);
         }
 
-#region Hilfsprogramme
+        #region Hilfsprogramme
+
         // Wird für XSRF-Schutz beim Hinzufügen externer Anmeldungen verwendet.
         private const string XsrfKey = "XsrfId";
 
@@ -434,6 +493,6 @@ namespace BiraFit.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

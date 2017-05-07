@@ -6,13 +6,11 @@
 <h2>@ViewBag.Title</h2>
 <h3>Sind Sie sicher?</h3>
 
-@using (Html.BeginForm("Delete", "Account", new { id = User.Identity.GetUserId() }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Delete", "Account", new {id = User.Identity.GetUserId()}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
 {
     @Html.AntiForgeryToken()
     <div class="form-actions no-color">
-        <input type="submit" value="RemoveLogin" class="btn btn-default" /> |
+        <input type="submit" value="RemoveLogin" class="btn btn-default"/> |
         @Html.ActionLink("Zurück", "Index")
     </div>
 }
-
-
