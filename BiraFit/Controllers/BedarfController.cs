@@ -94,5 +94,17 @@ namespace BiraFit.Controllers
             return Context.Bedarf.Any(b => b.Id == bedarfId &&
                                            b.Sportler_Id == sportlerId);
         }
+
+
+        [ChildActionOnly]
+        public ActionResult bedarfNavigation()
+        {
+            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+            if (IsBedarfOpen(sportlerId))
+            {
+                ViewBag.id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
+            }
+            return PartialView();
+        }
     }
 }

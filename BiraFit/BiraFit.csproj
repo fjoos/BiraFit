@@ -390,6 +390,7 @@
     <Content Include="Views\Manage\Delete.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\UploadFile.cshtml" />
+    <Content Include="Views\Shared\bedarfNavigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

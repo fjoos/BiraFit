@@ -13,7 +13,8 @@
                 </h1>
             </li>
             <li>@Html.ActionLink("Nachrichten", "Index", "Nachricht", routeValues: null, htmlAttributes: new {id = "navlink"})</li>
-            <li>@Html.ActionLink("Neuen Bedarf", "New", "Bedarf", routeValues: null, htmlAttributes: new {id = "navlink"})</li>
+            @{Html.RenderAction("bedarfNavigation", "Bedarf");}
+      
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
@@ -21,8 +22,9 @@
             </li>
             <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()" id="navlink">Abmelden</a>
-            </li>
+            
         </ul>
+
     }
 }
 else
