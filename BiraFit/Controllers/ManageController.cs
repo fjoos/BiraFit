@@ -8,6 +8,7 @@ using Microsoft.Owin.Security;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
 using System.Net;
+using System.Data.Entity;
 
 namespace BiraFit.Controllers
 {
@@ -336,11 +337,11 @@ namespace BiraFit.Controllers
         }
 
 
-        // GET: /Account/Edit/34
+        // GET: /Manage/Edit/34
         public ActionResult Edit()
         {
             string username = User.Identity.GetUserId();
-            var user = Context.Users.FirstOrDefault(s => s.Id == username);
+            var user = Context.Users.Single(s => s.Id == username);
 
             return View(new EditViewModel
             {
@@ -352,13 +353,22 @@ namespace BiraFit.Controllers
             });
         }
 
+        // POST: /Manage/Edit/34
         [HttpPost]
         public ActionResult Edit(EditViewModel model)
         {
             if (ModelState.IsValid)
             {
+  
+                string username = User.Identity.GetUserId();
+                Users user = Context.Users.Single(s => s.Id == username);
+
+                TryUpdateModel(user);
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
-            return View();
+
+            return View(model);
         }
 
         // GET: /Manage/Show/34

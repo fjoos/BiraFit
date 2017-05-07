@@ -388,6 +388,7 @@
     <Content Include="Views\Nachricht\Index.cshtml" />
     <Content Include="Views\Nachricht\Chat.cshtml" />
     <Content Include="Views\Manage\Delete.cshtml" />
+    <Content Include="Views\Manage\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
