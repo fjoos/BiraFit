@@ -58,8 +58,19 @@
     background: none;
     color: orange;
 }
+#accountBox {
+    padding-top: 5px;
+    background: none;
+    color: orange;
+    margin-left: -15px;
+}
 
-#boxbody { background: none; }
+#closeBtn {
+    color:floralwhite;
+}
+#boxbody {
+    background: none;
+}
 
 #descriptionText { color: white !important; }
 
@@ -249,7 +260,7 @@
     text-align: center;
 }
 
-textarea.form-control {
+textarea .form-control {
     resize: vertical;
     height: 130px;
     transition: all 0.5s ease 0s;
