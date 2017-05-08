@@ -136,10 +136,45 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult AngebotTrainer()
+        {
+            if (IsSportler() || !IsLoggedIn())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var currentPersonalTrainerId = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context).Id;
+            var currentAngebot = Context.Angebot.Where(s => s.PersonalTrainer_Id == currentPersonalTrainerId).ToList();
+            List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
+            foreach (var angebot in currentAngebot)
+            {
+                foreach (var bedarf in Context.Bedarf.Where(b => b.Id == angebot.Bedarf_Id).ToList())
+                {
+                    if (bedarf.OpenBedarf)
+                    {
+                        angebotList.Add(new AngebotViewModel()
+                        {
+                            Angebot = angebot,
+                            Bedarf = bedarf
+                        });
+                    }
+                }
+            }
+            return View(angebotList);
+        }
+
+
         [ChildActionOnly]
         public ActionResult angebotNavigation()
         {
-
+            if (IsSportler())
+            {
+                ViewBag.Type = "Sportler";
+            }
+            else
+            {
+               
+            }
             return PartialView();
         }
     }

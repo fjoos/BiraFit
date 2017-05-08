@@ -97,7 +97,7 @@ namespace BiraFit.Controllers
 
 
         [ChildActionOnly]
-        public ActionResult bedarfNavigation()
+        public ActionResult BedarfNavigation()
         {
             if (IsSportler())
             {

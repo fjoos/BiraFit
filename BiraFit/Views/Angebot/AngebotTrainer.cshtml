@@ -1,0 +1,24 @@
+﻿@model List<BiraFit.ViewModel.AngebotViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Meine Angebote</h2>
+
+@ViewBag.angebotli
+
+@foreach (var item in @Model)
+{
+    <h2>Bedarf</h2>
+    <p>@item.Bedarf.Titel</p>
+
+
+    <h2>Angebot</h2>
+    <p>@item.Angebot.Id</p>
+}
+
+@if(Model.Count == null)
+{
+    <p>Leider sind noch keine Angebote abgegeben worden</p>
+}
