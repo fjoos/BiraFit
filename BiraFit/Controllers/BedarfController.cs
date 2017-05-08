@@ -99,11 +99,16 @@ namespace BiraFit.Controllers
         [ChildActionOnly]
         public ActionResult bedarfNavigation()
         {
-            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-            if (IsBedarfOpen(sportlerId))
+            if (IsSportler())
             {
-                ViewBag.id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
+                ViewBag.Type = "Sportler";
+                var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+                if (IsBedarfOpen(sportlerId))
+                {
+                    ViewBag.id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
+                }
             }
+           
             return PartialView();
         }
     }

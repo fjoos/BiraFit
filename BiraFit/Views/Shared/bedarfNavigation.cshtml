@@ -1,11 +1,15 @@
 ﻿@{ 
-    var test = "Edit/" + ViewBag.id;
+    var path = "Edit/" + ViewBag.id;
 }
-@if (ViewBag.id != null)
+
+@if (ViewBag.Type == "Sportler")
 {
-    <li>@Html.ActionLink("Bedarf anpassen", (string)test, "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
-}
-else
-{
-    <li>@Html.ActionLink("Neuen Bedarf", "New", "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+    if (ViewBag.id != null)
+    {
+        <li>@Html.ActionLink("Bedarf anpassen", (string)path, "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+    }
+    else
+    {
+        <li>@Html.ActionLink("Neuen Bedarf", "New", "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+    }
 }
