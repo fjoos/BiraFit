@@ -3,6 +3,22 @@
     border-color: orange;
     background-color: black;
 }
+#navbarDidCollapse {
+    border-color: orange;
+}
+
+#myBurgerButton {
+    color: orange;
+    border-color: orange;
+    background-color: black;
+}
+    #myBurgerButton:hover {
+        box-shadow: 0px 0px 2px 2px orange;
+    }
+
+#burgerLine {
+    background-color: orange !important;
+}
 
 #mybox {
     margin-top: 50px;
@@ -185,12 +201,12 @@
 
 #titleLink:hover, #titleLink:focus {
     text-decoration: none;
-    color: darkorange;
+    color: orangered;
 }
 
 #link, #registerLink, #loginLink, #navlink { color: grey; }
 
-#link:hover {
+#link:hover, #link:focus {
     color: orange;
     text-decoration: none;
 }
@@ -199,7 +215,6 @@
     text-decoration: none;
     background-color: black;
     color: orange;
-    box-shadow: 0px 3px 0px 0px orange;
 }
 
 
