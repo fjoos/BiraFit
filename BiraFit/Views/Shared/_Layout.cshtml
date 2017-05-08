@@ -11,22 +11,37 @@
 
 </head>
 <body>
-<div style="max-height: 50px"class="navbar navbar-fixed-top" id="menuBar">
-    <div class="container">
-        <div class="navbar-collapse collapse">
-            @Html.Partial("_LoginPartial")
-        </div>
-    </div>
-</div>
-<div class="container body-content">
-    @RenderBody()
-    <footer id="footer">
-        <p>&copy; @DateTime.Now.Year - BiraFit</p>
-    </footer>
-</div>
 
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="menuBar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" id="menuBar" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 class="modal-title"><a id="titleLink" href="/">BiraFit</a></h1>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <footer id="footer">
+                <p>&copy; @DateTime.Now.Year - BiraFit</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>
