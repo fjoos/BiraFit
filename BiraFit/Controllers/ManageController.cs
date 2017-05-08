@@ -420,8 +420,9 @@ namespace BiraFit.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = Context.Users.FirstOrDefault(s => s.Id == id);
-            var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == user.Id);
+            
+            ApplicationUser user = Context.Users.Single(s => s.Id == id);
+            var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == id);
             if (user == null || personalTrainer == null)
             {
                 return HttpNotFound();
