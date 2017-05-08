@@ -390,9 +390,10 @@
     <Content Include="Views\Manage\Delete.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\UploadFile.cshtml" />
-    <Content Include="Views\Shared\bedarfNavigation.cshtml" />
-    <Content Include="Views\Shared\angebotNavigation.cshtml" />
+    <Content Include="Views\Shared\BedarfNavigation.cshtml" />
+    <Content Include="Views\Shared\AngebotNavigation.cshtml" />
     <Content Include="Views\Manage\Show.cshtml" />
+    <Content Include="Views\Angebot\AngebotTrainer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
