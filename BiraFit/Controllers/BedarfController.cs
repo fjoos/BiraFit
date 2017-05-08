@@ -105,7 +105,7 @@ namespace BiraFit.Controllers
                 var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
                 if (IsBedarfOpen(sportlerId))
                 {
-                    ViewBag.id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
+                    ViewBag.Id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
                 }
             }
            

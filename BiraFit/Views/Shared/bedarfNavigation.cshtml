@@ -4,7 +4,7 @@
 
 @if (ViewBag.Type == "Sportler")
 {
-    if (ViewBag.id != null)
+    if (ViewBag.Id != null)
     {
         <li>@Html.ActionLink("Bedarf anpassen", (string)path, "Bedarf", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
     }
