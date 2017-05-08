@@ -135,5 +135,12 @@ namespace BiraFit.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [ChildActionOnly]
+        public ActionResult angebotNavigation()
+        {
+
+            return PartialView();
+        }
     }
 }

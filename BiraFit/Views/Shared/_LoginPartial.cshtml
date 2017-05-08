@@ -8,6 +8,7 @@
         <ul class="nav navbar-nav">
             <li>@Html.ActionLink("Nachrichten", "Index", "Nachricht", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
             @{Html.RenderAction("bedarfNavigation", "Bedarf");}
+            @{Html.RenderAction("angebotNavigation", "Angebot");}
         </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { id = "navlink", title = "Manage" })</li>

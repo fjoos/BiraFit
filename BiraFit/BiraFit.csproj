@@ -391,6 +391,8 @@
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\UploadFile.cshtml" />
     <Content Include="Views\Shared\bedarfNavigation.cshtml" />
+    <Content Include="Views\Shared\angebotNavigation.cshtml" />
+    <Content Include="Views\Manage\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
