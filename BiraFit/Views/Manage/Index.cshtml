@@ -63,8 +63,8 @@
                 </div>
                 <div class="panel-footer" id="footerBox">
                     <a href="/Manage/Edit" class="btn btn-primary" id="loginButton">Profil bearbeiten</a>
-                    <a href="/Manage/Delete" class="btn btn-primary" id="delButton">Profil löschen</a>
-                    @Html.ActionLink("Show Profile", "Show", new {id = "285f8200-6809-4898-ac27-475e4c167ecb"})
+                    <a data-toggle="modal" href="#deletePopUp" class="btn btn-primary" id="delButton">Profil löschen</a>
+                    @Html.ActionLink("Show Profile", "Show", new {id = "4331f5fb-8967-4bd4-85ee-e9132dbc801a" })
 
                 </div>
 
@@ -74,6 +74,10 @@
 
     <div id="profileChangePopUp" class="modal fade">
         @Html.Partial("UploadFile");
+    </div>
+
+    <div id="deletePopUp" class="modal fade">
+        @Html.Partial("Delete");
     </div>
 
 

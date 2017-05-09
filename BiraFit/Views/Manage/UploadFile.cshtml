@@ -5,7 +5,7 @@
 @using (Html.BeginForm("UploadFile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="container" id="boxform">
-        <div id="mybox" class="col-md-6 col-md-offset-3 modal-content">
+        <div id="popUpBox" class="col-md-6 col-md-offset-3 modal-content">
             <div class="panel panel-info" id="innerbox">
                 <div class="panel-heading" id="boxHead">
                     <button type="button" class="close" id="closeBtn" data-dismiss="modal" aria-hidden="true">×</button>
@@ -18,11 +18,14 @@
                     <form role="form">
                         <div class="col-md-12">
                             <div class="form-group">
-                                @Html.TextBox("file", "", new {@type = "file" })
+                                <label class="btn-bs-file btn" id="loginButton">
+                                    Durchsuchen...
+                                    @Html.TextBox("file", "", new { @type = "file", @class = "btn-bs-file btn" })
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" id="loginButton" class="btn btn-block">Speichern</button>
+                            <button type="submit" id="loginButton" class="btn btn-block">Bild hochladen</button>
                         </div>
                     </form>
                 </div>
