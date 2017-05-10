@@ -5,7 +5,6 @@
     var activeWriterMe = false;
     var activeWriterHim = false;
 }
-
 <body id="chatBack">
 <div class="row">
     <section id="boxForm">
@@ -17,7 +16,7 @@
                             <h4>Konversation</h4>
                         </div>
                     </div>
-                    <div class="modal-body" id="scrollBody">
+                    <div class="modal-body" id="scrollBody" onload="bodyOnloadHandler()">
                         <ul class="chat">
                             @foreach (var item in @Model.Nachrichten)
                             {

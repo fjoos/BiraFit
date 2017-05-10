@@ -3,22 +3,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<body id="mainBack">
+    @ViewBag.angebotli
+    <div class="row">
+        <section id="boxForm">
+            <div class="container">
+                <div class="mainbox col-md-8 col-md-offset-2">
+                    <div class="panel-heading" id="boxHead">
+                        <div class="panel-title">
+                            <h2>Meine Angebote</h2>
+                        </div>
+                    </div>
+                    @foreach (var item in @Model)
+                    {
+                        <div class="modal-content" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-2">
+                                        <figure>
+                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                        </figure>
+                                        <p id="usrName">
+                                            Benutzername
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>@item.Bedarf.Titel</b>
+                                        </h4>
+                                        <p id="descriptionText">@item.Bedarf.Beschreibung</p>
+                                        <section>
+                                            <small>Preisvorstellung: <b id="descriptionText">@item.Bedarf.Preis.- / Woche</b></small>
+                                        </section>
+                                        <section>
+                                            <small>Umgebung: <b id="descriptionText">@item.Bedarf.Ort</b></small>
+                                        </section>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
 
-<h2>Meine Angebote</h2>
+                        <div class="modal-content col-md-offset-2" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-md-10" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>Mein Angebot</b>
+                                        </h4>
+                                        <p id="descriptionText">@item.Angebot.Beschreibung</p>
+                                        <section>
+                                            <small>Preisvorstellung: <b id="descriptionText">@item.Angebot.Preis.- / Woche</b></small>
+                                        </section>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                    </div>
+                                    <a href="/Angebot/Withdraw/@item.Bedarf.Id" class="btn btn-primary" id="delAngButton">Löschen</a>
+                                </div>
+                            </article>
+                        </div>
 
-@ViewBag.angebotli
 
-@foreach (var item in @Model)
-{
-    <h2>Bedarf</h2>
-    <p>@item.Bedarf.Titel</p>
+                    }
 
+                    @if (Model.Count == 0)
+                    {
+                        <p>Leider haben Sie noch keine Angebote abgegeben</p>
+                    }
+                    </div>
+                </div>
+            </section>
+        </div>
 
-    <h2>Angebot</h2>
-    <p>@item.Angebot.Id</p>
-}
-
-@if(Model.Count == null)
-{
-    <p>Leider sind noch keine Angebote abgegeben worden</p>
-}
+</body>
