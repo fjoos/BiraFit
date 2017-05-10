@@ -4,34 +4,34 @@
 }
 @using (Html.BeginForm("UploadFile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="container" id="boxform">
-        <div id="popUpBox" class="col-md-6 col-md-offset-3 modal-content">
-            <div class="panel panel-info" id="innerbox">
-                <div class="panel-heading" id="boxHead">
-                    <button type="button" class="close" id="closeBtn" data-dismiss="modal" aria-hidden="true">×</button>
-                    <div class="panel-title">
-                        <h4>Profilbild ändern</h4>
+    <div class="row">
+        <div class="container" id="boxform">
+            <div id="popUpBox" class="col-md-4 col-md-offset-4 modal-content">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
+                        <button type="button" class="close" id="closeBtn" data-dismiss="modal" aria-hidden="true">×</button>
+                        <div class="panel-title">
+                            <h4>Profilbild ändern</h4>
+                        </div>
                     </div>
-                </div>
 
-                <div class="panel-body">
-                    <form role="form">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="btn-bs-file btn" id="loginButton">
-                                    Durchsuchen...
-                                    @Html.TextBox("file", "", new { @type = "file", @class = "btn-bs-file btn" })
-                                </label>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <label class="btn-bs-file btn">
+                                        @Html.TextBox("file", "", new { @type = "file" })
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="panel-footer" id="footerBox">
                             <button type="submit" id="loginButton" class="btn btn-block">Bild hochladen</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-
-}
+        </div>
+        }

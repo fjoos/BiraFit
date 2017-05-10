@@ -24,10 +24,10 @@
     margin-top: 50px;
     border: 2px solid orange;
     background: black;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 #popUpBox {
-    margin-top: 105px;
+    margin-top: 100px;
     border: 2px solid orange;
     background: black;
 }
@@ -38,7 +38,7 @@
 
 #chatbox #boxbody {
     background: black;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 #footerBox {
@@ -63,10 +63,8 @@
     color: orange;
 }
 #accountBox {
-    padding-top: 5px;
     background: none;
     color: orange;
-    margin-left: -15px;
 }
 
 #closeBtn {
@@ -133,10 +131,16 @@
 #profileImg {
     width: 100px;
     height: 100px;
-    padding: 5px 5px 5px 5px;
 }
 
-.glyphicon glyphicon-off { color: orange; }
+#detailProfileImg {
+    width: 160px;
+    height: 160px;
+}
+
+.glyphicon glyphicon-off {
+    color: orange;
+}
 
 #angebotButton {
     color: orange;
@@ -300,14 +304,14 @@ textarea .form-control {
     box-shadow: none;
     border: 2px solid orange;
     background: black;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 #angebot {
     box-shadow: none;
     border: 2px solid orange;
     background: black;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 #angebotBedarfBody {
@@ -336,18 +340,17 @@ textarea .form-control {
 
 #logregText { color: lightgray; }
 
-
-.btn-bs-file {
-    position: relative;
+#myList {
+    border: none;
+    background: none;
 }
 
-    .btn-bs-file input[type="file"] {
-        position: absolute;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        width: 0;
-        height: 0;
-        outline: none;
-        cursor: inherit;
-    }
+#myListObj {
+    border: none;
+    background: none;
+    border-bottom: 2px solid orange;
+}
 
+input[type="file"] {
+    color: orange;    
+}

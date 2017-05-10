@@ -4,13 +4,59 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<body id="profileBack">
 
-@using (Html.BeginForm("Show", "Manage"))
-{
-
-<div>
-    Show Profile
-</div>
-}
+    @using (Html.BeginForm("Show", "Manage"))
+    {
+        <div class="row">
+            <section id="boxForm">
+                <div class="container" id="accountBox">
+                    <div class="col-md-8 col-md-offset-2 modal-content" id="mybox">
+                        <div class="panel panel-info" id="innerbox">
+                            <div class="panel-heading" id="boxHead">
+                                <div class="panel-title">
+                                    <h4>Trainer Benutzername</h4>
+                                </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-md-4 col-md-offset-1" align="center">
+                                                @*
+                                                    if else für bilder
+                                                *@
+                                                <img class="img-circle img-responsive" id="detailProfileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            </div>
+                                            <div class="col-md-5">
+                                                <ul class="list-group" id="myList">
+                                                    <li class="list-group-item" id="myListObj">Vorname</li>
+                                                    <li class="list-group-item" id="myListObj">Nachname</li>
+                                                    <li class="list-group-item" id="myListObj">Strasse</li>
+                                                    <li class="list-group-item" id="myListObj"><a href="mailto:" id="link">Email</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="panel-footer" id="footerBox">
+                                <h4>Zu mir</h4>
+                                <p>
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung Beschreibung 
+                                Beschreibung  
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    }
+</body>
 
 
