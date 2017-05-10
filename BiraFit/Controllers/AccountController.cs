@@ -452,14 +452,14 @@ namespace BiraFit.Controllers
                 if (result.Succeeded)
                 {
                     LogOff();
-                    DeleteOpenStock(id, userId);
+                    DeleteOpenStock(id, userId, user.ProfilBild);
                 }
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
 
-        private void DeleteOpenStock(string id, int userId)
+        private void DeleteOpenStock(string id, int userId, string profilePicture)
         {
            if (IsSportler())
             {
@@ -477,7 +477,16 @@ namespace BiraFit.Controllers
             {
                 Context.Nachricht.Remove(openNachricht);
             }
-
+            
+            string serverPath = "~/Resources/AccountPicture/";
+            if (profilePicture != null)
+            {
+                string fullPath = Request.MapPath(serverPath + profilePicture);
+                if ((System.IO.File.Exists(fullPath)))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+            }
             Context.SaveChanges();
         }
 

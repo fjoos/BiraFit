@@ -360,7 +360,6 @@ namespace BiraFit.Controllers
         {
             if (ModelState.IsValid)
             {
-  
                 string username = User.Identity.GetUserId();
                 ApplicationUser user = Context.Users.Single(s => s.Id == username);
 
