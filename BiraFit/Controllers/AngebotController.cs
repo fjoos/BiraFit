@@ -29,10 +29,20 @@ namespace BiraFit.Controllers
                 {
                     foreach (var angebot in Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList())
                     {
+                        var trainerId = GetTrainerAspNetUserId(angebot.PersonalTrainer_Id);
+                        var trainer = Context.Users.Single(s => s.Id == trainerId);
+                        var sportlerId = User.Identity.GetUserId();
+                        var sportler = Context.Users.Single(s => s.Id == sportlerId);
+                        
                         angebotList.Add(new AngebotViewModel()
                         {
                             Angebot = angebot,
-                            Bedarf = bedarf
+                            Bedarf = bedarf,
+                            peronalTrainerId = trainer.Id,
+                            trainerUsername = trainer.Email,
+                            sportlerPicture = sportler.ProfilBild,
+                            trainerPicture = trainer.ProfilBild
+
                         });
                     }
                     return View(angebotList);
@@ -182,10 +192,14 @@ namespace BiraFit.Controllers
                 {
                     if (bedarf.OpenBedarf)
                     {
+                        var sportlerId = GetSportlerAspNetUserId(bedarf.Sportler_Id);
+                        var sportler = Context.Users.Single(s => s.Id == sportlerId);
                         angebotList.Add(new AngebotViewModel()
                         {
                             Angebot = angebot,
-                            Bedarf = bedarf
+                            Bedarf = bedarf,
+                            sportlerPicture = sportler.ProfilBild,
+                            sportlerUsername = sportler.Email
                         });
                     }
                 }

@@ -21,10 +21,17 @@
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
                                         <figure>
-                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            @if (item.sportlerPicture != null)
+                                            {
+                                                <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/" + item.sportlerPicture)" />
+                                            }
+                                            else
+                                            {
+                                                <img class="img-circle" id="profileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                            }
                                         </figure>
                                         <p id="usrName">
-                                            Benutzername
+                                            @item.sportlerUsername
                                         </p>
                                     </div>
                                     <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
