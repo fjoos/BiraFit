@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
 using Microsoft.AspNet.Identity;
+using System.Net.Mail;
 
 namespace BiraFit.Controllers
 {
@@ -86,13 +87,42 @@ namespace BiraFit.Controllers
                 Context.Angebot.Remove(angebot);
             }
 
-            var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id;
-            Context.Bedarf.Single(i => i.Id == bedarfId).OpenBedarf = false;
+            var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
+            Context.Bedarf.Remove(bedarfId);
             Context.SaveChanges();
+
+            //SendMail();
+
             return RedirectToAction("Chat/" + Context.Konversation
                                         .Single(i => i.Sportler_Id == sportlerId &&
                                                      i.PersonalTrainer_Id == personalTrainerId)
                                         .Id, "Nachricht");
+        }
+
+        private void SendMail()
+        {
+            MailMessage msg = new MailMessage();
+            System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
+            try
+            {
+                msg.Subject = "Add Subject";
+                msg.Body = "Add Email Body Part";
+                msg.From = new MailAddress("fabjoos@gmail.com");
+                msg.To.Add("enzo.berther@hsr.ch");
+                msg.IsBodyHtml = true;
+                client.Host = "smtp.gmail.com";
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("fabjoos@gmail.com", "Israel27");
+                client.Port = int.Parse("587");
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicauthenticationinfo;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Send(msg);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public ActionResult Reject(int id)

@@ -11,7 +11,7 @@
             @{Html.RenderAction("AngebotNavigation", "Angebot");}
         </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { id = "navlink", title = "Manage" })</li>
+                <li>@Html.ActionLink("Mein Profil", "Index", "Manage", routeValues: null, htmlAttributes: new { id = "navlink", title = "Manage" })</li>
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" id="navlink">Abmelden</a></li>
             </ul>
     }

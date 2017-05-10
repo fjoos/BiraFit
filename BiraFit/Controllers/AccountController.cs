@@ -477,6 +477,17 @@ namespace BiraFit.Controllers
             {
                 Context.Nachricht.Remove(openNachricht);
             }
+            /*
+            string serverPath = "~/Resources/AccountPicture/";
+            ApplicationUser user = Context.Users.Single(s => s.Id == userId);
+            if (user.ProfilBild != null)
+            {
+                string fullPath = Request.MapPath(serverPath + user.ProfilBild);
+                if ((System.IO.File.Exists(fullPath)))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+            }*/
 
             Context.SaveChanges();
         }
