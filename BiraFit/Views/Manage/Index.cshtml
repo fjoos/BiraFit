@@ -3,7 +3,7 @@
 
 @{
     var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
-    var image = "~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg";
+    var image = "~/Resources/standardprofilbild.jpg";
     if (user.ProfilBild != null)
     {
         image = "~/Resources/AccountPicture/" + user.ProfilBild;
