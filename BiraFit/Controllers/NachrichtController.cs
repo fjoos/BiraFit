@@ -34,22 +34,29 @@ namespace BiraFit.Controllers
 
             List<string> lastMessages = new List<string>();
             List<string> profileImages = new List<string>();
+            List<string> userNames = new List<string>();
+            List<DateTime> sendTimes = new List<DateTime>();
             foreach (var konversation in konversationList)
             {
                 lastMessages.Add(GetLastMessage(konversation.Id));
-
+                sendTimes.Add(GetLastTime(konversation.Id));
                 if (IsSportler())
                 {
                     string trainerId = GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
+                    string username = Context.Users.Single(i => i.Id == trainerId).Email;
                     var profileImage = Context.Users.Single(i => i.Id == trainerId).ProfilBild ??
                                        "standardprofilbild.jpg";
+                    userNames.Add(username);
                     profileImages.Add(profileImage);
+
                 }
                 else
                 {
                     string sportlerId = GetSportlerAspNetUserId(konversation.Sportler_Id);
+                    string username = Context.Users.Single(i => i.Id == sportlerId).Name;
                     var profileImage = Context.Users.Single(i => i.Id == sportlerId).ProfilBild ??
                                        "standardprofilbild.jpg";
+                    userNames.Add(username);
                     profileImages.Add(profileImage);
                 }
             }
@@ -58,7 +65,9 @@ namespace BiraFit.Controllers
             {
                 Konversationen = konversationList,
                 LastMessages = lastMessages,
-                ProfileImages = profileImages
+                ProfileImages = profileImages,
+                UserNames = userNames,
+                SendTimes = sendTimes
             });
         }
 
@@ -130,6 +139,17 @@ namespace BiraFit.Controllers
                 lastMessage = nachricht.Text;
             }
             return lastMessage;
+        }
+
+        public DateTime GetLastTime(int konversationId)
+        {
+            var nachrichten = Context.Nachricht.Where(n => n.Konversation_Id == konversationId).OrderBy(m => m.Datum);
+            DateTime sendtime = new DateTime();
+            foreach (var nachricht in nachrichten)
+            {
+                sendtime = nachricht.Datum;
+            }
+            return sendtime;
         }
     }
 }

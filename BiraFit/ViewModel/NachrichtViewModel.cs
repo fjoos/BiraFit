@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using BiraFit.Models;
+using System;
 
 namespace BiraFit.ViewModel
 {
@@ -9,5 +10,7 @@ namespace BiraFit.ViewModel
         public List<Konversation> Konversationen { get; set; }
         public List<string> LastMessages { get; set; }
         public List<string> ProfileImages { get; set; }
+        public List<DateTime> SendTimes { get; set; }
+        public List<string> UserNames { get; set; }
     }
 }
