@@ -84,14 +84,31 @@ namespace BiraFit.Controllers
                 from m in k.Nachrichten
                 orderby m.Datum
                 select m;
-
             List<Nachricht> chatList = chat.ToList();
-
+            var empfängerName = "";
+            var empfängerId = "";
+            if (IsSportler())
+            {
+                var personalTrainerId = Context.Konversation.Single(s => s.Id == id).PersonalTrainer_Id;
+                var personalTrainer = GetTrainerAspNetUserId(personalTrainerId);
+                empfängerName = Context.Users.Single(s => s.Id == personalTrainer).Email;
+                empfängerId = Context.Users.Single(s => s.Id == personalTrainer).Id;
+            }
+            else
+            {
+                var sportlerId = Context.Konversation.Single(s => s.Id == id).Sportler_Id;
+                var sportler = GetSportlerAspNetUserId(sportlerId);
+                empfängerName = Context.Users.Single(s => s.Id == sportler).Email;
+                empfängerId = Context.Users.Single(s => s.Id == sportler).Id;
+            }
+           
             return View(new ChatViewModel
             {
                 Nachrichten = chatList,
                 KonversationId = id,
-                Id = User.Identity.GetUserId()
+                Id = User.Identity.GetUserId(),
+                Empfänger = empfängerName,
+                EmpfängerId = empfängerId
             });
         }
 
