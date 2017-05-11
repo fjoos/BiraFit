@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="modal-body" id="boxbody">
-                    <form role="form">
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="titel">Titel</label>
@@ -26,7 +26,7 @@
 
                             <div class="form-group">
                                 <label for="textarea">Beschreibung</label>
-                                @Html.TextAreaFor(m => m.Beschreibung, new { @class = "form-control", @id = "textarea", @placeholder = "Beschreibung" })
+                                @Html.TextAreaFor(m => m.Beschreibung, new { @class = "form-control", @id = "SingleNachricht", @placeholder = "Beschreibung" })
                                 @Html.ValidationMessageFor(m => m.Beschreibung, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -44,17 +44,21 @@
                                 @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <button type="submit" id="loginButton" class="btn btn-block">Bedarf speichern</button>
-                            </div>
+
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <a id="delButton" href="Bedarf/Delete/@Model.Id" class="btn btn-block">Bedarf löschen</a>
-                            </div>
+                    </div>
+                <div class="panel-footer" id="footerBox">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <button type="submit" id="loginButton" class="btn btn-block">Speichern</button>
                         </div>
-                    </form>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <a id="delButton" href="Bedarf/Delete/@Model.Id" class="btn btn-block">Löschen</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

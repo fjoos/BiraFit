@@ -240,6 +240,17 @@
     color: orange;
 }
 
+textarea .form-control {
+    resize: vertical;
+    height: 130px;
+    transition: all 0.5s ease 0s;
+}
+
+#textarea, #SingleNachricht {
+    border: 2px solid #ccc;
+    min-height: 50px;
+    height: 50px;
+}
 
 #SingleNachricht {
     max-width: 100% !important;
@@ -272,22 +283,13 @@
     text-align: center;
 }
 
-textarea .form-control {
-    resize: vertical;
-    height: 130px;
-    transition: all 0.5s ease 0s;
-}
 
 .modal-content {
     background: none;
     border: 2px solid orange;
 }
 
-#textarea, #SingleNachricht {
-    border: 2px solid #ccc;
-    min-height: 50px;
-    height: 50px;
-}
+
 
 #postTime {
     background-color: orange;
