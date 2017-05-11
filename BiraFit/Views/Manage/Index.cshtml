@@ -2,9 +2,12 @@
 @using Microsoft.AspNet.Identity.Owin;
 
 @{
-    ViewBag.Title = "Verwalten";
     var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
-    var image = "~/Resources/AccountPicture/" + user.ProfilBild;
+    var image = "~/Resources/standardprofilbild.jpg";
+    if (user.ProfilBild != null)
+    {
+        image = "~/Resources/AccountPicture/" + user.ProfilBild;
+    }
 }
 
 <body id="profileBack">
@@ -22,14 +25,7 @@
                         <div class="col-md-12">
                             <div class="col-md-3 col-lg-3" align="center">
                                 <div class="row">
-                                    @if (user.ProfilBild != null)
-                                    {
-                                        <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
-                                    }
-                                    else
-                                    {
-                                        <img class="img-circle" id="profileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                                    }
+                                    <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
                                 </div>
                                 <div class="row">
                                     <a data-toggle="modal" href="#profileChangePopUp" id="link">Profilbild ändern</a>
@@ -50,8 +46,6 @@
                 <div class="panel-footer" id="footerBox">
                     <a href="/Manage/Edit" class="btn btn-primary" id="loginButton">Profil bearbeiten</a>
                     <a data-toggle="modal" href="#deletePopUp" class="btn btn-primary" id="delButton">Profil löschen</a>
-                    @Html.ActionLink("Show Profile", "Show", new {id = "4331f5fb-8967-4bd4-85ee-e9132dbc801a" })
-
                 </div>
 
             </div>
