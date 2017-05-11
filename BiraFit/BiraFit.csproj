@@ -283,6 +283,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\star-rating.css" />
+    <Content Include="Content\star-rating.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -328,6 +330,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\star-rating.js" />
+    <Content Include="Scripts\star-rating.min.js" />
     <Content Include="Scripts\_references.js" />
     <EmbeddedResource Include="Migrations\201704301154563_initialcreate.resx">
       <DependentUpon>201704301154563_initialcreate.cs</DependentUpon>

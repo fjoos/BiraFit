@@ -81,8 +81,16 @@
     background: none;
     border: 2px solid orange;
 }
+#rateButton {
+    color: orange;
+    background: none;
+    border: 2px solid orange;
+    max-width: 165px;
+}
 
-#loginButton:hover { box-shadow: 0px 0px 3px 3px orange; }
+    #loginButton:hover, #rateButton:hover {
+        box-shadow: 0px 0px 3px 3px orange;
+    }
 
 
 #bewerbButton {
@@ -134,10 +142,9 @@
 }
 
 #detailProfileImg {
-    width: 200px;
-    height: 200px;
-    width: auto;
-    height: auto;
+    margin-top: 20px;
+    width: 220px;
+    height: 220px;
 }
 
 .glyphicon glyphicon-off {

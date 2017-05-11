@@ -5,6 +5,7 @@
 }
 
 <body id="profileBack">
+
         <div class="row">
             <section id="boxForm">
                 <div class="container" id="accountBox">
@@ -18,43 +19,52 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="col-md-4 col-md-offset-1" align="center">
+                                            <div class="col-md-5" align="center">
                                                 @if (Model.Picture_ID != null)
                                                 {
                                                     <img class="img-circle img-responsive" id="detailProfileImg" src="@Url.Content("~/Resources/AccountPicture/" + Model.Picture_ID)" />
                                                 }
                                                 else
                                                 {
-                                                    <img class="img-circle" id="profileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                                    <img class="img-circle img-responsive" id="detailProfileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
                                                 }
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-6">
                                                 <ul class="list-group" id="myList">
                                                     <li class="list-group-item" id="myListObj">@Model.Vorname</li>
                                                     <li class="list-group-item" id="myListObj">@Model.Name</li>
                                                     <li class="list-group-item" id="myListObj">@Model.Adresse</li>
                                                     <li class="list-group-item" id="myListObj"><a href="mailto:" id="link">@Model.Mail</a></li>
                                                     <li class="list-group-item" id="myListObj">
-                                                        <p>Bewertung:</p> 
-                                                       
-                                                            @Model.Bewertung
-                                                        
-                                                        <li>
+                                                             Durchschnittliche Bewertung:                                                       
+                                                            @if (Model.Bewertung > 0)
+                                                            {
+                                                                <input value="@Model.Bewertung" id="actRate" class="rating" min=0 max=5 step=0.1 data-size="xs" disabled>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>Noch keine Bewertung vorhanden</p>
+                                                            }
+                                                    <li>
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="col-md-8">
-                                            Trainer Bewerten: button bibiba
-                                            @using(Html.BeginForm("RateTrainer", "Manage")){ 
-                                            
-                                                <div class="input-group">
-                                                    <input type="text" hidden value="@Model.User_Id" name="id" id="id" />
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @using (Html.BeginForm("RateTrainer", "Manage"))
+                                            {
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="text" hidden value="@Model.User_Id" name="id" id="id" />
+                                                        <input id="rating" name="rating" value="0" class="rating" min=0 max=5 step=1 data-size="xs">
+                                                        <button type="submit" id="rateButton" class="btn btn-block">Bewertung abgeben</button>
+                                                    </div>
+
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="rating">Bewerten</label>
-                                                    <input id="rating" type="number" placeholder="Bewertung 1-5" name="rating" />
-                                                </div>
-                                                <button type="submit" id="loginButton" class="btn btn-block">Bewertung abgeben</button>
+
+
                                             }
                                         </div>
                                     </div>
@@ -71,5 +81,3 @@
             </section>
         </div>
 </body>
-
-
