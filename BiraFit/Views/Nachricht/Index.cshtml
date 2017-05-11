@@ -1,7 +1,8 @@
 ﻿@model BiraFit.ViewModel.NachrichtViewModel
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var imagePath = "~/Resources/";
+    var dateNow = new DateTime();
 }
 <body id="chatBack">
 <div class="row">
@@ -21,15 +22,31 @@
                             {
                                 <li class="left clearfix" id="chatList">
                                     <a href="Nachricht/Chat/@item.Id">
-                                        <div class="col-md-10">
+                                        <div class="col-md-12">
                                             <span class="chat-img pull-left">
-                                                <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="@Model.ProfileImages[counter]" class="img-circle" />
-                                            </span>
+                                                @if (Model.ProfileImages[counter] == "standardprofilbild.jpg")
+                                                {
+                                                    <img src="@Url.Content(imagePath + Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="@Url.Content(imagePath + "AccountPicture/"+ Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
+
+                                                }
+                                                  </span>
                                             <div class="chat-body clearfix">
                                                 <div class="header">
-                                                    <strong id="usrName">Chatpartner</strong>
+                                                    <strong id="usrName">@Model.UserNames[counter]</strong>
                                                     <small class="pull-right">
                                                         <span class="glyphicon glyphicon-time"></span>
+                                                        @if(Model.SendTimes[counter] == dateNow)
+                                                        {
+                                                            <p>Noch keine Nachrichten gesendet.</p>
+                                                        }else {
+                                                           <p>@Model.SendTimes[counter]</p> 
+                                                        }
+
                                                     </small>
                                                 </div>
                                                 @if (@Model.LastMessages[counter].Length > 40)
@@ -47,13 +64,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <a id="delButton" href="" class="btn btn-block">Löschen</a>
-                                        </div>
-                                    </div>
                                 </li>
-
                                 counter++;
                             }
                         }
