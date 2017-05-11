@@ -343,14 +343,21 @@ namespace BiraFit.Controllers
         {
             string username = User.Identity.GetUserId();
             var user = Context.Users.Single(s => s.Id == username);
-
+            var beschreibung = "";
+            if (!IsSportler())
+            {
+                ViewBag.Type = "PersonalTrainer";
+                var personalTrainer = Context.PersonalTrainer.Single(s => s.User_Id == user.Id);
+                beschreibung = personalTrainer.Beschreibung;
+            }
             return View(new EditViewModel
             {
                 Vorname = user.Vorname,
                 Name = user.Name,
                 Email = user.Email,
                 Adresse = user.Adresse,
-                ProfilBild = user.ProfilBild
+                ProfilBild = user.ProfilBild,
+                Beschreibung = beschreibung
             });
         }
 
@@ -362,8 +369,9 @@ namespace BiraFit.Controllers
             {
                 string username = User.Identity.GetUserId();
                 ApplicationUser user = Context.Users.Single(s => s.Id == username);
-
+                PersonalTrainer personalTrainer = Context.PersonalTrainer.Single(s => s.User_Id == username);
                 TryUpdateModel(user);
+                TryUpdateModel(personalTrainer);
                 Context.SaveChanges();
                 return RedirectToAction("Index", "Manage");
             }

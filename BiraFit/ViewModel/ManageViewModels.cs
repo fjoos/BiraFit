@@ -106,6 +106,8 @@ namespace BiraFit.Models
         public string Adresse { get; set; }
 
         public string ProfilBild { get; set; }
+
+        public string Beschreibung;
     }
 
     public class ShowViewModel

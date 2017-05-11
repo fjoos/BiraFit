@@ -37,6 +37,13 @@
                                             <td>Strasse: </td>
                                             <td>@Html.TextBoxFor(model => model.Adresse, new { @class = "form-control", @placeholder = "Strasse" })</td>
                                         </tr>
+                                        @if (ViewBag.Type == "PersonalTrainer")
+                                        {
+                                            <tr class="form-group">
+                                                <td>Beschreibung: </td>
+                                                <td>@Html.TextAreaFor(model => model.Beschreibung, new { @class = "form-control", @placeholder = "Beschreibung" })</td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
