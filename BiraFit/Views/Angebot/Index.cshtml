@@ -1,13 +1,17 @@
 ﻿@model List<BiraFit.ViewModel.AngebotViewModel>
 
 @{
-    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //    var image = "~/Resources/AccountPicture/" + user.ProfilBild;
+    var image = "~/ Resources / default- avatar - c5d8ec086224cb6fc4e395f4ba3018c2.jpg";
+    if (@Model.Count > 0)
+    {
+        if (Model[0].sportlerPicture != null)
+        {
+            image = "~/Resources/AccountPicture/" + Model[0].sportlerPicture;
+        }
+    }
+}
 
-    var image = "~/Resources/AccountPicture/" + Model[0].sportlerPicture;
-}
-}
 
 <body id="mainBack">
     <div class="row">
@@ -26,14 +30,7 @@
                                 <div class="row">
                                     <div class="col-md-2">
                                         <figure>
-                                            @if (Model[0].sportlerPicture != null)
-                                            {
-                                                <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
-                                            }
-                                            else
-                                            {
-                                                <img class="img-circle" id="profileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                                            }
+                                            <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
                                         </figure>
                                         <p id="usrName">
                                         </p>

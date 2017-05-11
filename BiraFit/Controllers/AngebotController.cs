@@ -101,7 +101,7 @@ namespace BiraFit.Controllers
             Context.Bedarf.Remove(bedarfId);
             Context.SaveChanges();
 
-            //SendMail();
+            SendMail();
 
             return RedirectToAction("Chat/" + Context.Konversation
                                         .Single(i => i.Sportler_Id == sportlerId &&
@@ -117,11 +117,11 @@ namespace BiraFit.Controllers
             {
                 msg.Subject = "Add Subject";
                 msg.Body = "Add Email Body Part";
-                msg.From = new MailAddress("fabjoos@gmail.com");
+                msg.From = new MailAddress("birafit17@gmail.com");
                 msg.To.Add("enzo.berther@hsr.ch");
                 msg.IsBodyHtml = true;
                 client.Host = "smtp.gmail.com";
-                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("fabjoos@gmail.com", "Israel27");
+                System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("birafit17@gmail.com", "Hsr-12345");
                 client.Port = int.Parse("587");
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;

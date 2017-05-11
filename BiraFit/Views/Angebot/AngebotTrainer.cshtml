@@ -1,6 +1,7 @@
 ﻿@model List<BiraFit.ViewModel.AngebotViewModel>
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var image = "~/Resources/AccountPicture/";
 }
 
 <body id="mainBack">
@@ -23,7 +24,7 @@
                                         <figure>
                                             @if (item.sportlerPicture != null)
                                             {
-                                                <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/" + item.sportlerPicture)" />
+                                                <img class="img-circle" id="profileImg" src="@Url.Content(image + item.sportlerPicture)" />
                                             }
                                             else
                                             {
