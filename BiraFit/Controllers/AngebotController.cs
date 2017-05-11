@@ -100,8 +100,14 @@ namespace BiraFit.Controllers
             var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
             Context.Bedarf.Remove(bedarfId);
             Context.SaveChanges();
+            var ptId = GetTrainerAspNetUserId(personalTrainerId);
+            var peronalTrainerEmail = Context.Users.Single(s => s.Id == ptId).Email;
 
-            SendMail();
+            var spId = GetSportlerAspNetUserId(sportlerId);
+            var sportlerEmail = Context.Users.Single(s => s.Id == spId).Email;
+
+            createEmailForPersonaTrainer(peronalTrainerEmail);
+            createEmailForSportler(sportlerEmail);
 
             return RedirectToAction("Chat/" + Context.Konversation
                                         .Single(i => i.Sportler_Id == sportlerId &&
@@ -109,16 +115,29 @@ namespace BiraFit.Controllers
                                         .Id, "Nachricht");
         }
 
-        private void SendMail()
+        private void createEmailForPersonaTrainer(string email)
+        {
+            var massage = "Ihr Angebot wurde angenommen. Eine neue Konversation ist nun verfügbar.";
+            SendMail(email, massage);
+        }
+
+        private void createEmailForSportler(string email)
+        {
+            var massage = "Sie haben ein Angebot angenommen. Eine neue Konversation ist nun verfügbar.";
+            SendMail(email, massage);
+        }
+
+
+        private void SendMail(string email, string massage)
         {
             MailMessage msg = new MailMessage();
             System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient();
             try
             {
-                msg.Subject = "Add Subject";
-                msg.Body = "Add Email Body Part";
+                msg.Subject = "Angebot angenommen";
+                msg.Body = massage;
                 msg.From = new MailAddress("birafit17@gmail.com");
-                msg.To.Add("enzo.berther@hsr.ch");
+                msg.To.Add(email);
                 msg.IsBodyHtml = true;
                 client.Host = "smtp.gmail.com";
                 System.Net.NetworkCredential basicauthenticationinfo = new System.Net.NetworkCredential("birafit17@gmail.com", "Hsr-12345");
