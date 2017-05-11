@@ -21,9 +21,9 @@
                             {
                                 <li class="left clearfix" id="chatList">
                                     <a href="Nachricht/Chat/@item.Id">
-                                        <div class="col-md-12">
+                                        <div class="col-md-10">
                                             <span class="chat-img pull-left">
-                                                <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="@Model.ProfileImages[counter]" class="img-circle"/>
+                                                <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="@Model.ProfileImages[counter]" class="img-circle" />
                                             </span>
                                             <div class="chat-body clearfix">
                                                 <div class="header">
@@ -47,7 +47,13 @@
                                             </div>
                                         </div>
                                     </a>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <a id="delButton" href="" class="btn btn-block">Löschen</a>
+                                        </div>
+                                    </div>
                                 </li>
+
                                 counter++;
                             }
                         }

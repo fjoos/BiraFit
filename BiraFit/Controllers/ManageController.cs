@@ -437,12 +437,43 @@ namespace BiraFit.Controllers
 
             return View(new ShowViewModel
             {
+                User_Id = user.Id,
+                Picture_ID = user.ProfilBild,
                 Vorname = user.Vorname,
                 Name = user.Name,
+                Adresse = user.Adresse,
+                Mail = user.Email,
                 Beschreibung = personalTrainer.Beschreibung,
                 Bewertung = personalTrainer.Bewertung
             });
         }
+
+        //POST /Manage/Show/34/3
+        [HttpPost]
+        public ActionResult RateTrainer(string id, float rating)
+        {
+            var pT = Context.PersonalTrainer.Single(k => k.User_Id == id);
+            float cache = rating;
+            try
+            {
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                cache += pT.Bewertung * pT.AnzahlBewertungen;
+                pT.AnzahlBewertungen = pT.AnzahlBewertungen + 1;
+                pT.Bewertung = (float)System.Math.Round(cache / pT.AnzahlBewertungen, 1);
+                TryUpdateModel(pT);
+                Context.SaveChanges();
+                return RedirectToAction("Show/"+pT.User_Id, "Manage");
+            }
+            catch
+            {
+                System.Console.WriteLine("Exit3");
+                return RedirectToAction("Show/"+pT.User_Id, "Manage");
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {

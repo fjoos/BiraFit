@@ -11,7 +11,7 @@ namespace BiraFit.Models
         public int Id { get; set; }
 
         [Required]
-        public int Bewertung { get; set; }
+        public float Bewertung { get; set; }
 
         [Required]
         public string User_Id { get; set; }

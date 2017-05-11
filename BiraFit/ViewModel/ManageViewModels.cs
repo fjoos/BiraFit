@@ -113,15 +113,27 @@ namespace BiraFit.Models
     public class ShowViewModel
     {
         [Required]
+        public string User_Id { get; set; }
+
+        [Required]
+        public string Picture_ID { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]
         public string Vorname { get; set; }
 
         [Required]
+        public string Adresse { get; set; }
+
+        [Required]
+        public string Mail { get; set; }
+
+        [Required]
         public string Beschreibung { get; set; }
 
         [Required]
-        public int Bewertung { get; set; }
+        public float Bewertung { get; set; }
     }
 }
