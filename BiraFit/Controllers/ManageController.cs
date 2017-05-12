@@ -454,6 +454,7 @@ namespace BiraFit.Controllers
         {
             var pT = Context.PersonalTrainer.Single(k => k.User_Id == id);
             float cache = rating;
+            Response.Cookies[id].Value = ""+rating;
             try
             {
                 if (id == null)
