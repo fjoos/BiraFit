@@ -2,11 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var cookieValue = "";
-    if (Request.Cookies[Model.User_Id] != null)
-    {
-        cookieValue = Request.Cookies[Model.User_Id].Value;
-    }
+    var cookie = Request.Cookies[Model.User_Id];
 }
 
 <body id="profileBack">
@@ -62,7 +58,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
 
-                                            @if (cookieValue == "")
+                                            @if (cookie == null)
                                             {
                                                 using (Html.BeginForm("RateTrainer", "Manage"))
                                                 {
@@ -73,7 +69,7 @@
                                             }
                                             else
                                             {
-                                                <p>Sie haben den Trainer mit @cookieValue/5 Sternen bewertet.</p>
+                                                <p>Sie haben den Trainer mit @cookie.Value/5 Sternen bewertet.</p>
                                             }
                                         </div>
                                     </div>
