@@ -23,7 +23,9 @@ namespace BiraFit.Controllers
                         Sportler = null,
                         Trainer = null,
                         IsOwner = false,
-                        OfferMade = false
+                        OfferMade = false,
+                        sportlerProfilbild = null,
+                        sportlerEmail = null
                     });
                 }
 
@@ -33,9 +35,10 @@ namespace BiraFit.Controllers
             if (IsSportler())
             {
                 var currentId = User.Identity.GetUserId();
-
                 foreach (var bedarf in bedarfList)
                 {
+                    var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
+                    var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
                     if (currentId == GetSportlerAspNetUserId(bedarf.Sportler_Id))
                     {
                         bedarfViewModelList.Add(new BedarfViewModel()
@@ -45,6 +48,8 @@ namespace BiraFit.Controllers
                             Trainer = null,
                             IsOwner = true,
                             OfferMade = false,
+                            sportlerProfilbild = sportlerId.ProfilBild,
+                            sportlerEmail = sportlerId.Email
                         });
                     }
                     else
@@ -56,6 +61,8 @@ namespace BiraFit.Controllers
                             Trainer = null,
                             IsOwner = false,
                             OfferMade = false,
+                            sportlerProfilbild = sportlerId.ProfilBild,
+                            sportlerEmail = sportlerId.Email
                         });
                     }
                 }
@@ -65,16 +72,20 @@ namespace BiraFit.Controllers
             foreach (var bedarf in bedarfList)
             {
                 var personalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
-
+                var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
+                var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
                 if (Context.Angebot.Any(i => i.Bedarf_Id == bedarf.Id && i.PersonalTrainer_Id == personalTrainerId))
                 {
+                   
                     bedarfViewModelList.Add(new BedarfViewModel()
                     {
                         Bedarf = bedarf,
-                        Sportler = null,
+                        Sportler = sportler,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
-                        OfferMade = true
+                        OfferMade = true,
+                        sportlerProfilbild = sportlerId.ProfilBild,
+                        sportlerEmail = sportlerId.Email
                     });
                 }
                 else
@@ -82,10 +93,12 @@ namespace BiraFit.Controllers
                     bedarfViewModelList.Add(new BedarfViewModel()
                     {
                         Bedarf = bedarf,
-                        Sportler = null,
+                        Sportler = sportler,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
                         OfferMade = false,
+                        sportlerProfilbild = sportlerId.ProfilBild,
+                        sportlerEmail = sportlerId.Email
                     });
                 }
             }

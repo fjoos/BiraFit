@@ -12,5 +12,7 @@ namespace BiraFit.ViewModel
         public int Preis { get; set; }
         public string Beschreibung { get; set; }
         public int Id { get; set; }
+        public string sportlerProfilbild { get; set; }
+        public string sportlerEmail { get; set; }
     }
 }

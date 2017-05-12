@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Bedarf";
+    var image = "~/Resources/standardprofilbild.jpg";
 }
 
 <div class="row">
@@ -21,12 +22,39 @@
                             <article>
                                 <div class="row">
                                     <div class="col-sm-4 col-md-2">
-                                        <figure>
-                                            <img class="img-circle" id="profileImg" src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
-                                        </figure>
-                                        <p id="usrName">
-                                            Benutzername
-                                        </p>
+                                       
+                                        
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                if (item.sportlerProfilbild != null && item.sportlerEmail != null)
+                                                {
+                                                    <figure>
+                                                        <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/"+item.sportlerProfilbild)" />
+                                                    </figure>
+                                                    <p id="usrName">
+                                                       @item.sportlerEmail
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <figure>
+                                                        <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                                    </figure>
+                                                    <p id="usrName">
+                                                        Benutzer
+                                                    </p>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <figure>
+                                                    <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                                </figure>
+                                                <p id="usrName">
+                                                    Benutzername
+                                                </p>
+                                            }
+                                                  
                                     </div>
                                     <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
                                         <h4>
@@ -119,7 +147,7 @@
                                                     </div>
                                                 </div>
                                             }
-</article>
+                            </article>
                         </div>
                     }
                 }
