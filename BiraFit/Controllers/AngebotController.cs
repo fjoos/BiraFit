@@ -77,7 +77,8 @@ namespace BiraFit.Controllers
             var currentAngebot = Context.Angebot.Single(i => i.Id == id);
             var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
             var personalTrainerId = currentAngebot.PersonalTrainer_Id;
-
+            List<Angebot> canceledAngebote = Context.Angebot.Where(s => s.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+            canceledAngebote.Remove(currentAngebot);
             if (Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id != currentAngebot.Bedarf_Id)
             {
                 return RedirectToAction("Index", "Home");
@@ -111,6 +112,12 @@ namespace BiraFit.Controllers
 
             createEmailForPersonaTrainer(peronalTrainerEmail);
             createEmailForSportler(sportlerEmail);
+            foreach(Angebot cancelAngebot in canceledAngebote)
+            {
+                var cancelPersonalTrainer = GetTrainerAspNetUserId(cancelAngebot.PersonalTrainer_Id);
+                var cancelPersonalTrainerId = Context.Users.Single(s => s.Id == cancelPersonalTrainer);
+                createCancelEmails(cancelPersonalTrainerId.Email);
+            }
 
             return RedirectToAction("Chat/" + Context.Konversation
                                         .Single(i => i.Sportler_Id == sportlerId &&
@@ -127,6 +134,12 @@ namespace BiraFit.Controllers
         private void createEmailForSportler(string email)
         {
             var massage = "Sie haben ein Angebot angenommen. Eine neue Konversation ist nun verfügbar.";
+            SendMail(email, massage);
+        }
+
+        private void createCancelEmails(string email)
+        {
+            var massage = "Ihr Angebot wurde leider abgelehnt. Probieren Sie es weiter!";
             SendMail(email, massage);
         }
 
