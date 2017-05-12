@@ -83,11 +83,14 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            Context.Konversation.Add(new Konversation()
+            if(!Context.Konversation.Any(s => s.PersonalTrainer_Id == personalTrainerId && s.Sportler_Id == sportlerId))
             {
-                Sportler_Id = sportlerId,
-                PersonalTrainer_Id = personalTrainerId
-            });
+                Context.Konversation.Add(new Konversation()
+                {
+                    Sportler_Id = sportlerId,
+                    PersonalTrainer_Id = personalTrainerId
+                });
+            }
 
             var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id)
                 .ToList();
