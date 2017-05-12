@@ -5,75 +5,84 @@
     var dateNow = new DateTime();
 }
 <body id="chatBack">
-<div class="row">
-    <div class="container" id="boxForm">
-        <div class="mainbox col-md-8 col-md-offset-2" id="chatbox">
-            <div class="panel panel-info" id="innerbox">
-                <div class="panel-heading" id="boxHead">
-                    <div class="panel-title">
-                        <h2>Meine Chats</h2>
+    <div class="row">
+        <div class="container" id="boxForm">
+            <div class="mainbox col-md-8 col-md-offset-2" id="chatbox">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
+                        <div class="panel-title">
+                            <h2>Meine Chats</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-body" id="boxbody">
-                    <ul class="chat">
+                    <div class="modal-body" id="boxbody">
                         @{
                             int counter = 0;
                             foreach (var item in @Model.Konversationen)
                             {
-                                <li class="left clearfix" id="chatList">
-                                    <a href="Nachricht/Chat/@item.Id">
-                                        <div class="col-md-12">
-                                            <span class="chat-img pull-left">
-                                                @if (Model.ProfileImages[counter] == "standardprofilbild.jpg")
-                                                {
-                                                    <img src="@Url.Content(imagePath + Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
-
-                                                }
-                                                else
-                                                {
-                                                    <img src="@Url.Content(imagePath + "AccountPicture/"+ Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
-
-                                                }
-                                                  </span>
-                                            <div class="chat-body clearfix">
-                                                <div class="header">
-                                                    <strong id="usrName">@Model.UserNames[counter]</strong>
-                                                    <small class="pull-right">
-                                                        <span class="glyphicon glyphicon-time"></span>
-                                                        @if(Model.SendTimes[counter] == dateNow)
+                                <div class="col-md-12" id="chatBackgrnd">
+                                <a href="Nachricht/Chat/@item.Id">
+                                    <div class="col-md-10">
+                                        <div class="modal-content" id="chatList">
+                                            <article>
+                                                <div class="row">
+                                                    <div class="col-md-1">
+                                                        @if (Model.ProfileImages[counter] == "standardprofilbild.jpg")
                                                         {
-                                                            <p>Noch keine Nachrichten gesendet.</p>
-                                                        }else {
-                                                           <p>@Model.SendTimes[counter]</p> 
+                                                            <img src="@Url.Content(imagePath + Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="@Url.Content(imagePath + "AccountPicture/"+ Model.ProfileImages[counter])" alt="@Model.ProfileImages[counter]" class="img-circle" />
+
                                                         }
 
-                                                    </small>
+                                                    </div>
+                                                    <div class="col-md-9" id="angebotBedarfBody">
+                                                        <strong id="usrName">@Model.UserNames[counter]</strong>
+                                                        <small class="pull-right">
+                                                            <span class="glyphicon glyphicon-time"></span>
+                                                            @if (Model.SendTimes[counter] == dateNow)
+                                                            {
+                                                                <p>Noch keine Nachrichten gesendet.</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>@Model.SendTimes[counter]</p>
+                                                            }
+
+                                                        </small>
+                                                        @if (@Model.LastMessages[counter].Length > 40)
+                                                        {
+                                                            <p>
+                                                                @Model.LastMessages[counter].Remove(40)...
+                                                            </p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>
+                                                                @Model.LastMessages[counter]
+                                                            </p>
+                                                        }
+                                                    </div>
                                                 </div>
-                                                @if (@Model.LastMessages[counter].Length > 40)
-                                                {
-                                                    <p>
-                                                        @Model.LastMessages[counter].Remove(40)...
-                                                    </p>
-                                                }
-                                                else
-                                                {
-                                                    <p>
-                                                        @Model.LastMessages[counter]
-                                                    </p>
-                                                }
-                                            </div>
+                                            </article>
                                         </div>
-                                    </a>
-                                </li>
+                                    </div>
+                                </a>
+                                <div class="col-md-2">
+                                    <div class="form-group" id="chatBtn">
+                                        <a id="delButton" href="/Nachricht/Delete/@item.Id" class="btn btn-block">Löschen</a>
+                                    </div>
+                                </div>
+                                    </div>
                                 counter++;
+
                             }
                         }
-                    </ul>
-                </div>
-                <div class="panel-footer" id="footerBox">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>

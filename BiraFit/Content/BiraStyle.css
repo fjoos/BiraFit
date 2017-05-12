@@ -36,10 +36,10 @@
     border: none;
 }
 
-#chatbox #boxbody {
-    background: black;
-    opacity: 0.9;
-}
+    #chatbox #boxbody {
+        background: black;
+        opacity: 0.9;
+    }
 
 #footerBox {
     background: none;
@@ -139,6 +139,8 @@
 #profileImg {
     width: 100px;
     height: 100px;
+    margin-top: 5px;
+    margin-left: 5px;
 }
 
 #detailProfileImg {
@@ -159,7 +161,9 @@
 
 #usrName {
     color: orange !important;
-    padding: 5px 5px 5px 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    word-wrap: break-word;
 }
 
 .fa fa-reply {
@@ -178,11 +182,6 @@
     border: solid;
     border-color: lawngreen;
     background-color: greenyellow;
-}
-
-#chatList {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
 }
 
 #chatList * { color: white; }
@@ -222,8 +221,21 @@
     max-width: none !important;
 }
 
-#chatList { color: orange; }
-
+#chatList {
+    color: orange;
+    margin-top: 10px;
+    box-shadow: none;
+    border: 2px solid orange;
+    background: black;
+    opacity: 0.9;
+}
+#chatBackgrnd {
+    background: black;
+    opacity: 0.9;
+}
+#chatBtn {
+    margin-top: 20px;
+}
 #chatList:hover {
     text-decoration: none;
     box-shadow: 0px 0px 3px 3px orange;

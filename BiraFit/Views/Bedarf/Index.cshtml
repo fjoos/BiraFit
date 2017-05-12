@@ -31,18 +31,18 @@
                                                     <figure>
                                                         <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/"+item.sportlerProfilbild)" />
                                                     </figure>
-                                                    <p id="usrName">
+                                                    <small id="usrName">
                                                        @item.sportlerEmail
-                                                    </p>
+                                                    </small>
                                                 }
                                                 else
                                                 {
                                                     <figure>
                                                         <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
                                                     </figure>
-                                                    <p id="usrName">
-                                                        Benutzer
-                                                    </p>
+                                                    <small id="usrName">
+                                                       @item.sportlerEmail
+                                                    </small>
                                                 }
                                             }
                                             else
@@ -50,9 +50,9 @@
                                                 <figure>
                                                     <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
                                                 </figure>
-                                                <p id="usrName">
-                                                    Benutzername
-                                                </p>
+                                                <small id="usrName">
+                                                    Anonym
+                                                </small>
                                             }
                                                   
                                     </div>

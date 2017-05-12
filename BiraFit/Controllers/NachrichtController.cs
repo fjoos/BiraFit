@@ -71,6 +71,27 @@ namespace BiraFit.Controllers
             });
         }
 
+        //GET: Nachricht/Delete/id
+        public ActionResult Delete(int id)
+        {
+            Konversation konv = Context.Konversation.Single(i => i.Id == id);
+            deleteMessages(konv.Id);
+            Context.Konversation.Remove(konv);
+            Context.SaveChanges();
+            return RedirectToAction("Index", "Nachricht");
+        }
+        private void deleteMessages(int id)
+        {
+
+                var openMessages = Context.Nachricht.Where((s => s.Konversation_Id == id));
+                foreach (Nachricht item in openMessages)
+                {
+                    Context.Nachricht.Remove(item);
+                }
+            
+        }
+
+
         // GET: Nachricht/Chat/<id>
         public ActionResult Chat(int id)
         {
