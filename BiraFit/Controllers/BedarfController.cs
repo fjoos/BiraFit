@@ -67,11 +67,24 @@ namespace BiraFit.Controllers
 
             if (GetSportlerAspNetUserId(bedarf.Sportler_Id) == User.Identity.GetUserId())
             {
+                deleteOpenAngebote(bedarf.Id);
                 Context.Bedarf.Remove(bedarf);
                 Context.SaveChanges();
             }
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void deleteOpenAngebote(int bedarfId)
+        {
+            if(Context.Angebot.Any(s => s.Bedarf_Id == bedarfId))
+            {
+                var openAngebote = Context.Angebot.Where((s => s.Bedarf_Id == bedarfId));
+                foreach(Angebot item in openAngebote)
+                {
+                    Context.Angebot.Remove(item);
+                }
+            }
         }
 
         [HttpPost]
