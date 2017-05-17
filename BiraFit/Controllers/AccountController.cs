@@ -63,8 +63,6 @@ namespace BiraFit.Controllers
                 return View("Login", model);
             }
 
-            // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.
-            // Wenn Sie aktivieren möchten, dass Kennwortfehler eine Sperre auslösen, ändern Sie in "shouldLockout: true".
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                 shouldLockout: false);
             switch (result)
@@ -87,7 +85,6 @@ namespace BiraFit.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
-            // Verlangen, dass sich der Benutzer bereits mit seinem Benutzernamen/Kennwort oder einer externen Anmeldung angemeldet hat.
             if (!await SignInManager.HasBeenVerifiedAsync())
             {
                 return View("Error");
@@ -107,10 +104,6 @@ namespace BiraFit.Controllers
                 return View(model);
             }
 
-            // Der folgende Code schützt vor Brute-Force-Angriffen der zweistufigen Codes. 
-            // Wenn ein Benutzer in einem angegebenen Zeitraum falsche Codes eingibt, wird das Benutzerkonto 
-            // für einen bestimmten Zeitraum gesperrt. 
-            // Sie können die Einstellungen für Kontosperren in "IdentityConfig" konfigurieren.
             var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code,
                 isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
@@ -157,19 +150,11 @@ namespace BiraFit.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     AllocateUser(user, model);
-
-                    // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
-                    // E-Mail-Nachricht mit diesem Link senden
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Konto bestätigen", "Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
             return View(model);
         }
 
@@ -206,19 +191,15 @@ namespace BiraFit.Controllers
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                    // Nicht anzeigen, dass der Benutzer nicht vorhanden ist oder nicht bestätigt wurde.
-                    return View("ForgotPasswordConfirmation");
+                   return View("ForgotPasswordConfirmation");
                 }
 
-                // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
-                // E-Mail-Nachricht mit diesem Link senden
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
-            // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
             return View(model);
         }
 
@@ -252,7 +233,6 @@ namespace BiraFit.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                // Nicht anzeigen, dass der Benutzer nicht vorhanden ist.
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
@@ -317,7 +297,6 @@ namespace BiraFit.Controllers
                 return View();
             }
 
-            // Token generieren und senden
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
                 return View("Error");
@@ -337,7 +316,6 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Login");
             }
 
-            // Benutzer mit diesem externen Anmeldeanbieter anmelden, wenn der Benutzer bereits eine Anmeldung besitzt
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
@@ -349,7 +327,6 @@ namespace BiraFit.Controllers
                     return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
                 case SignInStatus.Failure:
                 default:
-                    // Benutzer auffordern, ein Konto zu erstellen, wenn er kein Konto besitzt
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation",
@@ -372,7 +349,6 @@ namespace BiraFit.Controllers
 
             if (ModelState.IsValid)
             {
-                // Informationen zum Benutzer aus dem externen Anmeldeanbieter abrufen
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {

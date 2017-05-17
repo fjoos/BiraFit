@@ -120,7 +120,6 @@ namespace BiraFit.Controllers
             {
                 return View(model);
             }
-            // Token generieren und senden
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
             if (UserManager.SmsService != null)
             {
@@ -169,7 +168,6 @@ namespace BiraFit.Controllers
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Eine SMS über den SMS-Anbieter senden, um die Telefonnummer zu überprüfen.
             return phoneNumber == null
                 ? View("Error")
                 : View(new VerifyPhoneNumberViewModel {PhoneNumber = phoneNumber});
@@ -196,7 +194,6 @@ namespace BiraFit.Controllers
                 }
                 return RedirectToAction("Index", new {Message = ManageMessageId.AddPhoneSuccess});
             }
-            // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten. Formular erneut anzeigen.
             ModelState.AddModelError("", "Fehler beim Überprüfen des Telefons.");
             return View(model);
         }
@@ -280,7 +277,6 @@ namespace BiraFit.Controllers
                 AddErrors(result);
             }
 
-            // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten. Formular erneut anzeigen.
             return View(model);
         }
 
@@ -317,7 +313,6 @@ namespace BiraFit.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
-            // Umleitung an den externen Anmeldeanbieter anfordern, um eine Anmeldung für den aktuellen Benutzer zu verknüpfen.
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"),
                 User.Identity.GetUserId());
         }

@@ -79,6 +79,7 @@ namespace BiraFit.Controllers
             var personalTrainerId = currentAngebot.PersonalTrainer_Id;
             List<Angebot> canceledAngebote = Context.Angebot.Where(s => s.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
             canceledAngebote.Remove(currentAngebot);
+
             if (Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id != currentAngebot.Bedarf_Id)
             {
                 return RedirectToAction("Index", "Home");
@@ -104,6 +105,7 @@ namespace BiraFit.Controllers
             var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
             Context.Bedarf.Remove(bedarfId);
             Context.SaveChanges();
+
             var ptId = GetTrainerAspNetUserId(personalTrainerId);
             var peronalTrainerEmail = Context.Users.Single(s => s.Id == ptId).Email;
 
