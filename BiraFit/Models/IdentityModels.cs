@@ -10,7 +10,6 @@ using BiraFit.ViewModel;
 
 namespace BiraFit.Models
 {
-    // Sie können Profildaten für den Benutzer durch Hinzufügen weiterer Eigenschaften zur ApplicationUser-Klasse hinzufügen. Weitere Informationen finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=317594".
     [Table("AspNetUsers")]
     public class ApplicationUser : IdentityUser
     {
@@ -35,9 +34,7 @@ namespace BiraFit.Models
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Beachten Sie, dass der "authenticationType" mit dem in "CookieAuthenticationOptions.AuthenticationType" definierten Typ übereinstimmen muss.
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Benutzerdefinierte Benutzeransprüche hier hinzufügen
             return userIdentity;
         }
     }
