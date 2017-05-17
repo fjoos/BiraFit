@@ -274,6 +274,7 @@ th {
   font-style: normal;
   font-weight: normal;
   line-height: 1;
+  color: orange;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1141,7 +1142,9 @@ img {
           transition: all .2s ease-in-out;
 }
 .img-circle {
-  border-radius: 50%;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
 }
 hr {
   margin-top: 20px;
@@ -2523,7 +2526,8 @@ input[type="checkbox"] {
   line-height: normal;
 }
 input[type="file"] {
-  display: block;
+    display: block;
+    color: orange;
 }
 input[type="range"] {
   display: block;
@@ -5242,16 +5246,19 @@ a.thumbnail.active {
   list-style: none;
 }
 .list-group {
-  padding-left: 0;
-  margin-bottom: 20px;
+    padding-left: 0;
+    margin-bottom: 20px;
+    border: none;
+    background: none;
 }
 .list-group-item {
-  position: relative;
-  display: block;
-  padding: 10px 15px;
-  margin-bottom: -1px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    border: none;
+    background: none;
+    border-bottom: 2px solid orange;
 }
 .list-group-item:first-child {
   border-top-left-radius: 4px;
@@ -5533,6 +5540,9 @@ button.list-group-item-danger.active:focus {
 .panel > .table-responsive:first-child > .table:first-child {
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+}
+.radio-inline, .checkbox-inline {
+    color: white;
 }
 .panel > .table:first-child > thead:first-child > tr:first-child,
 .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child,
@@ -5903,16 +5913,16 @@ button.close {
   margin: 10px;
 }
 .modal-content {
-  position: relative;
-  background-color: #fff;
-  -webkit-background-clip: padding-box;
-          background-clip: padding-box;
-  border: 1px solid #999;
-  border: 1px solid rgba(0, 0, 0, .2);
-  border-radius: 6px;
-  outline: 0;
-  -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-          box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    position: relative;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    background: none;
+    border: 2px solid orange;
+    border-radius: 6px;
+    outline: 0;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 }
 .modal-backdrop {
   position: fixed;
@@ -6754,6 +6764,11 @@ button.close {
     display: none !important;
   }
 }
+.fa fa-reply {
+    color: orange;
+    background: none;
+    border-color: orange;
+}
 /*# sourceMappingURL=bootstrap.css.map */
 
 /*Navigation*/
@@ -6840,9 +6855,6 @@ button.close {
     background: none;
     color: orange;
 }
-#descriptionText {
-    color: white;
-}
 
 /*Buttons*/
 #closeBtn {
@@ -6874,26 +6886,15 @@ button.close {
         box-shadow: 0px 0px 3px 3px orange;
     }
 
-
-
-
-
-
-
-
 #delButton {
     color: red;
     background: none;
     border: 2px solid red;
 }
-#delAngButton {
-    color: red;
-    background: none;
-    border: 2px solid red;
+#bedarf #delButton {
     margin-top: 35px;
 }
-
-    #delButton:hover, #delAngButton:hover {
+    #delButton:hover {
         box-shadow: 0px 0px 3px 3px red;
     }
 
@@ -6902,45 +6903,28 @@ button.close {
     background: none;
     border: 2px solid green;
 }
-
     #acceptButton:hover {
         box-shadow: 0px 0px 3px 3px green;
     }
 
+/*Images*/
 #profileImg {
     width: 100px;
     height: 100px;
     margin-top: 5px;
     margin-left: 5px;
 }
-
 #detailProfileImg {
     margin-top: 20px;
     width: 220px;
     height: 220px;
 }
 
-.glyphicon glyphicon-off {
-    color: orange;
-}
-
-#angebotButton {
-    color: orange;
-    background: none;
-    border-color: orange
-}
 
 #usrName {
     color: orange !important;
     margin-top: 5px;
-    margin-left: 5px;
     word-wrap: break-word;
-}
-
-.fa fa-reply {
-    color: orange;
-    background: none;
-    border-color: orange
 }
 
 #chatHim {
@@ -7068,22 +7052,9 @@ textarea .form-control {
     text-align: center;
 }
 
-
-.modal-content {
-    background: none;
-    border: 2px solid orange;
-}
-
-
-
 #postTime {
     background-color: orange;
     color: black;
-}
-
-.img-circle {
-    height: 50px;
-    width: 50px;
 }
 
 #bedarf {
@@ -7105,41 +7076,27 @@ textarea .form-control {
     padding: 0px 25px 5px;
 }
 
+/*Backgrounds*/
 #mainBack {
     background: url('../resources/BackgroundMain.jpg') no-repeat center center fixed;
     background-size: cover;
 }
-
 #loginRegBack {
     background: url('../resources/BackgroundLoginRegister.jpg') no-repeat center center fixed;
     background-size: cover;
 }
-
 #profileBack {
     background: url('../resources/BackgroundProfile.jpg') no-repeat center center fixed;
     background-size: cover;
 }
-
 #chatBack {
     background: url('../resources/BackgroundChat.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
-#logregText {
-    color: lightgray;
+/*text etc*/
+p {
+    color: white;
 }
 
-#myList {
-    border: none;
-    background: none;
-}
 
-#myListObj {
-    border: none;
-    background: none;
-    border-bottom: 2px solid orange;
-}
-
-input[type="file"] {
-    color: orange;
-}

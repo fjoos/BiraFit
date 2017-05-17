@@ -56,17 +56,17 @@
                                             }
                                                   
                                     </div>
-                                    <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
+                                    <div class="col-md-8" id="angebotBedarfBody">
                                         <h4>
                                             <b>@item.Bedarf.Titel</b>
                                         </h4>
-                                        <p id="descriptionText">@item.Bedarf.Beschreibung</p>
-                                        <section>
-                                            <small>Preisvorstellung: <b id="descriptionText">@item.Bedarf.Preis.- / Woche</b></small>
-                                        </section>
-                                        <section>
-                                            <small>Umgebung: <b id="descriptionText">@item.Bedarf.Ort</b></small>
-                                        </section>
+                                        <p>@item.Bedarf.Beschreibung</p>
+                                        <div class="col-md-4">
+                                            Preisvorstellung: <p><b>@item.Bedarf.Preis.- / Woche</b></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            Umgebung: <p><b>@item.Bedarf.Ort</b></p>
+                                        </div>
                                     </div>
                                     <div class="col-sm-2 col-md-2">
                                         <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>

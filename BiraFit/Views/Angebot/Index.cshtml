@@ -32,19 +32,18 @@
                                         <figure>
                                             <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
                                         </figure>
-                                        <p id="usrName">
-                                        </p>
+                                        @*Name?*@
                                     </div>
                                     <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
                                         <h4>
                                             <b>@Model[0].Bedarf.Titel</b>
                                         </h4>
-                                        <p id="descriptionText">@Model[0].Bedarf.Beschreibung</p>
+                                        <p>@Model[0].Bedarf.Beschreibung</p>
                                         <section>
-                                            <small>Preisvorstellung: <b id="descriptionText">@Model[0].Bedarf.Preis.- / Woche</b></small>
+                                            Preisvorstellung: <p><b>@Model[0].Bedarf.Preis.- / Woche</b></p>
                                         </section>
                                         <section>
-                                            <small>Umgebung: <b id="descriptionText">@Model[0].Bedarf.Ort</b></small>
+                                            Umgebung: <p><b>@Model[0].Bedarf.Ort</b></p>
                                         </section>
                                     </div>
                                     <div class="col-sm-2 col-md-2">
@@ -75,15 +74,15 @@
                                                         <img class="img-circle" id="profileImg" src="~/Resources/standardprofilbild.jpg" />
                                                     }
                                                 </a>
-                                                    </figure>
+                                                </figure>
                                             </div>
                                             <div class="col-md-8 col-sm-6" id="angebotBedarfBody">
                                                 <h4>
                                                     <b>Angebot von <a href="/Manage/Show/@item.peronalTrainerId">@item.trainerUsername</a></b>
                                                 </h4>
-                                                <p id="descriptionText">@item.Angebot.Beschreibung</p>
+                                                <p>@item.Angebot.Beschreibung</p>
                                                 <section>
-                                                    <small>Preisangebot: <b id="descriptionText">@item.Angebot.Preis.- / Woche</b></small>
+                                                    Preisangebot: <p><b>@item.Angebot.Preis.- / Woche</b></p>
                                                 </section>
                                             </div>
                                             <div class="col-md-2 col-sm-2">

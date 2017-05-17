@@ -31,20 +31,18 @@
                                                 <img class="img-circle" id="profileImg" src="~/Resources/standardprofilbild" />
                                             }
                                         </figure>
-                                        <p id="usrName">
-                                            @item.sportlerUsername
-                                        </p>
+                                        @item.sportlerUsername                                        
                                     </div>
                                     <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
                                         <h4>
                                             <b>@item.Bedarf.Titel</b>
                                         </h4>
-                                        <p id="descriptionText">@item.Bedarf.Beschreibung</p>
+                                        <p>@item.Bedarf.Beschreibung</p>
                                         <section>
-                                            <small>Preisvorstellung: <b id="descriptionText">@item.Bedarf.Preis.- / Woche</b></small>
+                                            Preisvorstellung: <p><b>@item.Bedarf.Preis.- / Woche</b></p>
                                         </section>
                                         <section>
-                                            <small>Umgebung: <b id="descriptionText">@item.Bedarf.Ort</b></small>
+                                            Umgebung: <p><b>@item.Bedarf.Ort</b></p>
                                         </section>
                                     </div>
                                     <div class="col-sm-2 col-md-2">
@@ -61,15 +59,15 @@
                                         <h4>
                                             <b>Mein Angebot</b>
                                         </h4>
-                                        <p id="descriptionText">@item.Angebot.Beschreibung</p>
+                                        <p>@item.Angebot.Beschreibung</p>
                                         <section>
-                                            <small>Preisvorstellung: <b id="descriptionText">@item.Angebot.Preis.- / Woche</b></small>
+                                            Preisvorstellung: <p><b>@item.Angebot.Preis.- / Woche</b></p>
                                         </section>
                                     </div>
                                     <div class="col-md-2">
                                         <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
                                     </div>
-                                    <a href="/Angebot/Withdraw/@item.Bedarf.Id" class="btn btn-primary" id="delAngButton">Löschen</a>
+                                    <a href="/Angebot/Withdraw/@item.Bedarf.Id" class="btn btn-primary" id="delButton">Löschen</a>
                                 </div>
                             </article>
                         </div>
