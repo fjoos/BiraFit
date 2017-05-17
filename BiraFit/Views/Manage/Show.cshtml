@@ -41,7 +41,7 @@
                                                 @if (Model.Bewertung > 0)
                                                 {
                                                     <input value="@Model.Bewertung" id="actRate" class="rating" min=0 max=5 step=0.1 data-size="xs" disabled>
-
+                                                    <p>(@Model.Bewertung/5) aus @Model.AnzahlBew Bewertungen.</p>
                                                 }
                                                 else
                                                 {

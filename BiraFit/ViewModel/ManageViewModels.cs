@@ -135,5 +135,8 @@ namespace BiraFit.Models
 
         [Required]
         public float Bewertung { get; set; }
+
+        [Required]
+        public int AnzahlBew { get; set; }
     }
 }

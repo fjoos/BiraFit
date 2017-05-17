@@ -440,6 +440,8 @@ namespace BiraFit.Controllers
                 Mail = user.Email,
                 Beschreibung = personalTrainer.Beschreibung,
                 Bewertung = personalTrainer.Bewertung
+                AnzahlBew = personalTrainer.AnzahlBewertungen
+
             });
         }
 
