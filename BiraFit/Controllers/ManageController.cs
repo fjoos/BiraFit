@@ -439,7 +439,7 @@ namespace BiraFit.Controllers
                 Adresse = user.Adresse,
                 Mail = user.Email,
                 Beschreibung = personalTrainer.Beschreibung,
-                Bewertung = personalTrainer.Bewertung
+                Bewertung = personalTrainer.Bewertung,
                 AnzahlBew = personalTrainer.AnzahlBewertungen
 
             });

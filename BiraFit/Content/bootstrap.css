@@ -6859,39 +6859,33 @@ button.close {
     border: 2px solid orange;
     max-width: 165px;
 }
-
-    #loginButton:hover, #rateButton:hover {
-        box-shadow: 0px 0px 3px 3px orange;
-    }
-
-
 #bewerbButton {
     color: orange;
     background: none;
     border: 2px solid orange;
     height: auto;
 }
-
-    #bewerbButton:hover {
-        box-shadow: 0px 0px 3px 3px orange;
-    }
-
 #editButton {
     color: orange;
     background: none;
     border: 2px solid orange;
 }
-
-    #editButton:hover {
+    #loginButton:hover, #rateButton:hover, #bewerbButton:hover, #editButton:hover {
         box-shadow: 0px 0px 3px 3px orange;
     }
+
+
+
+
+
+
+
 
 #delButton {
     color: red;
     background: none;
     border: 2px solid red;
 }
-
 #delAngButton {
     color: red;
     background: none;
