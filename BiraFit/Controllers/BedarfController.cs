@@ -33,9 +33,17 @@ namespace BiraFit.Controllers
             {
                 if (sportlerId > 0)
                 {
-                    string query =
-                        $"INSERT INTO Bedarf (Titel,Beschreibung,Preis,Ort,OpenBedarf,Sportler_Id,Datum) VALUES ('{bedarf.Titel}','{bedarf.Beschreibung}',{bedarf.Preis},'{bedarf.Ort}',{1},{sportlerId},'{DateTime.Now}')";
-                    Context.Database.ExecuteSqlCommand(query);
+                    Context.Bedarf.Add(new Bedarf()
+                    {
+                        Titel = bedarf.Titel,
+                        Beschreibung = bedarf.Beschreibung,
+                        Preis = bedarf.Preis,
+                        Ort = bedarf.Ort,
+                        OpenBedarf = true,
+                        Sportler_Id = GetUserIdbyAspNetUserId(User.Identity.GetUserId()),
+                        Datum = DateTime.Now
+                    });
+                    Context.SaveChanges();
                     return RedirectToAction("Index", "Bedarf");
                 }
                 return RedirectToAction("Index", "Home");

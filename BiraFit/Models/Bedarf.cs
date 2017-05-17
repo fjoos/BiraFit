@@ -31,6 +31,7 @@ namespace BiraFit.Models
 
         public List<Angebot> Angebote { get; set; }
 
+        [Required]
         public int Sportler_Id { get; set; }
     }
 }
