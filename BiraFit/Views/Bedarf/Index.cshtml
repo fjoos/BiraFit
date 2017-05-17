@@ -79,12 +79,12 @@
 
                                         <div class="panel-footer" id="footerBox">
                                             <div class="row">
-                                                <div class="col-md-5">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <p>Sie haben schon ein Angebot gemacht.</p>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6 pull-right">
                                                     <div class="form-group">
                                                         <a class="btn btn-block" id="delButton" href="/Angebot/Withdraw/@item.Bedarf.Id">Angebot zurückziehen</a>
                                                     </div>
@@ -117,7 +117,7 @@
                                                     @Html.Hidden("Id", item.Bedarf.Id, new { @value = item.Bedarf.Id })
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <input type="submit" class="btn btn-block" id="bewerbButton" value="Angebot abgeben"/>
+                                                            <input type="submit" class="btn btn-block" id="normalButton" value="Angebot abgeben"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +133,7 @@
                                                     <div class="row">
                                                             <div class="col-md-3 col-md-offset-5">
                                                                 <div class="form-group">
-                                                                    <a class="btn btn-block" id="editButton" href="Bedarf/Edit/@item.Bedarf.Id">Bearbeiten</a>
+                                                                    <a class="btn btn-block" id="normalButton" href="Bedarf/Edit/@item.Bedarf.Id">Bearbeiten</a>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-1">

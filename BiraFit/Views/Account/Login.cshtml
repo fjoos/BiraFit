@@ -20,13 +20,13 @@
                 <div class="modal-body">
                     <div class="col-md-12">
                         <div class="form-group">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "usrname", @placeholder = "E-Mail" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-Mail" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @id = "psw", @placeholder = "Kennwort" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Kennwort" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                         <div class="form-group">
-                            <button type="submit" id="loginButton" class="btn btn-block">Anmelden</button>
+                            <button type="submit" id="normalButton" class="btn btn-block">Anmelden</button>
                         </div>
                 </div>
             </div>

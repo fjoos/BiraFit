@@ -2551,22 +2551,23 @@ output {
   color: #555;
 }
 .form-control {
-  display: block;
-  width: 100%;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
-       -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-          transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    display: block;
+    width: 100%;
+    height: 50px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: white;
+    background: none;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: none;
+    margin-bottom: 15px;
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 .form-control:focus {
   border-color: #66afe9;
@@ -3845,6 +3846,14 @@ tbody.collapse.in {
   font-size: 18px;
   line-height: 1.3333333;
   border-radius: 6px;
+}
+.control-label {
+    font-size: 17px;
+    color: orange;
+    position: absolute;
+    top: 5px;
+    left: 27px;
+    text-align: center;
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
@@ -6426,6 +6435,10 @@ button.close {
   margin: 0;
   background-color: #fff;
 }
+.form-group .form-control {
+    width: 100%;
+    max-width: none !important;
+}
 .carousel-caption {
   position: absolute;
   right: 15%;
@@ -6502,6 +6515,9 @@ button.close {
 .modal-footer:after {
   display: table;
   content: " ";
+}
+p {
+    color: white;
 }
 .clearfix:after,
 .dl-horizontal dd:after,
@@ -6860,44 +6876,22 @@ button.close {
 #closeBtn {
     color: floralwhite;
 }
-#loginButton {
+#normalButton {
     color: orange;
     background: none;
     border: 2px solid orange;
 }
-#rateButton {
-    color: orange;
-    background: none;
-    border: 2px solid orange;
-    max-width: 165px;
-}
-#bewerbButton {
-    color: orange;
-    background: none;
-    border: 2px solid orange;
-    height: auto;
-}
-#editButton {
-    color: orange;
-    background: none;
-    border: 2px solid orange;
-}
-    #loginButton:hover, #rateButton:hover, #bewerbButton:hover, #editButton:hover {
+    #normalButton:hover {
         box-shadow: 0px 0px 3px 3px orange;
     }
-
 #delButton {
     color: red;
     background: none;
     border: 2px solid red;
 }
-#bedarf #delButton {
-    margin-top: 35px;
-}
     #delButton:hover {
         box-shadow: 0px 0px 3px 3px red;
     }
-
 #acceptButton {
     color: green;
     background: none;
@@ -6920,70 +6914,47 @@ button.close {
     height: 220px;
 }
 
-
-#usrName {
-    color: orange !important;
-    margin-top: 5px;
-    word-wrap: break-word;
-}
-
+/*chat*/
 #chatHim {
     border: solid;
     border-color: lightslategray;
     background-color: gray;
 }
-
 #chatMe {
     border: solid;
     border-color: lawngreen;
     background-color: greenyellow;
 }
-
 #chatList * {
     color: white;
 }
-
 .chat {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
     .chat li {
         margin-bottom: 10px;
         padding-bottom: 5px;
     }
-
         .chat li.left .chat-body {
             margin-left: 60px;
         }
-
-
         .chat li.right .chat-body {
             margin-right: 60px;
         }
-
         .chat li .chat-body p {
             margin: 0;
             color: black;
         }
-
     .modal .slidedown .glyphicon, .chat .glyphicon {
         margin-right: 5px;
     }
-
 #scrollBody {
     overflow-x: hidden;
     overflow-y: scroll;
     height: 300px;
 }
-
-
-.form-group .form-control {
-    width: 100%;
-    max-width: none !important;
-}
-
 #chatList {
     color: orange;
     margin-top: 10px;
@@ -6992,71 +6963,41 @@ button.close {
     background: black;
     opacity: 0.9;
 }
-
 #chatBackgrnd {
     background: black;
     opacity: 0.9;
 }
-
 #chatBtn {
     margin-top: 20px;
 }
-
 #chatList:hover {
     text-decoration: none;
     box-shadow: 0px 0px 3px 3px orange;
 }
-
-
-
 textarea .form-control {
     resize: vertical;
     height: 130px;
     transition: all 0.5s ease 0s;
 }
-
 #textarea, #SingleNachricht {
     border: 2px solid #ccc;
     min-height: 50px;
     height: 50px;
 }
-
 #SingleNachricht {
     max-width: 100% !important;
     min-width: 100% !important;
 }
-
-.form-control {
-    height: 50px;
-    font-size: 14px;
-    color: white;
-    border: none;
-    background: none;
-    border-bottom: 2px solid #ccc;
-    border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 15px;
-}
-
     #textareaEdit:focus, #textarea:focus, .form-control:focus, #SingleNachricht:focus {
         border-color: orange;
         box-shadow: none;
     }
 
-.control-label {
-    font-size: 17px;
-    color: orange;
-    position: absolute;
-    top: 5px;
-    left: 27px;
-    text-align: center;
-}
-
+    /*Bedürfnisse*/
 #postTime {
     background-color: orange;
     color: black;
 }
-
 #bedarf {
     margin-top: 20px;
     box-shadow: none;
@@ -7064,14 +7005,12 @@ textarea .form-control {
     background: black;
     opacity: 0.9;
 }
-
 #angebot {
     box-shadow: none;
     border: 2px solid orange;
     background: black;
     opacity: 0.9;
 }
-
 #angebotBedarfBody {
     padding: 0px 25px 5px;
 }
@@ -7092,11 +7031,6 @@ textarea .form-control {
 #chatBack {
     background: url('../resources/BackgroundChat.jpg') no-repeat center center fixed;
     background-size: cover;
-}
-
-/*text etc*/
-p {
-    color: white;
 }
 
 
