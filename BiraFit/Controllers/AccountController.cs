@@ -423,21 +423,22 @@ namespace BiraFit.Controllers
                 }
 
                 int userId = GetUserIdbyAspNetUserId(id);
+                bool sportler = IsSportler();
                 var user = await UserManager.FindByIdAsync(id);
                 var result = await UserManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
                     LogOff();
-                    DeleteOpenStock(id, userId, user.ProfilBild);
+                    DeleteOpenStock(id, userId, user.ProfilBild, sportler);
                 }
                 return RedirectToAction("Index", "Home");
             }
             return View();
         }
 
-        private void DeleteOpenStock(string id, int userId, string profilePicture)
+        private void DeleteOpenStock(string id, int userId, string profilePicture, bool sportler)
         {
-           if (IsSportler())
+           if (sportler)
             {
                 deleteOpenStockForSportler(id, userId);
             }
@@ -469,15 +470,12 @@ namespace BiraFit.Controllers
 
         private void deleteOpenStockForSportler(string id, int userId)
         {
-            BedarfController bc = new BedarfController();
-            if (bc.IsBedarfOpen(userId))
-            {
-                var queryBedarf = from d in Context.Bedarf
-                    where d.Sportler_Id == userId
-                    select d;
-                var openBedarf = queryBedarf.FirstOrDefault<Bedarf>();
+                if(Context.Bedarf.Any(s => s.Sportler_Id == userId))
+                {
+                var openBedarf = Context.Bedarf.Single(s => s.Sportler_Id == userId);
+                deleteOpenAngebote(openBedarf.Id);
                 Context.Bedarf.Remove(openBedarf);
-            }
+                }            
             var queryKonversation = from d in Context.Konversation
                 where d.Sportler_Id == userId
                 select d;
@@ -486,7 +484,17 @@ namespace BiraFit.Controllers
                 Context.Konversation.Remove(openKonversation);
             }
         }
-
+        private void deleteOpenAngebote(int bedarfId)
+        {
+            if (Context.Angebot.Any(s => s.Bedarf_Id == bedarfId))
+            {
+                var openAngebote = Context.Angebot.Where((s => s.Bedarf_Id == bedarfId));
+                foreach (Angebot item in openAngebote)
+                {
+                    Context.Angebot.Remove(item);
+                }
+            }
+        }
         private void deleteOpenStockForPersonaltrainer(string id, int userId)
         {
             var queryAngebot = from d in Context.Angebot

@@ -337,8 +337,11 @@ th {
 .glyphicon-ok:before {
   content: "\e013";
 }
+#usrName {
+    word-wrap: break-word
+}
 .glyphicon-remove:before {
-  content: "\e014";
+    content: "\e014";
 }
 .glyphicon-zoom-in:before {
   content: "\e015";
