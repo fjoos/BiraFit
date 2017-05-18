@@ -5,10 +5,10 @@
 @using (Html.BeginForm("UploadFile", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="row">
-        <div class="container" id="boxform">
+        <div class="container">
             <div id="popUpBox" class="col-md-4 col-md-offset-4 modal-content">
                 <div class="panel panel-info" id="innerbox">
-                    <div class="panel-heading" id="boxHead">
+                    <div class="panel-heading">
                         <button type="button" class="close" id="closeBtn" data-dismiss="modal" aria-hidden="true">×</button>
                         <div class="panel-title">
                             <h4>Profilbild ändern</h4>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer" id="footerBox">
+                    <div class="panel-footer">
                             <button type="submit" id="normalButton" class="btn btn-block">Bild hochladen</button>
                     </div>
                 </div>
