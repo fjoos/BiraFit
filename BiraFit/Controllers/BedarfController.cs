@@ -56,13 +56,13 @@ namespace BiraFit.Controllers
 
         //
         // GET: /Bedarf/Edit/1
-        public ActionResult Edit(int bedarfId)
+        public ActionResult Edit(int id)
         {
             var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
 
-            if (IsBedarfOwner(bedarfId, sportlerId))
+            if (IsBedarfOwner(id, sportlerId))
             {
-                var bedarf = Context.Bedarf.Single(b => b.Id == bedarfId);
+                var bedarf = Context.Bedarf.Single(b => b.Id == id);
                 return View(bedarf);
             }
 
@@ -71,11 +71,11 @@ namespace BiraFit.Controllers
 
         //
         // POST: /Bedarf/Delete/1
-        public ActionResult Delete(int bedarfId)
+        public ActionResult Delete(int id)
         {
             if (IsSportler())
             {
-                Bedarf bedarf = Context.Bedarf.Single(i => i.Id == bedarfId);
+                Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
 
                 if (GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id) == User.Identity.GetUserId())
                 {

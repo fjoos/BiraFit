@@ -14,35 +14,35 @@ namespace BiraFit.Controllers
         // GET: Angebot
         public ActionResult Index()
         {
-            if (!IsSportler() || !IsLoggedIn())
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            var currentSportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-            var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
-            List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
-            foreach (var bedarf in currentBedarf)
-            {
-                if (bedarf.OpenBedarf)
-                {
-                    foreach (var angebot in Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList())
+            if (IsSportler())
+            {            
+                var currentSportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+                var currentBedarf = Context.Bedarf.FirstOrDefault(s => s.Sportler_Id == currentSportlerId);
+                var userId = User.Identity.GetUserId();
+                var user = Context.Users.Single(s => s.Id == userId);
+
+                List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
+                    if (currentBedarf != null && currentBedarf.OpenBedarf)
                     {
-                        var trainerId = GetAspNetUserIdFromTrainerId(angebot.PersonalTrainer_Id);
-                        var trainer = Context.Users.Single(s => s.Id == trainerId);
-                        var userId = User.Identity.GetUserId();
-                        var user = Context.Users.Single(s => s.Id == userId);
-                        angebotList.Add(new AngebotViewModel()
+                    var angebote = Context.Angebot.Where(b => b.Bedarf_Id == currentBedarf.Id).ToList();
+                        foreach (var angebot in angebote)
                         {
-                            Angebot = angebot,
-                            Bedarf = bedarf,
-                            peronalTrainerId = trainer.Id,
-                            trainerUsername = trainer.Email,
-                            sportlerPicture = user.ProfilBild,
-                            trainerPicture = trainer.ProfilBild
-                        });
+                            var trainerId = GetAspNetUserIdFromTrainerId(angebot.PersonalTrainer_Id);
+                            var trainer = Context.Users.Single(s => s.Id == trainerId);
+
+                            angebotList.Add(new AngebotViewModel()
+                            {
+                                Angebot = angebot,
+                                Bedarf = currentBedarf,
+                                peronalTrainerId = trainer.Id,
+                                trainerUsername = trainer.Email,
+                                sportlerPicture = user.ProfilBild,
+                                trainerPicture = trainer.ProfilBild
+                            });
+                        }
+                        return View(angebotList);
                     }
-                    return View(angebotList);
-                }
+                
             }
             return RedirectToAction("Index", "Home");
         }

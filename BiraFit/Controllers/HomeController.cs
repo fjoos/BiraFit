@@ -13,6 +13,7 @@ namespace BiraFit.Controllers
         {
             var bedarfList = Context.Bedarf.ToList();
             var bedarfViewModelList = new List<BedarfViewModel>();
+
             if (!IsLoggedIn())
             {
                 foreach (var bedarf in bedarfList)
@@ -102,21 +103,9 @@ namespace BiraFit.Controllers
                     });
                 }
             }
+
             return View(bedarfViewModelList);
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
