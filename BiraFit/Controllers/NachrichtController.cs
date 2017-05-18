@@ -42,7 +42,7 @@ namespace BiraFit.Controllers
                 sendTimes.Add(GetLastTime(konversation.Id));
                 if (IsSportler())
                 {
-                    string trainerId = GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
+                    string trainerId = GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
                     string username = Context.Users.Single(i => i.Id == trainerId).Email;
                     var profileImage = Context.Users.Single(i => i.Id == trainerId).ProfilBild ??
                                        "standardprofilbild.jpg";
@@ -52,7 +52,7 @@ namespace BiraFit.Controllers
                 }
                 else
                 {
-                    string sportlerId = GetSportlerAspNetUserId(konversation.Sportler_Id);
+                    string sportlerId = GetAspNetUserIdFromSportlerId(konversation.Sportler_Id);
                     string username = Context.Users.Single(i => i.Id == sportlerId).Name;
                     var profileImage = Context.Users.Single(i => i.Id == sportlerId).ProfilBild ??
                                        "standardprofilbild.jpg";
@@ -111,14 +111,14 @@ namespace BiraFit.Controllers
             if (IsSportler())
             {
                 var personalTrainerId = Context.Konversation.Single(s => s.Id == id).PersonalTrainer_Id;
-                var personalTrainer = GetTrainerAspNetUserId(personalTrainerId);
+                var personalTrainer = GetAspNetUserIdFromTrainerId(personalTrainerId);
                 empfängerName = Context.Users.Single(s => s.Id == personalTrainer).Email;
                 empfängerId = Context.Users.Single(s => s.Id == personalTrainer).Id;
             }
             else
             {
                 var sportlerId = Context.Konversation.Single(s => s.Id == id).Sportler_Id;
-                var sportler = GetSportlerAspNetUserId(sportlerId);
+                var sportler = GetAspNetUserIdFromSportlerId(sportlerId);
                 empfängerName = Context.Users.Single(s => s.Id == sportler).Email;
                 empfängerId = Context.Users.Single(s => s.Id == sportler).Id;
             }
@@ -137,9 +137,9 @@ namespace BiraFit.Controllers
         public ActionResult SendMessage(ChatViewModel message)
         {
             var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
-            string empfaengerId = User.Identity.GetUserId() == GetTrainerAspNetUserId(konversation.PersonalTrainer_Id)
-                ? GetSportlerAspNetUserId(konversation.Sportler_Id)
-                : GetTrainerAspNetUserId(konversation.PersonalTrainer_Id);
+            string empfaengerId = User.Identity.GetUserId() == GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id)
+                ? GetAspNetUserIdFromSportlerId(konversation.Sportler_Id)
+                : GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
             string query =
                 $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
             Context.Database.ExecuteSqlCommand(query);
@@ -157,10 +157,10 @@ namespace BiraFit.Controllers
 
             if (IsSportler())
             {
-                return konversation.Sportler_Id == GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+                return konversation.Sportler_Id == GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             }
 
-            return konversation.PersonalTrainer_Id == GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            return konversation.PersonalTrainer_Id == GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
         }
 
         public Konversation GetKonversation(int konversationId)

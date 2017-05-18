@@ -30,17 +30,17 @@ namespace BiraFit.Controllers
             Context.Dispose();
         }
 
-        protected string GetTrainerAspNetUserId(int trainerId)
+        protected string GetAspNetUserIdFromTrainerId(int trainerId)
         {
             return Context.PersonalTrainer.First(i => i.Id == trainerId).User_Id;
         }
 
-        protected string GetSportlerAspNetUserId(int sportlerId)
+        protected string GetAspNetUserIdFromSportlerId(int sportlerId)
         {
             return Context.Sportler.First(i => i.Id == sportlerId).User_Id;
         }
 
-        protected int GetUserIdbyAspNetUserId(string id)
+        protected int GetAspNetSpecificIdFromUserId(string id)
         {
             if (Context.Sportler.Any(i => i.User_Id == id))
             {

@@ -132,4 +132,13 @@ namespace BiraFit.Models
         [Display(Name = "E-Mail")]
         public string Email { get; set; }
     }
+
+    public class ConfirmationViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "E-Mail")]
+        public string Email { get; set; }
+    }
+
 }

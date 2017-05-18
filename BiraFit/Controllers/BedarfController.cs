@@ -40,7 +40,7 @@ namespace BiraFit.Controllers
                         Preis = bedarf.Preis,
                         Ort = bedarf.Ort,
                         OpenBedarf = true,
-                        Sportler_Id = GetUserIdbyAspNetUserId(User.Identity.GetUserId()),
+                        Sportler_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
                         Datum = DateTime.Now
                     });
                     Context.SaveChanges();
@@ -73,7 +73,7 @@ namespace BiraFit.Controllers
 
             Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
 
-            if (GetSportlerAspNetUserId(bedarf.Sportler_Id) == User.Identity.GetUserId())
+            if (GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id) == User.Identity.GetUserId())
             {
                 deleteOpenAngebote(bedarf.Id);
                 Context.Bedarf.Remove(bedarf);

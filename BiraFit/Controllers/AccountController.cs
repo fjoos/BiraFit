@@ -8,7 +8,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BiraFit.Models;
 using System.Net;
-
+using System.Net.Mail;
 
 namespace BiraFit.Controllers
 {
@@ -63,8 +63,13 @@ namespace BiraFit.Controllers
                 return View("Login", model);
             }
 
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                 shouldLockout: false);
+            if (!UserManager.FindByEmail(model.Email).EmailConfirmed)
+            {
+                return RedirectToAction("Confirmation", "Account");
+            }
             switch (result)
             {
                 case SignInStatus.Success:
@@ -143,19 +148,38 @@ namespace BiraFit.Controllers
                     AnmeldeDatum = DateTime.Now,
                     Name = model.Lastname,
                     Vorname = model.Firstname,
-                    Aktiv = 1
+                    Aktiv = 1                                        
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    var msg = "Willkommen bei BiraFit! Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">Email bestätigen</a>";
+                    var header = "Konto bestätigen";
+                    SendMail(user.Email, msg, header);
+
                     AllocateUser(user, model);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Confirmation", "Account");
                 }
                 AddErrors(result);
             }
 
             return View(model);
+        }
+        //
+        // POST /Account/Confirmation
+        private async Task<ActionResult> sendConfirmation(ConfirmationViewModel model)
+        {
+            var user = UserManager.FindByEmail(model.Email);
+
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+            var msg = "Willkommen bei BiraFit! Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">Email bestätigen</a>";
+            var header = "Konto bestätigen";
+
+            SendMail(user.Email, msg, header);
+            return View();
         }
 
         //
@@ -189,14 +213,16 @@ namespace BiraFit.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                    return View("ForgotPasswordConfirmation");
                 }
 
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var msg = "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>";
+                var header = "Kennwort zurücksetzen";
+                SendMail(model.Email, msg, header);
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -422,7 +448,7 @@ namespace BiraFit.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
 
-                int userId = GetUserIdbyAspNetUserId(id);
+                int userId = GetAspNetSpecificIdFromUserId(id);
                 bool sportler = IsSportler();
                 var user = await UserManager.FindByIdAsync(id);
                 var result = await UserManager.DeleteAsync(user);
@@ -578,6 +604,32 @@ namespace BiraFit.Controllers
                     properties.Dictionary[XsrfKey] = UserId;
                 }
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
+            }
+        }
+
+        private void SendMail(string email, string massage, string header)
+        {
+            MailMessage msg = new MailMessage();
+            SmtpClient client = new SmtpClient();
+            try
+            {
+                msg.Subject = header;
+                msg.Body = massage;
+                msg.From = new MailAddress("birafit17@gmail.com");
+                msg.To.Add(email);
+                msg.IsBodyHtml = true;
+                client.Host = "smtp.gmail.com";
+                NetworkCredential basicauthenticationinfo = new NetworkCredential("birafit17@gmail.com", "Hsr-12345");
+                client.Port = int.Parse("587");
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = basicauthenticationinfo;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Send(msg);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

@@ -39,7 +39,7 @@ namespace BiraFit.Controllers
                 {
                     var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
                     var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
-                    if (currentId == GetSportlerAspNetUserId(bedarf.Sportler_Id))
+                    if (currentId == GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id))
                     {
                         bedarfViewModelList.Add(new BedarfViewModel()
                         {
@@ -71,7 +71,7 @@ namespace BiraFit.Controllers
 
             foreach (var bedarf in bedarfList)
             {
-                var personalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+                var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
                 var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
                 var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
                 if (Context.Angebot.Any(i => i.Bedarf_Id == bedarf.Id && i.PersonalTrainer_Id == personalTrainerId))

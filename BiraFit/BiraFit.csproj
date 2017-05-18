@@ -397,6 +397,7 @@
     <Content Include="Views\Shared\AngebotNavigation.cshtml" />
     <Content Include="Views\Manage\Show.cshtml" />
     <Content Include="Views\Angebot\AngebotTrainer.cshtml" />
+    <Content Include="Views\Account\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

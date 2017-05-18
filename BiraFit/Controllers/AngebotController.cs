@@ -18,7 +18,7 @@ namespace BiraFit.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var currentSportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var currentSportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             var currentBedarf = Context.Bedarf.Where(s => s.Sportler_Id == currentSportlerId).ToList();
             List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
             foreach (var bedarf in currentBedarf)
@@ -27,7 +27,7 @@ namespace BiraFit.Controllers
                 {
                     foreach (var angebot in Context.Angebot.Where(b => b.Bedarf_Id == bedarf.Id).ToList())
                     {
-                        var trainerId = GetTrainerAspNetUserId(angebot.PersonalTrainer_Id);
+                        var trainerId = GetAspNetUserIdFromTrainerId(angebot.PersonalTrainer_Id);
                         var trainer = Context.Users.Single(s => s.Id == trainerId);
                         var userId = User.Identity.GetUserId();
                         var user = Context.Users.Single(s => s.Id == userId);
@@ -54,7 +54,7 @@ namespace BiraFit.Controllers
             {
                 Beschreibung = bedarfviewmodel.Beschreibung,
                 Datum = DateTime.Now,
-                PersonalTrainer_Id = GetUserIdbyAspNetUserId(User.Identity.GetUserId()),
+                PersonalTrainer_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
                 Preis = bedarfviewmodel.Preis,
                 Bedarf_Id = bedarfviewmodel.Id
             });
@@ -70,24 +70,20 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var currentAngebot = Context.Angebot.Single(i => i.Id == id);
-            var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
-            var sportlerUserId = GetSportlerAspNetUserId(sportlerId);
+            var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+            var sportlerUserId = GetAspNetUserIdFromSportlerId(sportlerId);
             var personalTrainerId = currentAngebot.PersonalTrainer_Id;
-            var personalTrainerUserId = GetTrainerAspNetUserId(personalTrainerId);
+            var personalTrainerUserId = GetAspNetUserIdFromTrainerId(personalTrainerId);
             var peronalTrainerEmail = Context.Users.Single(s => s.Id == personalTrainerUserId).Email;
             var sportlerEmail = Context.Users.Single(s => s.Id == sportlerUserId).Email;
             var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
 
             var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
             var canceledAngebote = Context.Angebot.Where(s => s.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+
             canceledAngebote.Remove(currentAngebot);
             startConversation(personalTrainerId, sportlerId);
-            /* Bruchts das?, isch miner meinig no scho gwährleischtet bim posta fu agebot.
-            if (Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id != currentAngebot.Bedarf_Id)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            */
+
             Context.Angebot.RemoveRange(angeboteToRemove);
             Context.Bedarf.Remove(bedarfId);
             Context.SaveChanges();
@@ -95,8 +91,6 @@ namespace BiraFit.Controllers
             createEmailForPersonaTrainer(peronalTrainerEmail);
             createEmailForSportler(sportlerEmail);
             createCancelEmails(canceledAngebote);
-
-
             return RedirectToAction("Chat/" + Context.Konversation.Single(i => i.Sportler_Id == sportlerId && i.PersonalTrainer_Id == personalTrainerId).Id, "Nachricht");
         }
 
@@ -122,7 +116,7 @@ namespace BiraFit.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var personalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             var angebotToRemove = Context.Angebot.Single(
                 i => i.Bedarf_Id == id && i.PersonalTrainer_Id == personalTrainerId);
             Context.Angebot.Remove(angebotToRemove);
@@ -137,7 +131,7 @@ namespace BiraFit.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var currentPersonalTrainerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var currentPersonalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             var currentAngebot = Context.Angebot.Where(s => s.PersonalTrainer_Id == currentPersonalTrainerId).ToList();
             List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
             foreach (var angebot in currentAngebot)
@@ -146,7 +140,7 @@ namespace BiraFit.Controllers
                 {
                     if (bedarf.OpenBedarf)
                     {
-                        var sportlerId = GetSportlerAspNetUserId(bedarf.Sportler_Id);
+                        var sportlerId = GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id);
                         var sportler = Context.Users.Single(s => s.Id == sportlerId);
                         angebotList.Add(new AngebotViewModel()
                         {
@@ -190,7 +184,7 @@ namespace BiraFit.Controllers
             var massage = "Ihr Angebot wurde leider abgelehnt. Probieren Sie es weiter!";
             foreach (Angebot cancelAngebot in receiverList)
             {
-                var cancelPersonalTrainer = GetTrainerAspNetUserId(cancelAngebot.PersonalTrainer_Id);
+                var cancelPersonalTrainer = GetAspNetUserIdFromTrainerId(cancelAngebot.PersonalTrainer_Id);
                 var receiverEmail = Context.Users.Single(s => s.Id == cancelPersonalTrainer).Email;                
                 SendMail(receiverEmail, massage);
             }
@@ -202,7 +196,7 @@ namespace BiraFit.Controllers
             SmtpClient client = new SmtpClient();
             try
             {
-                msg.Subject = "Angebot angenommen";
+                msg.Subject = "Ein Angebot wurde angenommen";
                 msg.Body = massage;
                 msg.From = new MailAddress("birafit17@gmail.com");
                 msg.To.Add(email);
@@ -225,7 +219,7 @@ namespace BiraFit.Controllers
         public bool AuthenticateOwner(int angebotId)
         {
             var currentAngebot = Context.Angebot.Single(i => i.Id == angebotId);
-            var sportlerId = GetUserIdbyAspNetUserId(User.Identity.GetUserId());
+            var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             if (Context.Bedarf.Any(i => i.Sportler_Id == sportlerId))
             {
                 return Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf).Id ==
