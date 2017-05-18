@@ -136,7 +136,7 @@ namespace BiraFit.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> sendConfirmation(ConfirmationViewModel model)
+        public async Task<ActionResult> Confirmation(ConfirmationViewModel model)
         {
             if (ModelState.IsValid)
             {

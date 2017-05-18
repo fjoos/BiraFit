@@ -16,29 +16,33 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                @Html.TextBoxFor(m => m.Titel, new { @class = "form-control", @placeholder = "Titel" })
-                                @Html.ValidationMessageFor(m => m.Titel, "", new { @class = "text-danger" })
-                            </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Titel, new { @class = "form-control", @placeholder = "Titel" })
+                                    @Html.ValidationMessageFor(m => m.Titel, "", new { @class = "text-danger" })
+                                </div>
 
-                            <div class="form-group">
-                                @Html.TextAreaFor(m => m.Beschreibung, new { @class = "form-control", @id = "textarea", @placeholder = "Beschrreibung, was will ich..." })
-                                @Html.ValidationMessageFor(m => m.Beschreibung, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.TextAreaFor(m => m.Beschreibung, new { @class = "form-control", @id = "textarea", @placeholder = "Beschrreibung, was will ich..." })
+                                    @Html.ValidationMessageFor(m => m.Beschreibung, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Preis, new { @class = "form-control", @type = "number", @placeholder = "Preis pro Woche" })
+                                    @Html.ValidationMessageFor(m => m.Preis, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Ort, new { @class = "form-control", @placeholder = "In der Umgebung von" })
+                                    @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.TextBoxFor(m => m.Preis, new { @class = "form-control", @type = "number", @placeholder = "Preis pro Woche" })
-                                @Html.ValidationMessageFor(m => m.Preis, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.TextBoxFor(m => m.Ort, new { @class = "form-control", @placeholder = "In der Umgebung von" })
-                                @Html.ValidationMessageFor(m => m.Ort, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
+                    </div>
+                    <div class="panel-footer" id="footerBox">
                         <div class="form-group">
                             <button type="submit" id="normalButton" class="btn btn-info btn-block">Bedarf Erstellen</button>
                         </div>

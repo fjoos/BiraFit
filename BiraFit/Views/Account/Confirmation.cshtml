@@ -3,7 +3,7 @@
     ViewBag.Title = "Konto bestätigen";
 }
 <body id="loginRegBack">
-    @using (Html.BeginForm("sendConfirmation", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Confirmation", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -17,13 +17,19 @@
                     </div>
 
                     <div class="modal-body">
-                        <div class="col-md-12">
-                            <p>Noch keine Mail erhalten?</p>
-                            <div class="form-group">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-Mail" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p>Noch keine Mail erhalten?</p>
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-Mail" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
                             </div>
                         </div>
+                        </div>
+                    <div class="panel-footer" id="footerBox">
                         <div class="form-group">
                             <button type="submit" id="normalButton" class="btn btn-block">Erneut senden</button>
                         </div>
