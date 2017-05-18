@@ -151,6 +151,14 @@ namespace BiraFit.Controllers
             return View(model);
         }
 
+
+        [AllowAnonymous]
+        public ActionResult Confirmation()
+        {
+            return View();
+        }
+
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
