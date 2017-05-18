@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using BiraFit.Models;
 using BiraFit.Controllers.Helpers;
 using Microsoft.AspNet.Identity;
+using BiraFit.ViewModel;
 
 namespace BiraFit.Controllers
 {
@@ -14,72 +15,75 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //
+        // GET: /Bedarf/New
         public ActionResult New()
         {
-            if (!IsSportler() || !IsLoggedIn())
+            if (IsSportler())
             {
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(Bedarf bedarf)
-        {
-            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-
-            if (!IsBedarfOpen(sportlerId))
-            {
-                if (sportlerId > 0)
+                var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+                if (IsBedarfOpen(sportlerId))
                 {
-                    Context.Bedarf.Add(new Bedarf()
-                    {
-                        Titel = bedarf.Titel,
-                        Beschreibung = bedarf.Beschreibung,
-                        Preis = bedarf.Preis,
-                        Ort = bedarf.Ort,
-                        OpenBedarf = true,
-                        Sportler_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
-                        Datum = DateTime.Now
-                    });
-                    Context.SaveChanges();
-                    return RedirectToAction("Index", "Bedarf");
+                    return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", "Home");
+                return View();
             }
-            return RedirectToAction("New", "Bedarf");
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Edit(int id)
+        //
+        // POST: /Bedarf/New
+        [HttpPost]
+        public ActionResult Create(BedarfCreateViewModel model)
         {
-            var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
-
-            if (IsBedarfOwner(id, sportlerId))
+            if(ModelState.IsValid)
             {
-                var bedarf = Context.Bedarf.Single(b => b.Id == id);
+                Context.Bedarf.Add(new Bedarf()
+                {
+                    Titel = model.Titel,
+                    Beschreibung = model.Beschreibung,
+                    Preis = model.Preis,
+                    Ort = model.Ort,
+                    OpenBedarf = true,
+                    Sportler_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
+                    Datum = DateTime.Now
+                });
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }         
+            return View(model);
+        }
+
+        //
+        // GET: /Bedarf/Edit/1
+        public ActionResult Edit(int bedarfId)
+        {
+            var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+
+            if (IsBedarfOwner(bedarfId, sportlerId))
+            {
+                var bedarf = Context.Bedarf.Single(b => b.Id == bedarfId);
                 return View(bedarf);
             }
 
             return HttpNotFound();
         }
 
-        public ActionResult Delete(int id)
+        //
+        // POST: /Bedarf/Delete/1
+        public ActionResult Delete(int bedarfId)
         {
-            if (!IsSportler() || !IsLoggedIn())
+            if (IsSportler())
             {
-                return RedirectToAction("Index", "Home");
+                Bedarf bedarf = Context.Bedarf.Single(i => i.Id == bedarfId);
+
+                if (GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id) == User.Identity.GetUserId())
+                {
+                    deleteOpenAngebote(bedarf.Id);
+                    Context.Bedarf.Remove(bedarf);
+                    Context.SaveChanges();
+                }
             }
-
-            Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
-
-            if (GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id) == User.Identity.GetUserId())
-            {
-                deleteOpenAngebote(bedarf.Id);
-                Context.Bedarf.Remove(bedarf);
-                Context.SaveChanges();
-            }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -88,13 +92,12 @@ namespace BiraFit.Controllers
             if(Context.Angebot.Any(s => s.Bedarf_Id == bedarfId))
             {
                 var openAngebote = Context.Angebot.Where((s => s.Bedarf_Id == bedarfId));
-                foreach(Angebot item in openAngebote)
-                {
-                    Context.Angebot.Remove(item);
-                }
+                Context.Angebot.RemoveRange(openAngebote);
             }
         }
 
+        //
+        // POST: /Bedarf/Edit/1
         [HttpPost]
         public ActionResult Edit(Bedarf bedarf)
         {
@@ -115,7 +118,6 @@ namespace BiraFit.Controllers
             return Context.Bedarf.Any(b => b.Id == bedarfId &&
                                            b.Sportler_Id == sportlerId);
         }
-
 
         [ChildActionOnly]
         public ActionResult BedarfNavigation()

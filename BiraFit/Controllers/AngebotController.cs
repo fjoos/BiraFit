@@ -63,54 +63,55 @@ namespace BiraFit.Controllers
         }
 
         // GET: Accept
-        public ActionResult Accept(int id)
+        public ActionResult Accept(int AngebotId)
         {
-            if (!IsSportler() || !IsLoggedIn() || !AuthenticateOwner(id))
+            if (IsSportler() && SportlerHasAngebot(AngebotId))
             {
-                return RedirectToAction("Index", "Home");
+
+                var currentAngebot = Context.Angebot.Single(i => i.Id == AngebotId);
+                var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+                var sportlerUserId = GetAspNetUserIdFromSportlerId(sportlerId);
+                var personalTrainerId = currentAngebot.PersonalTrainer_Id;
+                var personalTrainerUserId = GetAspNetUserIdFromTrainerId(personalTrainerId);
+                var peronalTrainerEmail = Context.Users.Single(s => s.Id == personalTrainerUserId).Email;
+                var sportlerEmail = Context.Users.Single(s => s.Id == sportlerUserId).Email;
+                var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
+
+                var angeboteToRemove = Context.Angebot.Where(i => i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+                var canceledAngebote = Context.Angebot.Where(i => i.Id != AngebotId && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+
+                createEmailForPersonaTrainer(peronalTrainerEmail);
+                createEmailForSportler(sportlerEmail);
+                createCancelEmails(canceledAngebote);
+                startConversation(personalTrainerId, sportlerId);
+
+
+                Context.Angebot.RemoveRange(angeboteToRemove);
+                Context.Bedarf.Remove(bedarfId);
+                Context.SaveChanges();
+                return RedirectToAction("Chat/" + Context.Konversation.Single(i => i.Sportler_Id == sportlerId && i.PersonalTrainer_Id == personalTrainerId).Id, "Nachricht");
             }
-            var currentAngebot = Context.Angebot.Single(i => i.Id == id);
-            var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-            var sportlerUserId = GetAspNetUserIdFromSportlerId(sportlerId);
-            var personalTrainerId = currentAngebot.PersonalTrainer_Id;
-            var personalTrainerUserId = GetAspNetUserIdFromTrainerId(personalTrainerId);
-            var peronalTrainerEmail = Context.Users.Single(s => s.Id == personalTrainerUserId).Email;
-            var sportlerEmail = Context.Users.Single(s => s.Id == sportlerUserId).Email;
-            var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
+            return RedirectToAction("Index", "Home");
 
-            var angeboteToRemove = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
-            var canceledAngebote = Context.Angebot.Where(s => s.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
-
-            canceledAngebote.Remove(currentAngebot);
-            startConversation(personalTrainerId, sportlerId);
-
-            Context.Angebot.RemoveRange(angeboteToRemove);
-            Context.Bedarf.Remove(bedarfId);
-            Context.SaveChanges();
-
-            createEmailForPersonaTrainer(peronalTrainerEmail);
-            createEmailForSportler(sportlerEmail);
-            createCancelEmails(canceledAngebote);
-            return RedirectToAction("Chat/" + Context.Konversation.Single(i => i.Sportler_Id == sportlerId && i.PersonalTrainer_Id == personalTrainerId).Id, "Nachricht");
         }
 
-        // GET: Reject Angebot
-        public ActionResult Reject(int id)
+        // GET: Reject Angebot as a Sportler
+        public ActionResult Reject(int AngebotId)
         {
-            if (!IsSportler() || !IsLoggedIn() || !AuthenticateOwner(id))
+            if (IsSportler() && SportlerHasAngebot(AngebotId))
             {
-                return RedirectToAction("Index", "Home");
+                var angebot = Context.Angebot.Single(i => i.Id == AngebotId);
+                Context.Angebot.Remove(angebot);
+                Context.SaveChanges();
+
+                return RedirectToAction("Index", "Angebot");
             }
+            return RedirectToAction("Index", "Home");
 
-            var angebot = Context.Angebot.Single(i => i.Id == id);
-            Context.Angebot.Remove(angebot);
-            Context.SaveChanges();
-
-            return RedirectToAction("Index", "Angebot");
         }
 
-        // GET: Withdraw (delete)
-        public ActionResult Withdraw(int id)
+        // GET: Withdraw (delete) as a Trainer
+        public ActionResult Withdraw(int AngebotId)
         {
             if (IsSportler() || !IsLoggedIn())
             {
@@ -118,7 +119,7 @@ namespace BiraFit.Controllers
             }
             var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             var angebotToRemove = Context.Angebot.Single(
-                i => i.Bedarf_Id == id && i.PersonalTrainer_Id == personalTrainerId);
+                i => i.Bedarf_Id == AngebotId && i.PersonalTrainer_Id == personalTrainerId);
             Context.Angebot.Remove(angebotToRemove);
             Context.SaveChanges();
             return RedirectToAction("Index", "Home");
@@ -136,9 +137,8 @@ namespace BiraFit.Controllers
             List<AngebotViewModel> angebotList = new List<AngebotViewModel>();
             foreach (var angebot in currentAngebot)
             {
-                foreach (var bedarf in Context.Bedarf.Where(b => b.Id == angebot.Bedarf_Id).ToList())
-                {
-                    if (bedarf.OpenBedarf)
+                var bedarf = Context.Bedarf.FirstOrDefault(b => b.Id == angebot.Bedarf_Id);
+                    if (bedarf != null && bedarf.OpenBedarf)
                     {
                         var sportlerId = GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id);
                         var sportler = Context.Users.Single(s => s.Id == sportlerId);
@@ -150,7 +150,7 @@ namespace BiraFit.Controllers
                             sportlerUsername = sportler.Email
                         });
                     }
-                }
+                
             }
             return View(angebotList);
         }
@@ -216,7 +216,7 @@ namespace BiraFit.Controllers
             }
         }
 
-        public bool AuthenticateOwner(int angebotId)
+        public bool SportlerHasAngebot(int angebotId)
         {
             var currentAngebot = Context.Angebot.Single(i => i.Id == angebotId);
             var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
