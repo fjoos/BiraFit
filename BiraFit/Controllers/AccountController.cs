@@ -168,18 +168,26 @@ namespace BiraFit.Controllers
             return View(model);
         }
         //
-        // POST /Account/Confirmation
-        private async Task<ActionResult> sendConfirmation(ConfirmationViewModel model)
+        // POST: /Account/Confirmation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> sendConfirmation(ConfirmationViewModel model)
         {
-            var user = UserManager.FindByEmail(model.Email);
+            if (ModelState.IsValid)
+            {
+                var user = UserManager.FindByEmail(model.Email);
 
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-            var msg = "Willkommen bei BiraFit! Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">Email bestätigen</a>";
-            var header = "Konto bestätigen";
+                string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                var msg = "Willkommen bei BiraFit! Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">Email bestätigen</a>";
+                var header = "Konto bestätigen";
 
-            SendMail(user.Email, msg, header);
-            return View();
+                SendMail(user.Email, msg, header);
+                return View();
+            }
+
+            return View(model);
         }
 
         //
