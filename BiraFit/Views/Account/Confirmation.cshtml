@@ -3,27 +3,37 @@
     ViewBag.Title = "Konto bestätigen";
 }
 <body id="loginRegBack">
-    <h2>@ViewBag.Title.</h2>
-    <p>Bitte bestätigen sie ihr Konto</p>
-    <p>Kein Bestätigungsmail erhalten?</p>
     @using (Html.BeginForm("sendConfirmation", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Geben Sie Ihre E-Mail-Adresse ein.</h4>
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Link per E-Mail senden" />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container" id="loginForm">
+            <div id="mybox" class="mainbox col-md-6 col-md-offset-3 modal-content">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading" id="boxHead">
+                        <div class="panel-title">
+                            <h4>Konto Bestätigen</h4>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <p>Noch keine Mail erhalten?</p>
+                            <div class="form-group">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "E-Mail" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="normalButton" class="btn btn-block">Erneut senden</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     }
-    </body>
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+</body>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
