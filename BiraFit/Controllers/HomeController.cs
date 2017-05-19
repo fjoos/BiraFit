@@ -55,7 +55,7 @@ namespace BiraFit.Controllers
                     sportlerEmail = sportler.Email
                 });
             }
-            result.OrderBy(b => b.Bedarf.Datum);
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
             return result;
         }
 
@@ -81,7 +81,7 @@ namespace BiraFit.Controllers
                     sportlerEmail = sportlerUser.Email
                 });
             }
-            result.OrderBy(b => b.Bedarf.Datum);
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
             return result;
         }
 
@@ -101,7 +101,7 @@ namespace BiraFit.Controllers
                     sportlerEmail = null
                 });
             }
-            result.OrderBy(b => b.Bedarf.Datum);
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
             return result;
         }
 
