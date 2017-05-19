@@ -125,7 +125,7 @@ namespace BiraFit.Controllers
             if (IsSportler())
             {
                 ViewBag.Type = "Sportler";
-                var sportlerId = AuthentificationHelper.AuthenticateSportler(User, Context).Id;
+                var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
                 if (IsBedarfOpen(sportlerId))
                 {
                     ViewBag.Id = Context.Bedarf.Single(b => b.Sportler_Id == sportlerId).Id;
