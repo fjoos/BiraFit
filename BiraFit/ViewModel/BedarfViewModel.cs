@@ -20,10 +20,6 @@ namespace BiraFit.ViewModel
 
     public class BedarfCreateViewModel
     {
-            
-            [Required]
-            public bool OpenBedarf { get; set; }
-
             [Required]
             public string Titel { get; set; }
 
@@ -35,14 +31,6 @@ namespace BiraFit.ViewModel
 
             [Required]
             public string Ort { get; set; }
-
-            [Required]
-            public DateTime Datum { get; set; }
-
-            [Required]
-            public int Sportler_Id { get; set; }
-
-
     }
 
     public class BedarfEditViewModel

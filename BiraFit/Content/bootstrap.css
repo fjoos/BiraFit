@@ -6529,6 +6529,7 @@ button.close {
 }
 p {
     color: white;
+    word-wrap: hyphenate;
 }
 .clearfix:after,
 .dl-horizontal dd:after,
@@ -7021,4 +7022,49 @@ textarea .form-control {
     background-size: cover;
 }
 
+#search {
+    float: right;
+    margin-top: 9px;
+    width: 250px;
+}
 
+.search {
+    padding: 5px 0;
+    width: 230px;
+    height: 30px;
+    position: relative;
+    left: 10px;
+    float: left;
+    line-height: 22px;
+}
+
+    .search input {
+        position: absolute;
+        width: 200px;
+        float: Left;
+        -webkit-transition: all 0.7s ease-in-out;
+        -moz-transition: all 0.7s ease-in-out;
+        -o-transition: all 0.7s ease-in-out;
+        transition: all 0.7s ease-in-out;
+        height: 30px;
+        line-height: 18px;
+        padding: 0 2px 0 2px;
+        border-radius: 1px;
+    }
+
+.searchbtn {
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    border-radius: 1px;
+    color: orange;
+    background: black;
+    border: 1px solid orange;
+}
+    .searchbtn:hover {
+        background: black;
+        border: 1px solid orange;
+        color: orange;
+        box-shadow: 0px 0px 3px 3px orange;
+    }
