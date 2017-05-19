@@ -218,6 +218,7 @@ namespace BiraFit.Controllers
                     file.SaveAs(path);
 
                     user.ProfilBild = fileName;
+                    TryUpdateModel(user);
                     Context.SaveChanges();
                 }
                 return RedirectToAction("Index", "Manage");

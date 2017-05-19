@@ -34,7 +34,7 @@ namespace BiraFit.Controllers
         //
         // POST: /Bedarf/New
         [HttpPost]
-        public ActionResult Create(BedarfCreateViewModel model)
+        public ActionResult New(BedarfCreateViewModel model)
         {
             if(ModelState.IsValid)
             {
@@ -63,7 +63,17 @@ namespace BiraFit.Controllers
             if (IsBedarfOwner(id, sportlerId))
             {
                 var bedarf = Context.Bedarf.Single(b => b.Id == id);
-                return View(bedarf);
+                BedarfEditViewModel bedarfViewModel = new BedarfEditViewModel()
+                {
+                    Id=id,
+                    Titel=bedarf.Titel,
+                    Beschreibung=bedarf.Beschreibung,
+                    Datum=bedarf.Datum,
+                    OpenBedarf=bedarf.OpenBedarf,
+                    Ort=bedarf.Ort,
+                    Preis=bedarf.Preis            
+                };
+                return View(bedarfViewModel);
             }
 
             return HttpNotFound();
@@ -99,12 +109,19 @@ namespace BiraFit.Controllers
         //
         // POST: /Bedarf/Edit/1
         [HttpPost]
-        public ActionResult Edit(Bedarf bedarf)
+        public ActionResult Edit(BedarfEditViewModel bedarf)
         {
-            var bedarfInDb = Context.Bedarf.Single(c => c.Id == bedarf.Id);
-            TryUpdateModel(bedarfInDb);
-            Context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            if (IsSportler() && ModelState.IsValid)
+            {
+                var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+                var bedarfInDb = Context.Bedarf.FirstOrDefault(b => b.Sportler_Id == sportlerId && b.OpenBedarf);
+                bedarfInDb.Datum = DateTime.Now;
+                TryUpdateModel(bedarfInDb);
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(bedarf);
+
         }
 
         public bool IsBedarfOpen(int sportlerId)
