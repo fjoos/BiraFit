@@ -50,15 +50,19 @@ namespace BiraFit.Controllers
         [HttpPost]
         public ActionResult Create(BedarfViewModel bedarfviewmodel)
         {
-            Context.Angebot.Add(new Angebot()
+            if (ModelState.IsValid)
             {
-                Beschreibung = bedarfviewmodel.Beschreibung,
-                Datum = DateTime.Now,
-                PersonalTrainer_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
-                Preis = bedarfviewmodel.Preis,
-                Bedarf_Id = bedarfviewmodel.Id
-            });
-            Context.SaveChanges();
+                Context.Angebot.Add(new Angebot()
+                {
+                    Beschreibung = bedarfviewmodel.Beschreibung,
+                    Datum = DateTime.Now,
+                    PersonalTrainer_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
+                    Preis = bedarfviewmodel.Preis,
+                    Bedarf_Id = bedarfviewmodel.Id
+                });
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Index", "Home");
         }
 
