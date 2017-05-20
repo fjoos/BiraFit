@@ -239,7 +239,10 @@ namespace BiraFit.Controllers
             
             ApplicationUser user = Context.Users.Single(s => s.Id == id);
             var personalTrainer = Context.PersonalTrainer.Single(k => k.User_Id == id);
-            if (user == null || personalTrainer == null)
+            var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+            bool areConnected = Context.Konversation.Any(i => i.PersonalTrainer_Id == personalTrainer.Id && i.Sportler_Id == sportlerId);
+
+            if (user == null || !IsSportler())
             {
                 return HttpNotFound();
             }
@@ -254,7 +257,8 @@ namespace BiraFit.Controllers
                 Mail = user.Email,
                 Beschreibung = personalTrainer.Beschreibung,
                 Bewertung = personalTrainer.Bewertung,
-                AnzahlBew = personalTrainer.AnzahlBewertungen
+                AnzahlBew = personalTrainer.AnzahlBewertungen,
+                AreConnected = areConnected
 
             });
         }

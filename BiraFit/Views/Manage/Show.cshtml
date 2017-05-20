@@ -57,19 +57,21 @@
                                 <div class="col-md-12">
                                     <div class="col-md-8">
                                         <div class="form-group">
-
-                                            @if (cookie == null)
+                                            @if (Model.AreConnected)
                                             {
-                                                using (Html.BeginForm("RateTrainer", "Manage"))
+                                                if (cookie == null)
                                                 {
-                                                    <input type="text" hidden value="@Model.User_Id" name="id" id="id" />
-                                                    <input id="rating" name="rating" value="0" class="rating" min=0 max=5 step=1 data-size="xs">
-                                                    <button type="submit" id="normalButton" class="btn btn-primary">Bewertung abgeben</button>
+                                                    using (Html.BeginForm("RateTrainer", "Manage"))
+                                                    {
+                                                        <input type="text" hidden value="@Model.User_Id" name="id" id="id" />
+                                                        <input id="rating" name="rating" value="0" class="rating" min=0 max=5 step=1 data-size="xs">
+                                                        <button type="submit" id="normalButton" class="btn btn-primary">Bewertung abgeben</button>
+                                                    }
                                                 }
-                                            }
-                                            else
-                                            {
-                                                <p>Sie haben den Trainer mit @cookie.Value/5 Sternen bewertet.</p>
+                                                else
+                                                {
+                                                    <p>Sie haben den Trainer mit @cookie.Value/5 Sternen bewertet.</p>
+                                                }
                                             }
                                         </div>
                                     </div>
