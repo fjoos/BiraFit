@@ -1,4 +1,6 @@
 ﻿using BiraFit.Models;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BiraFit.ViewModel
 {
@@ -15,4 +17,49 @@ namespace BiraFit.ViewModel
         public string sportlerProfilbild { get; set; }
         public string sportlerEmail { get; set; }
     }
+
+    public class BedarfCreateViewModel
+    {
+            [Required]
+            public string Titel { get; set; }
+
+            [Required]
+            public string Beschreibung { get; set; }
+
+            [Required]
+            public int Preis { get; set; }
+
+            [Required]
+            public string Ort { get; set; }
+    }
+
+    public class BedarfEditViewModel
+    {
+        [Required]
+        public int Id { get; set; }
+
+        [Required]
+        public bool OpenBedarf { get; set; }
+
+        [Required]
+        public string Titel { get; set; }
+
+        [Required]
+        public string Beschreibung { get; set; }
+
+        [Required]
+        public int Preis { get; set; }
+
+        [Required]
+        public string Ort { get; set; }
+
+        [Required]
+        public DateTime Datum { get; set; }
+
+        [Required]
+        public int Sportler_Id { get; }
+
+
+    }
+
 }

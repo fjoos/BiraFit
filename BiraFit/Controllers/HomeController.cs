@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using BiraFit.Controllers.Helpers;
 using BiraFit.ViewModel;
 using Microsoft.AspNet.Identity;
+using BiraFit.Models;
 
 namespace BiraFit.Controllers
 {
@@ -13,110 +14,123 @@ namespace BiraFit.Controllers
         {
             var bedarfList = Context.Bedarf.ToList();
             var bedarfViewModelList = new List<BedarfViewModel>();
-            if (!IsLoggedIn())
-            {
-                foreach (var bedarf in bedarfList)
-                {
-                    bedarfViewModelList.Add(new BedarfViewModel()
-                    {
-                        Bedarf = bedarf,
-                        Sportler = null,
-                        Trainer = null,
-                        IsOwner = false,
-                        OfferMade = false,
-                        sportlerProfilbild = null,
-                        sportlerEmail = null
-                    });
-                }
 
-                return View(bedarfViewModelList);
-            }
-
-            if (IsSportler())
+            if (IsLoggedIn())
             {
-                var currentId = User.Identity.GetUserId();
-                foreach (var bedarf in bedarfList)
+                if (IsSportler())
                 {
-                    var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
-                    var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
-                    if (currentId == GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id))
-                    {
-                        bedarfViewModelList.Add(new BedarfViewModel()
-                        {
-                            Bedarf = bedarf,
-                            Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
-                            Trainer = null,
-                            IsOwner = true,
-                            OfferMade = false,
-                            sportlerProfilbild = sportlerId.ProfilBild,
-                            sportlerEmail = sportlerId.Email
-                        });
-                    }
-                    else
-                    {
-                        bedarfViewModelList.Add(new BedarfViewModel()
-                        {
-                            Bedarf = bedarf,
-                            Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
-                            Trainer = null,
-                            IsOwner = false,
-                            OfferMade = false,
-                            sportlerProfilbild = sportlerId.ProfilBild,
-                            sportlerEmail = sportlerId.Email
-                        });
-                    }
-                }
-                return View(bedarfViewModelList);
-            }
-
-            foreach (var bedarf in bedarfList)
-            {
-                var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-                var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
-                var sportlerId = Context.Users.Single(s => s.Id == sportler.User_Id);
-                if (Context.Angebot.Any(i => i.Bedarf_Id == bedarf.Id && i.PersonalTrainer_Id == personalTrainerId))
-                {
-                   
-                    bedarfViewModelList.Add(new BedarfViewModel()
-                    {
-                        Bedarf = bedarf,
-                        Sportler = sportler,
-                        Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
-                        IsOwner = false,
-                        OfferMade = true,
-                        sportlerProfilbild = sportlerId.ProfilBild,
-                        sportlerEmail = sportlerId.Email
-                    });
+                    ViewBag.Type = "Sportler";
+                    bedarfViewModelList = fillSportlerList(bedarfList);
                 }
                 else
                 {
-                    bedarfViewModelList.Add(new BedarfViewModel()
+                    ViewBag.Type = "PersonalTrainer";
+                    bedarfViewModelList = fillTrainerList(bedarfList, null);
+                }
+            }
+            else
+            {
+                ViewBag.Type = "Anonym";
+                bedarfViewModelList = fillAnonymList(bedarfList);
+            }
+
+            return View(bedarfViewModelList);
+        }
+
+        private List<BedarfViewModel> fillSportlerList(List<Bedarf> bedarfList)
+        {
+            var result = new List<BedarfViewModel>();
+            var currentId = User.Identity.GetUserId();
+            bool owner = false;
+            foreach (var bedarf in bedarfList)
+            {
+                var sportlerUserId = GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id);
+                var sportler = Context.Users.Single(s => s.Id == sportlerUserId);
+                owner = (currentId == GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id));
+
+                    result.Add(new BedarfViewModel()
+                    {
+                        Bedarf = bedarf,
+                        Sportler = AuthentificationHelper.AuthenticateSportler(User, Context),
+                        Trainer = null,
+                        IsOwner = owner,
+                        OfferMade = false,
+                        sportlerProfilbild = sportler.ProfilBild,
+                        sportlerEmail = sportler.Email
+                    });
+                            
+            }
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
+            return result;
+        }
+
+        private List<BedarfViewModel> fillTrainerList(List<Bedarf> bedarfList, int? priceFilter)
+        {
+            var result = new List<BedarfViewModel>();
+            var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+            bool offermade = false;
+
+            foreach (var bedarf in bedarfList)
+            {
+                var sportler = Context.Sportler.Single(s => s.Id == bedarf.Sportler_Id);
+                var sportlerUser = Context.Users.Single(s => s.Id == sportler.User_Id);
+                offermade = (Context.Angebot.Any(i => i.Bedarf_Id == bedarf.Id && i.PersonalTrainer_Id == personalTrainerId));
+                if (priceFilter == null || bedarf.Preis <= priceFilter)
+                {
+                    result.Add(new BedarfViewModel()
                     {
                         Bedarf = bedarf,
                         Sportler = sportler,
                         Trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context),
                         IsOwner = false,
-                        OfferMade = false,
-                        sportlerProfilbild = sportlerId.ProfilBild,
-                        sportlerEmail = sportlerId.Email
+                        OfferMade = offermade,
+                        sportlerProfilbild = sportlerUser.ProfilBild,
+                        sportlerEmail = sportlerUser.Email
                     });
                 }
             }
-            return View(bedarfViewModelList);
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
+            return result;
         }
 
-        public ActionResult About()
+        private List<BedarfViewModel> fillAnonymList(List<Bedarf> bedarfList)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            var result = new List<BedarfViewModel>();
+            foreach (var bedarf in bedarfList)
+            {
+                result.Add(new BedarfViewModel()
+                {
+                    Bedarf = bedarf,
+                    Sportler = null,
+                    Trainer = null,
+                    IsOwner = false,
+                    OfferMade = false,
+                    sportlerProfilbild = null,
+                    sportlerEmail = null
+                });
+            }
+            result.Sort((a, b) => b.Bedarf.Datum.CompareTo(a.Bedarf.Datum));
+            return result;
         }
 
-        public ActionResult Contact()
+        public ActionResult Filter()
         {
-            ViewBag.Message = "Your contact page.";
+            return RedirectToAction("Index", "Home");
+        }
 
-            return View();
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Filter(int? price)
+        {
+            ViewBag.Type = "PersonalTrainer";
+            var bedarfList = Context.Bedarf.ToList();
+            var bedarfViewModelList = new List<BedarfViewModel>();
+            if (!IsSportler())
+            {
+                bedarfViewModelList = fillTrainerList(bedarfList, price);
+            }
+            return View("~/Views/Home/Index.cshtml", bedarfViewModelList);
         }
     }
 }

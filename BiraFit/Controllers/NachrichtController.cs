@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using BiraFit.ViewModel;
-using BiraFit.Controllers.Helpers;
 
 namespace BiraFit.Controllers
 {
@@ -17,17 +16,17 @@ namespace BiraFit.Controllers
             List<Konversation> konversationList;
             if (IsSportler())
             {
-                Sportler sportler = AuthentificationHelper.AuthenticateSportler(User, Context);
+                int sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
                 var konversationen = from b in Context.Konversation
-                    where b.Sportler_Id == sportler.Id
+                    where b.Sportler_Id == sportlerId
                     select b;
                 konversationList = konversationen.ToList();
             }
             else
             {
-                PersonalTrainer trainer = AuthentificationHelper.AuthenticatePersonalTrainer(User, Context);
+                int trainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
                 var konversationen = from b in Context.Konversation
-                    where b.PersonalTrainer_Id == trainer.Id
+                    where b.PersonalTrainer_Id == trainerId
                     select b;
                 konversationList = konversationen.ToList();
             }
@@ -82,55 +81,53 @@ namespace BiraFit.Controllers
         }
         private void deleteMessages(int id)
         {
-
-                var openMessages = Context.Nachricht.Where((s => s.Konversation_Id == id));
-                foreach (Nachricht item in openMessages)
-                {
-                    Context.Nachricht.Remove(item);
-                }
-            
+            var openMessages = Context.Nachricht.Where((s => s.Konversation_Id == id));
+            foreach (Nachricht item in openMessages)
+            {
+               Context.Nachricht.Remove(item);
+            }            
         }
 
 
         // GET: Nachricht/Chat/<id>
         public ActionResult Chat(int id)
         {
-            if (!CheckPermission(id))
+            if (CheckPermission(id))
             {
-                return RedirectToAction("Index", "Home");
-            }
+                var chat = from k in Context.Konversation
+                           where k.Id == id
+                           from m in k.Nachrichten
+                           orderby m.Datum
+                           select m;
+                List<Nachricht> chatList = chat.ToList();
+                var empfängerName = "";
+                var empfängerId = "";
+                if (IsSportler())
+                {
+                    var personalTrainerId = Context.Konversation.Single(s => s.Id == id).PersonalTrainer_Id;
+                    var personalTrainer = GetAspNetUserIdFromTrainerId(personalTrainerId);
+                    empfängerName = Context.Users.Single(s => s.Id == personalTrainer).Email;
+                    empfängerId = Context.Users.Single(s => s.Id == personalTrainer).Id;
+                }
+                else
+                {
+                    var sportlerId = Context.Konversation.Single(s => s.Id == id).Sportler_Id;
+                    var sportler = GetAspNetUserIdFromSportlerId(sportlerId);
+                    empfängerName = Context.Users.Single(s => s.Id == sportler).Email;
+                    empfängerId = Context.Users.Single(s => s.Id == sportler).Id;
+                }
 
-            var chat = from k in Context.Konversation
-                where k.Id == id
-                from m in k.Nachrichten
-                orderby m.Datum
-                select m;
-            List<Nachricht> chatList = chat.ToList();
-            var empfängerName = "";
-            var empfängerId = "";
-            if (IsSportler())
-            {
-                var personalTrainerId = Context.Konversation.Single(s => s.Id == id).PersonalTrainer_Id;
-                var personalTrainer = GetAspNetUserIdFromTrainerId(personalTrainerId);
-                empfängerName = Context.Users.Single(s => s.Id == personalTrainer).Email;
-                empfängerId = Context.Users.Single(s => s.Id == personalTrainer).Id;
+                return View(new ChatViewModel
+                {
+                    Nachrichten = chatList,
+                    KonversationId = id,
+                    Id = User.Identity.GetUserId(),
+                    Empfänger = empfängerName,
+                    EmpfängerId = empfängerId
+                });
             }
-            else
-            {
-                var sportlerId = Context.Konversation.Single(s => s.Id == id).Sportler_Id;
-                var sportler = GetAspNetUserIdFromSportlerId(sportlerId);
-                empfängerName = Context.Users.Single(s => s.Id == sportler).Email;
-                empfängerId = Context.Users.Single(s => s.Id == sportler).Id;
-            }
-           
-            return View(new ChatViewModel
-            {
-                Nachrichten = chatList,
-                KonversationId = id,
-                Id = User.Identity.GetUserId(),
-                Empfänger = empfängerName,
-                EmpfängerId = empfängerId
-            });
+            return RedirectToAction("Index", "Home");
+
         }
 
         [HttpPost]
