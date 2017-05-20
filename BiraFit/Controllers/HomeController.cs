@@ -113,7 +113,7 @@ namespace BiraFit.Controllers
             return result;
         }
 
-        public ActionResult Search()
+        public ActionResult Filter()
         {
             return RedirectToAction("Index", "Home");
         }
@@ -121,7 +121,7 @@ namespace BiraFit.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Search(int? price)
+        public ActionResult Filter(int? price)
         {
             ViewBag.Type = "PersonalTrainer";
             var bedarfList = Context.Bedarf.ToList();
