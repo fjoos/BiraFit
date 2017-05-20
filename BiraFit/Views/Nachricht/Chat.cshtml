@@ -13,7 +13,15 @@
                 <div class="panel panel-info" id="innerbox">
                     <div class="panel-heading">
                         <div class="panel-title">
-                            <h4>Konversation - mit <a href="/Manage/Show/@Model.EmpfängerId"> @Model.Empfänger</a></h4>
+                            <h4>Konversation - mit @if (Model.IsSportler)
+                            {
+                                <a href="/Manage/Show/@Model.EmpfängerId"> @Model.Empfänger</a>
+                            }
+                            else
+                            {
+                                @Model.Empfänger
+                            }
+                            </h4>
                         </div>
                     </div>
                     <div class="modal-body" id="scrollBody" onload="bodyOnloadHandler()">
@@ -29,11 +37,11 @@
                                             {
                                                 <div class="header">
                                                     <span class="chat-img pull-right">
-                                                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle"/>
+                                                        <img src="~/Resources/AccountPicture/@Model.SenderProfilBild" alt="User Avatar" class="img-circle"/>
                                                     </span>
-                                                    <strong class="pull-right primary-font">Ich Name</strong>
+                                                    <strong class="pull-right primary-font">Ich</strong>
                                                     <small class=" text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>13 mins ago
+                                                        <span class="glyphicon glyphicon-time"></span>@item.Datum
                                                     </small>
                                                 </div>
                                             }
@@ -57,12 +65,12 @@
                                             {
                                                 <div class="header">
                                                     <span class="chat-img pull-left">
-                                                        <img src="http://www.keita-gaming.com/assets/profile/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" alt="User Avatar" class="img-circle"/>
+                                                        <img src="~/Resources/AccountPicture/@Model.EmpfängerProfilBild" alt="User Avatar" class="img-circle"/>
 
                                                     </span>
-                                                    <strong class="primary-font">Er Name</strong>
+                                                    <strong class="primary-font">@Model.Empfänger</strong>
                                                     <small class="pull-right text-muted">
-                                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
+                                                        <span class="glyphicon glyphicon-time"></span>@item.Datum
                                                     </small>
                                                 </div>
                                             }

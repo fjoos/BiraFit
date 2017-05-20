@@ -11,5 +11,8 @@ namespace BiraFit.ViewModel
         public int KonversationId { get; set; }
         public string Empfänger { get; set; }
         public string EmpfängerId { get; set; }
+        public bool IsSportler { get; set; }
+        public string EmpfängerProfilBild { get; set; }
+        public string SenderProfilBild { get; set; }
     }
 }
