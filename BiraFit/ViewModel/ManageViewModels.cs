@@ -138,5 +138,7 @@ namespace BiraFit.Models
 
         [Required]
         public int AnzahlBew { get; set; }
+
+        public bool AreConnected { get; set; }
     }
 }

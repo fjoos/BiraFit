@@ -98,6 +98,7 @@
 
                                             @using (Html.BeginForm("Create", "Angebot"))
                                             {
+                                                @Html.AntiForgeryToken()
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <h4>Angebot erstellen</h4>
@@ -105,7 +106,6 @@
                                                         <div class="form-group">
                                                             <label for="SingleNachricht">Beschreibung</label>
                                                             @Html.TextArea("Beschreibung", item.Beschreibung, new { @class = "form-control", @placeholder = "Beschreibung wieso ich...", @id = "SingleNachricht", name = "Beschreibung" })
-
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">

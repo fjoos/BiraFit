@@ -73,11 +73,16 @@ namespace BiraFit.Controllers
         //GET: Nachricht/Delete/id
         public ActionResult Delete(int id)
         {
-            Konversation konv = Context.Konversation.Single(i => i.Id == id);
-            deleteMessages(konv.Id);
-            Context.Konversation.Remove(konv);
-            Context.SaveChanges();
-            return RedirectToAction("Index", "Nachricht");
+            Konversation konv = Context.Konversation.FirstOrDefault(i => i.Id == id);
+            var currentUserId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+            if(konv != null && (konv.Sportler_Id == currentUserId || konv.PersonalTrainer_Id == currentUserId))
+            {
+                deleteMessages(konv.Id);
+                Context.Konversation.Remove(konv);
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Nachricht");
+            }
+            return HttpNotFound();
         }
         private void deleteMessages(int id)
         {
@@ -102,6 +107,8 @@ namespace BiraFit.Controllers
                 List<Nachricht> chatList = chat.ToList();
                 var empfängerName = "";
                 var empfängerId = "";
+                var senderId = User.Identity.GetUserId();
+
                 if (IsSportler())
                 {
                     var personalTrainerId = Context.Konversation.Single(s => s.Id == id).PersonalTrainer_Id;
@@ -116,6 +123,8 @@ namespace BiraFit.Controllers
                     empfängerName = Context.Users.Single(s => s.Id == sportler).Email;
                     empfängerId = Context.Users.Single(s => s.Id == sportler).Id;
                 }
+                var senderBild = Context.Users.Single(u => u.Id == senderId).ProfilBild;
+                var empfängerBild = Context.Users.Single(u => u.Id == empfängerId).ProfilBild;
 
                 return View(new ChatViewModel
                 {
@@ -123,7 +132,10 @@ namespace BiraFit.Controllers
                     KonversationId = id,
                     Id = User.Identity.GetUserId(),
                     Empfänger = empfängerName,
-                    EmpfängerId = empfängerId
+                    EmpfängerId = empfängerId,
+                    IsSportler = IsSportler(),
+                    SenderProfilBild = senderBild,
+                    EmpfängerProfilBild = empfängerBild,
                 });
             }
             return RedirectToAction("Index", "Home");

@@ -50,25 +50,29 @@ namespace BiraFit.Controllers
         [HttpPost]
         public ActionResult Create(BedarfViewModel bedarfviewmodel)
         {
-            Context.Angebot.Add(new Angebot()
+            if (ModelState.IsValid)
             {
-                Beschreibung = bedarfviewmodel.Beschreibung,
-                Datum = DateTime.Now,
-                PersonalTrainer_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
-                Preis = bedarfviewmodel.Preis,
-                Bedarf_Id = bedarfviewmodel.Id
-            });
-            Context.SaveChanges();
+                Context.Angebot.Add(new Angebot()
+                {
+                    Beschreibung = bedarfviewmodel.Beschreibung,
+                    Datum = DateTime.Now,
+                    PersonalTrainer_Id = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId()),
+                    Preis = bedarfviewmodel.Preis,
+                    Bedarf_Id = bedarfviewmodel.Id
+                });
+                Context.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Index", "Home");
         }
 
         // GET: Accept
-        public ActionResult Accept(int AngebotId)
+        public ActionResult Accept(int id)
         {
-            if (IsSportler() && SportlerHasAngebot(AngebotId))
+            if (IsSportler() && SportlerHasAngebot(id))
             {
 
-                var currentAngebot = Context.Angebot.Single(i => i.Id == AngebotId);
+                var currentAngebot = Context.Angebot.Single(i => i.Id == id);
                 var sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
                 var sportlerUserId = GetAspNetUserIdFromSportlerId(sportlerId);
                 var personalTrainerId = currentAngebot.PersonalTrainer_Id;
@@ -78,7 +82,7 @@ namespace BiraFit.Controllers
                 var bedarfId = Context.Bedarf.Single(i => i.Sportler_Id == sportlerId && i.OpenBedarf);
 
                 var angeboteToRemove = Context.Angebot.Where(i => i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
-                var canceledAngebote = Context.Angebot.Where(i => i.Id != AngebotId && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
+                var canceledAngebote = Context.Angebot.Where(i => i.Id != id && i.Bedarf_Id == currentAngebot.Bedarf_Id).ToList();
 
                 createEmailForPersonaTrainer(peronalTrainerEmail);
                 createEmailForSportler(sportlerEmail);

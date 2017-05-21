@@ -11,7 +11,9 @@ namespace BiraFit.ViewModel
         public Bedarf Bedarf { get; set; }
         public bool IsOwner { get; set; }
         public bool OfferMade { get; set; }
+        [Required]
         public int Preis { get; set; }
+        [Required]
         public string Beschreibung { get; set; }
         public int Id { get; set; }
         public string sportlerProfilbild { get; set; }
