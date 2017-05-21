@@ -47,7 +47,6 @@ namespace BiraFit.Controllers
                                        "standardprofilbild.jpg";
                     userNames.Add(username);
                     profileImages.Add(profileImage);
-
                 }
                 else
                 {
