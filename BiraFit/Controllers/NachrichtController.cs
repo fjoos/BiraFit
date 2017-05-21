@@ -84,6 +84,7 @@ namespace BiraFit.Controllers
             }
             return HttpNotFound();
         }
+
         private void deleteMessages(int id)
         {
             var openMessages = Context.Nachricht.Where((s => s.Konversation_Id == id));
@@ -92,7 +93,6 @@ namespace BiraFit.Controllers
                Context.Nachricht.Remove(item);
             }            
         }
-
 
         // GET: Nachricht/Chat/<id>
         public ActionResult Chat(int id)
@@ -138,21 +138,25 @@ namespace BiraFit.Controllers
                     EmpfängerProfilBild = empfängerBild,
                 });
             }
-            return RedirectToAction("Index", "Home");
+            return HttpNotFound();
 
         }
 
         [HttpPost]
         public ActionResult SendMessage(ChatViewModel message)
         {
-            var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
-            string empfaengerId = User.Identity.GetUserId() == GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id)
-                ? GetAspNetUserIdFromSportlerId(konversation.Sportler_Id)
-                : GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
-            string query =
-                $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
-            Context.Database.ExecuteSqlCommand(query);
-            return RedirectToAction("Chat/" + message.KonversationId, "Nachricht");
+            if (ModelState.IsValid)
+            {
+                var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
+                string empfaengerId = User.Identity.GetUserId() == GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id)
+                    ? GetAspNetUserIdFromSportlerId(konversation.Sportler_Id)
+                    : GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
+                string query =
+                    $"INSERT INTO Nachricht (Text,Sender_Id,Empfaenger_Id,Datum,Konversation_Id,Konversation_Id1) VALUES ('{message.Nachricht}','{User.Identity.GetUserId()}','{empfaengerId}',CONVERT(datetime, '{DateTime.Now}', 104),{message.KonversationId},{message.KonversationId})";
+                Context.Database.ExecuteSqlCommand(query);
+                return RedirectToAction("Chat/" + message.KonversationId, "Nachricht");
+            }
+            return View("~/Views/Nachricht/Chat/" + message.KonversationId, message);
         }
 
         public bool CheckPermission(int konversationId)
