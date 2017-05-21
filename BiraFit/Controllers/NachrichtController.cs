@@ -17,18 +17,12 @@ namespace BiraFit.Controllers
             if (IsSportler())
             {
                 int sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-                var konversationen = from b in Context.Konversation
-                    where b.Sportler_Id == sportlerId
-                    select b;
-                konversationList = konversationen.ToList();
+                konversationList = Context.Konversation.Where(k => k.Sportler_Id == sportlerId && !k.SportlerDeleted).ToList();
             }
             else
             {
                 int trainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-                var konversationen = from b in Context.Konversation
-                    where b.PersonalTrainer_Id == trainerId
-                    select b;
-                konversationList = konversationen.ToList();
+                konversationList = Context.Konversation.Where(k => k.PersonalTrainer_Id == trainerId && !k.TrainerDeleted).ToList();
             }
 
             List<string> lastMessages = new List<string>();
@@ -73,12 +67,25 @@ namespace BiraFit.Controllers
         public ActionResult Delete(int id)
         {
             Konversation konv = Context.Konversation.FirstOrDefault(i => i.Id == id);
+            if (IsSportler())
+            {
+                konv.SportlerDeleted = true;
+            }
+            else
+            {
+                konv.TrainerDeleted = true;
+            }
+            Context.SaveChanges();
+            bool deletable = konv.TrainerDeleted && konv.SportlerDeleted;
             var currentUserId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             if(konv != null && (konv.Sportler_Id == currentUserId || konv.PersonalTrainer_Id == currentUserId))
             {
-                deleteMessages(konv.Id);
-                Context.Konversation.Remove(konv);
-                Context.SaveChanges();
+                if (deletable)
+                {
+                    deleteMessages(konv.Id);
+                    Context.Konversation.Remove(konv);
+                    Context.SaveChanges();
+                }
                 return RedirectToAction("Index", "Nachricht");
             }
             return HttpNotFound();
@@ -147,6 +154,9 @@ namespace BiraFit.Controllers
             if (ModelState.IsValid)
             {
                 var konversation = Context.Konversation.First(i => i.Id == message.KonversationId);
+                konversation.SportlerDeleted = false;
+                konversation.TrainerDeleted = false;
+                Context.SaveChanges();
                 string empfaengerId = User.Identity.GetUserId() == GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id)
                     ? GetAspNetUserIdFromSportlerId(konversation.Sportler_Id)
                     : GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);

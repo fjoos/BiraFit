@@ -15,5 +15,9 @@ namespace BiraFit.Models
         public int Sportler_Id { get; set; }
 
         public int PersonalTrainer_Id { get; set; }
+
+        public bool SportlerDeleted { get; set; }
+
+        public bool TrainerDeleted { get; set; }
     }
 }

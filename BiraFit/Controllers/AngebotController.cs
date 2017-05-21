@@ -166,7 +166,9 @@ namespace BiraFit.Controllers
                 Context.Konversation.Add(new Konversation()
                 {
                     Sportler_Id = sportlerId,
-                    PersonalTrainer_Id = trainerId
+                    PersonalTrainer_Id = trainerId,
+                    SportlerDeleted = false,
+                    TrainerDeleted = false
                 });
             }
         }
