@@ -1,7 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using BiraFit.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using BiraFit.Models;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace BiraFit.Controllers.Tests
 {
@@ -20,10 +22,23 @@ namespace BiraFit.Controllers.Tests
         [TestMethod()]
         public void LoginView()
         {
-            ViewResult result = _controller.Login("/login") as ViewResult;
-            var actualModel = result.Model as LoginViewModel;
-            Assert.IsNull(actualModel);
+            var result = _controller.Login("/login") as ViewResult;
+            var returnUrl = result.ViewBag.ReturnUrl;
+            Assert.AreEqual("/login", returnUrl);
         }
+
+        [TestMethod()]
+        public async Task LoginWithNoModel()
+        {
+            LoginViewModel lvm = new LoginViewModel {
+                Email = "",
+                Password = ""                
+            };
+            var result = await _controller.Login(null, "/Login");
+            Assert.IsNotNull(result);
+        }
+
+
 
         [TestMethod()]
         public void LoginSuccess()
