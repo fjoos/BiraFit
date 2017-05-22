@@ -105,6 +105,12 @@ namespace BiraFit.Controllers
             if (IsSportler() && SportlerHasAngebot(id))
             {
                 var angebot = Context.Angebot.Single(i => i.Id == id);
+                var message = "Tut uns Leid Ihr Angebot wurde abgelehnt. Versuchen Sie es weiter!";
+                var persUserId = GetAspNetUserIdFromTrainerId(angebot.PersonalTrainer_Id);
+                var email = Context.Users.Single(s => s.Id == persUserId).Email; 
+                SendMail(email, message, "Ihr Angebot wurde abgelehnt");
+
+
                 Context.Angebot.Remove(angebot);
                 Context.SaveChanges();
 
@@ -175,35 +181,35 @@ namespace BiraFit.Controllers
 
         private void createEmailForPersonaTrainer(string email)
         {
-            var massage = "Ihr Angebot wurde angenommen. Eine neue Konversation ist nun verfügbar.";
-            SendMail(email, massage);
+            var message = "Ihr Angebot wurde angenommen. Eine neue Konversation ist nun verfügbar.";
+            SendMail(email, message, "Ihr Angebot wurde angenommen");
         }
 
         private void createEmailForSportler(string email)
         {
-            var massage = "Sie haben ein Angebot angenommen. Eine neue Konversation ist nun verfügbar.";
-            SendMail(email, massage);
+            var message = "Sie haben ein Angebot angenommen. Eine neue Konversation ist nun verfügbar.";
+            SendMail(email, message, "Sie haben ein Angebot angenommen");
         }
 
         private void createCancelEmails(List<Angebot> receiverList)
         {
-            var massage = "Ihr Angebot wurde leider abgelehnt. Probieren Sie es weiter!";
+            var massage = "Tut uns leid, ihr Angebot wurde leider abgelehnt. Versuchen Sie es weiter!";
             foreach (Angebot cancelAngebot in receiverList)
             {
                 var cancelPersonalTrainer = GetAspNetUserIdFromTrainerId(cancelAngebot.PersonalTrainer_Id);
                 var receiverEmail = Context.Users.Single(s => s.Id == cancelPersonalTrainer).Email;                
-                SendMail(receiverEmail, massage);
+                SendMail(receiverEmail, massage, "Ihr Angebot wurde leider abgelehnt");
             }
         }
 
-        private void SendMail(string email, string massage)
+        private void SendMail(string email, string message, string subject)
         {
             MailMessage msg = new MailMessage();
             SmtpClient client = new SmtpClient();
             try
             {
-                msg.Subject = "Ein Angebot wurde angenommen";
-                msg.Body = massage;
+                msg.Subject = subject;
+                msg.Body = message;
                 msg.From = new MailAddress("birafit17@gmail.com");
                 msg.To.Add(email);
                 msg.IsBodyHtml = true;
