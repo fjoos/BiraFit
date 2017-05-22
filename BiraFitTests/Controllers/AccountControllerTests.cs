@@ -7,6 +7,9 @@ using System.Web;
 using Moq;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Security.Principal;
+using TypeMock.ArrangeActAssert;
 
 namespace BiraFit.Controllers.Tests
 {
@@ -14,34 +17,44 @@ namespace BiraFit.Controllers.Tests
     public class AccountControllerTests
     {
         private AccountController _controller;
-        private Mock<HttpContextBase> moqContext;
-        private Mock<HttpRequestBase> moqRequest;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _controller = new AccountController();
-            moqContext = new Mock<HttpContextBase>();
-            moqRequest = new Mock<HttpRequestBase>();
         }
 
-        [TestMethod()]
-        public void RegisterSportler()
-        {
-            var model = new RegisterViewModel() {
-                Email = "birfafit17@gmail.com",
-                Firstname = "Bira",
-                Lastname = "Fit",
-                Birthdate = new DateTime(1999,1,1),
-                Password = "Hsr-123",
-                ConfirmPassword = "Hsr-123",
-                Sportler = true };
+[TestMethod, Isolated]
+public async Task TestWhenLoginIsBad_ErrorMessageIsShown()
+{
+    // Arrange
+    // Create the wanted controller for testing 
+    var controller = new AccountController(); 
+    var loginData = new LoginViewModel { Email = "support@typemock.com", Password = "password", RememberMe = false };
 
-            ValidateModel(model, _controller);
+    // Fake the ModelState
+    Isolate.WhenCalled(() => controller.ModelState.IsValid).WillReturn(true);
 
-            var asfd = _controller.Register(model);
-            Assert.IsNotNull(asfd.);
-        }
+    // Ignore AddModelError (should be called when login fails)
+    Isolate.WhenCalled(() => controller.ModelState.AddModelError("", "")).IgnoreCall();
+
+    // Fake HttpContext to return a fake ApplicationSignInManager
+    var fakeASIM = Isolate.WhenCalled(() => controller.HttpContext.GetOwinContext().Get<ApplicationSignInManager>()).ReturnRecursiveFake();
+
+    // When password checked it will fail. Note we are faking an async method
+    Isolate.WhenCalled(() => fakeASIM.PasswordSignInAsync(null, null, true, true)).WillReturn(Task.FromResult(SignInStatus.Failure));
+
+    // Act
+    var result = await controller.Login(loginData, "http://www.typemock.com/");
+
+    // Assert
+    // The result contains login data, doesn’t redirect
+    Assert.IsInstanceOfType(result, typeof(ViewResult));
+    Assert.AreSame(loginData, (result as ViewResult).Model);
+    // Make sure that the code added an error
+    Isolate.Verify.WasCalledWithExactArguments(() => controller.ModelState.AddModelError("", "Invalid login attempt."));
+}
+
 
         private static void ValidateModel(object model, Controller controller)
         {
@@ -104,14 +117,12 @@ namespace BiraFit.Controllers.Tests
         }
 
         [TestMethod()]
-        public async Task LoginWithNoModel()
+        public async Task LoginWithNullModelAsync()
         {
-            LoginViewModel lvm = new LoginViewModel {
-                Email = "",
-                Password = ""                
-            };
-            var result = await _controller.Login(null, "/Login");
-            Assert.IsNotNull(result);
+            var result = await _controller.Login(model: null, returnUrl: "/login");
+            var viewResult = (ViewResult)result;
+            Assert.AreEqual(viewResult.Model, null);
+            Assert.AreEqual("Login", viewResult.ViewName);
         }
 
 
@@ -152,5 +163,9 @@ namespace BiraFit.Controllers.Tests
             var result = _controller.Register(rvm);
             Assert.IsNotNull(result);
         }
+
     }
+
 }
+
+

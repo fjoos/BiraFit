@@ -100,11 +100,11 @@ namespace BiraFit.Controllers
         }
 
         // GET: Reject Angebot as a Sportler
-        public ActionResult Reject(int AngebotId)
+        public ActionResult Reject(int id)
         {
-            if (IsSportler() && SportlerHasAngebot(AngebotId))
+            if (IsSportler() && SportlerHasAngebot(id))
             {
-                var angebot = Context.Angebot.Single(i => i.Id == AngebotId);
+                var angebot = Context.Angebot.Single(i => i.Id == id);
                 Context.Angebot.Remove(angebot);
                 Context.SaveChanges();
 
@@ -115,7 +115,7 @@ namespace BiraFit.Controllers
         }
 
         // GET: Withdraw (delete) as a Trainer
-        public ActionResult Withdraw(int AngebotId)
+        public ActionResult Withdraw(int id)
         {
             if (IsSportler() || !IsLoggedIn())
             {
@@ -123,10 +123,10 @@ namespace BiraFit.Controllers
             }
             var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             var angebotToRemove = Context.Angebot.Single(
-                i => i.Bedarf_Id == AngebotId && i.PersonalTrainer_Id == personalTrainerId);
+                i => i.Bedarf_Id == id && i.PersonalTrainer_Id == personalTrainerId);
             Context.Angebot.Remove(angebotToRemove);
             Context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AngebotTrainer", "Angebot");
         }
 
         // GET: AngebotList as a Trainer
