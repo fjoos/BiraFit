@@ -14,17 +14,25 @@ namespace BiraFit.Controllers
         public ActionResult Index()
         {
             List<Konversation> konversationList;
+            int specificId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
+            NachrichtViewModel result = new NachrichtViewModel();
+
             if (IsSportler())
             {
-                int sportlerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-                konversationList = Context.Konversation.Where(k => k.Sportler_Id == sportlerId && !k.SportlerDeleted).ToList();
+                konversationList = Context.Konversation.Where(k => k.Sportler_Id == specificId && !k.SportlerDeleted).ToList();
+                result = GetViewModelBySportler(konversationList);
             }
             else
             {
-                int trainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-                konversationList = Context.Konversation.Where(k => k.PersonalTrainer_Id == trainerId && !k.TrainerDeleted).ToList();
+                konversationList = Context.Konversation.Where(k => k.PersonalTrainer_Id == specificId && !k.TrainerDeleted).ToList();
+                result = GetViewModelByTrainer(konversationList);
             }
 
+            return View(result);
+        }
+
+        private NachrichtViewModel GetViewModelBySportler(List<Konversation> konversationList)
+        {
             List<string> lastMessages = new List<string>();
             List<string> profileImages = new List<string>();
             List<string> userNames = new List<string>();
@@ -33,54 +41,67 @@ namespace BiraFit.Controllers
             {
                 lastMessages.Add(GetLastMessage(konversation.Id));
                 sendTimes.Add(GetLastTime(konversation.Id));
-                if (IsSportler())
-                {
-                    string trainerId = GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
-                    string username = Context.Users.Single(i => i.Id == trainerId).Email;
-                    var profileImage = Context.Users.Single(i => i.Id == trainerId).ProfilBild ??
-                                       "standardprofilbild.jpg";
-                    userNames.Add(username);
-                    profileImages.Add(profileImage);
-                }
-                else
-                {
-                    string sportlerId = GetAspNetUserIdFromSportlerId(konversation.Sportler_Id);
-                    string username = Context.Users.Single(i => i.Id == sportlerId).Name;
-                    var profileImage = Context.Users.Single(i => i.Id == sportlerId).ProfilBild ??
-                                       "standardprofilbild.jpg";
-                    userNames.Add(username);
-                    profileImages.Add(profileImage);
-                }
+                string trainerId = GetAspNetUserIdFromTrainerId(konversation.PersonalTrainer_Id);
+                string username = Context.Users.Single(i => i.Id == trainerId).Email;
+                var profileImage = Context.Users.Single(i => i.Id == trainerId).ProfilBild ??
+                                   "standardprofilbild.jpg";
+                userNames.Add(username);
+                profileImages.Add(profileImage);
             }
-
-            return View(new NachrichtViewModel()
+            return new NachrichtViewModel
             {
                 Konversationen = konversationList,
                 LastMessages = lastMessages,
                 ProfileImages = profileImages,
                 UserNames = userNames,
                 SendTimes = sendTimes
-            });
+            };
+        }
+
+        private NachrichtViewModel GetViewModelByTrainer(List<Konversation> konversationList)
+        {
+            List<string> lastMessages = new List<string>();
+            List<string> profileImages = new List<string>();
+            List<string> userNames = new List<string>();
+            List<DateTime> sendTimes = new List<DateTime>();
+            foreach (var konversation in konversationList)
+            {
+                lastMessages.Add(GetLastMessage(konversation.Id));
+                sendTimes.Add(GetLastTime(konversation.Id));
+                string sportlerId = GetAspNetUserIdFromSportlerId(konversation.Sportler_Id);
+                string username = Context.Users.Single(i => i.Id == sportlerId).Name;
+                var profileImage = Context.Users.Single(i => i.Id == sportlerId).ProfilBild ??
+                                   "standardprofilbild.jpg";
+                userNames.Add(username);
+                profileImages.Add(profileImage);
+            }
+            return new NachrichtViewModel
+            {
+                Konversationen = konversationList,
+                LastMessages = lastMessages,
+                ProfileImages = profileImages,
+                UserNames = userNames,
+                SendTimes = sendTimes
+            };
         }
 
         //GET: Nachricht/Delete/id
         public ActionResult Delete(int id)
         {
             Konversation konv = Context.Konversation.FirstOrDefault(i => i.Id == id);
-            if (IsSportler())
-            {
-                konv.SportlerDeleted = true;
-            }
-            else
-            {
-                konv.TrainerDeleted = true;
-            }
-            Context.SaveChanges();
-            bool deletable = konv.TrainerDeleted && konv.SportlerDeleted;
             var currentUserId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
             if(konv != null && (konv.Sportler_Id == currentUserId || konv.PersonalTrainer_Id == currentUserId))
             {
-                if (deletable)
+                if (IsSportler())
+                {
+                    konv.SportlerDeleted = true;
+                }
+                else
+                {
+                    konv.TrainerDeleted = true;
+                }
+                Context.SaveChanges();
+                if (konv.TrainerDeleted && konv.SportlerDeleted)
                 {
                     deleteMessages(konv.Id);
                     Context.Konversation.Remove(konv);
