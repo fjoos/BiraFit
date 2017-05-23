@@ -7,11 +7,10 @@ namespace BiraFit.Models
 {
     public class IndexViewModel
     {
-        public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
+        public string Vorname { get; set; }
+        public string Nachname { get; set; }
+        public string Email { get; set; }
+        public string ProfilBild { get; set; }
     }
 
     public class SetPasswordViewModel

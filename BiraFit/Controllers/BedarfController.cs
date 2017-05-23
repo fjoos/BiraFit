@@ -10,6 +10,8 @@ namespace BiraFit.Controllers
 {
     public class BedarfController : BaseController
     {
+        //
+        // GET: /Bedarf/Index
         public ActionResult Index()
         {
             return RedirectToAction("Index", "Home");
@@ -85,11 +87,11 @@ namespace BiraFit.Controllers
         {
             if (IsSportler())
             {
-                Bedarf bedarf = Context.Bedarf.Single(i => i.Id == id);
+                var bedarf = Context.Bedarf.Single(i => i.Id == id);
 
                 if (GetAspNetUserIdFromSportlerId(bedarf.Sportler_Id) == User.Identity.GetUserId())
                 {
-                    deleteOpenAngebote(bedarf.Id);
+                    DeleteOpenAngebote(bedarf.Id);
                     Context.Bedarf.Remove(bedarf);
                     Context.SaveChanges();
                 }
@@ -97,7 +99,7 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private void deleteOpenAngebote(int bedarfId)
+        private void DeleteOpenAngebote(int bedarfId)
         {
             if(Context.Angebot.Any(s => s.Bedarf_Id == bedarfId))
             {
@@ -124,13 +126,13 @@ namespace BiraFit.Controllers
 
         }
 
-        public bool IsBedarfOpen(int sportlerId)
+        private bool IsBedarfOpen(int sportlerId)
         {
             return Context.Bedarf.Any(b => b.Sportler_Id == sportlerId
                                            && b.OpenBedarf);
         }
 
-        public bool IsBedarfOwner(int bedarfId, int sportlerId)
+        private bool IsBedarfOwner(int bedarfId, int sportlerId)
         {
             return Context.Bedarf.Any(b => b.Id == bedarfId &&
                                            b.Sportler_Id == sportlerId);

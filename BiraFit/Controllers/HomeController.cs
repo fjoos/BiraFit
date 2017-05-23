@@ -10,6 +10,8 @@ namespace BiraFit.Controllers
 {
     public class HomeController : BaseController
     {
+        //
+        // GET: /Home/Index
         public ActionResult Index()
         {
             var bedarfList = Context.Bedarf.ToList();
@@ -20,24 +22,47 @@ namespace BiraFit.Controllers
                 if (IsSportler())
                 {
                     ViewBag.Type = "Sportler";
-                    bedarfViewModelList = fillSportlerList(bedarfList);
+                    bedarfViewModelList = FillSportlerList(bedarfList);
                 }
                 else
                 {
                     ViewBag.Type = "PersonalTrainer";
-                    bedarfViewModelList = fillTrainerList(bedarfList, null);
+                    bedarfViewModelList = FillTrainerList(bedarfList, null);
                 }
             }
             else
             {
                 ViewBag.Type = "Anonym";
-                bedarfViewModelList = fillAnonymList(bedarfList);
+                bedarfViewModelList = FillAnonymList(bedarfList);
             }
 
             return View(bedarfViewModelList);
         }
 
-        private List<BedarfViewModel> fillSportlerList(List<Bedarf> bedarfList)
+        //
+        // POST: /Home/Index/Filter
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Filter(int? price)
+        {
+            ViewBag.Type = "PersonalTrainer";
+            var bedarfList = Context.Bedarf.ToList();
+            var bedarfViewModelList = new List<BedarfViewModel>();
+            if (!IsSportler())
+            {
+                bedarfViewModelList = FillTrainerList(bedarfList, price);
+            }
+            return View("~/Views/Home/Index.cshtml", bedarfViewModelList);
+        }
+
+        //
+        // GET: /Home/Index/Filter
+        public ActionResult Filter()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        private List<BedarfViewModel> FillSportlerList(List<Bedarf> bedarfList)
         {
             var result = new List<BedarfViewModel>();
             var currentId = User.Identity.GetUserId();
@@ -64,7 +89,7 @@ namespace BiraFit.Controllers
             return result;
         }
 
-        private List<BedarfViewModel> fillTrainerList(List<Bedarf> bedarfList, int? priceFilter)
+        private List<BedarfViewModel> FillTrainerList(List<Bedarf> bedarfList, int? priceFilter)
         {
             var result = new List<BedarfViewModel>();
             var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
@@ -93,7 +118,7 @@ namespace BiraFit.Controllers
             return result;
         }
 
-        private List<BedarfViewModel> fillAnonymList(List<Bedarf> bedarfList)
+        private List<BedarfViewModel> FillAnonymList(List<Bedarf> bedarfList)
         {
             var result = new List<BedarfViewModel>();
             foreach (var bedarf in bedarfList)
@@ -113,24 +138,7 @@ namespace BiraFit.Controllers
             return result;
         }
 
-        public ActionResult Filter()
-        {
-            return RedirectToAction("Index", "Home");
-        }
 
-
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult Filter(int? price)
-        {
-            ViewBag.Type = "PersonalTrainer";
-            var bedarfList = Context.Bedarf.ToList();
-            var bedarfViewModelList = new List<BedarfViewModel>();
-            if (!IsSportler())
-            {
-                bedarfViewModelList = fillTrainerList(bedarfList, price);
-            }
-            return View("~/Views/Home/Index.cshtml", bedarfViewModelList);
-        }
+      
     }
 }

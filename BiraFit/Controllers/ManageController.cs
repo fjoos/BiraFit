@@ -41,44 +41,32 @@ namespace BiraFit.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message)
+        public ActionResult Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess
                     ? "Ihr Kennwort wurde geändert."
                     : message == ManageMessageId.SetPasswordSuccess
                         ? "Ihr Kennwort wurde festgelegt."
-                        : message == ManageMessageId.SetTwoFactorSuccess
-                            ? "Ihr Anbieter für zweistufige Authentifizierung wurde festgelegt."
                             : message == ManageMessageId.Error
                                 ? "Fehler"
-                                : message == ManageMessageId.AddPhoneSuccess
-                                    ? "Ihre Telefonnummer wurde hinzugefügt."
-                                    : message == ManageMessageId.RemovePhoneSuccess
-                                        ? "Ihre Telefonnummer wurde entfernt."
                                         : "";
 
             var userId = User.Identity.GetUserId();
+            var user = Context.Users.FirstOrDefault(i => i.Id == userId);
             var model = new IndexViewModel
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                Email = user.Email,
+                Nachname = user.Name,
+                ProfilBild = user.ProfilBild,
+                Vorname = user.Vorname
             };
             return View(model);
         }
 
+        //
         // GET: /Manage/Delete
         public ActionResult Delete()
-        {
-            return View();
-        }
-
-        //
-        // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
         {
             return View();
         }
@@ -116,36 +104,6 @@ namespace BiraFit.Controllers
         }
 
         //
-        // GET: /Manage/SetPassword
-        public ActionResult SetPassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/SetPassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-                if (result.Succeeded)
-                {
-                    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                    if (user != null)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    }
-                    return RedirectToAction("Index", new {Message = ManageMessageId.SetPasswordSuccess});
-                }
-                AddErrors(result);
-            }
-
-            return View(model);
-        }
-
         // GET: /Manage/Edit/34
         public ActionResult Edit()
         {
@@ -169,6 +127,7 @@ namespace BiraFit.Controllers
             });
         }
 
+        //
         // POST: /Manage/Edit/34
         [HttpPost]
         public ActionResult Edit(EditViewModel model)
@@ -187,12 +146,14 @@ namespace BiraFit.Controllers
             return View(model);
         }
 
+        //
         // GET: /Manage/UploadFile
         public ActionResult UploadFile()
         {
             return View();
         }
 
+        //
         //POST /Manage/UploadFile
         [HttpPost]
         public ActionResult UploadFile(HttpPostedFileBase file)
@@ -229,6 +190,7 @@ namespace BiraFit.Controllers
             }
         }
 
+        //
         // GET: /Manage/Show/34
         public ActionResult Show(string id)
         {
@@ -263,6 +225,7 @@ namespace BiraFit.Controllers
             });
         }
 
+        //
         //POST /Manage/Show/34/3
         [HttpPost]
         public ActionResult RateTrainer(string id, float rating)

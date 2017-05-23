@@ -11,7 +11,8 @@ namespace BiraFit.Controllers
 {
     public class AngebotController : BaseController
     {
-        // GET: Angebot
+        //
+        // GET: /Angebot/Index
         public ActionResult Index()
         {
             if (IsSportler())
@@ -47,6 +48,8 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //
+        // POST: /Angebot/create
         [HttpPost]
         public ActionResult Create(BedarfViewModel bedarfviewmodel)
         {
@@ -66,7 +69,8 @@ namespace BiraFit.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Accept
+        //
+        // GET: /Angebot/Accept/<id>
         public ActionResult Accept(int id)
         {
             if (IsSportler() && SportlerHasAngebot(id))
@@ -99,7 +103,8 @@ namespace BiraFit.Controllers
 
         }
 
-        // GET: Reject Angebot as a Sportler
+        //
+        // GET:/Angebot/Reject/<id> Angebot as a Sportler
         public ActionResult Reject(int id)
         {
             if (IsSportler() && SportlerHasAngebot(id))
@@ -120,7 +125,8 @@ namespace BiraFit.Controllers
 
         }
 
-        // GET: Withdraw (delete) as a Trainer
+        //
+        // GET: /Angebot/Withdraw/<id> (delete) as a Trainer
         public ActionResult Withdraw(int id)
         {
             if (IsSportler() || !IsLoggedIn())
@@ -128,14 +134,15 @@ namespace BiraFit.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var personalTrainerId = GetAspNetSpecificIdFromUserId(User.Identity.GetUserId());
-            var angebotToRemove = Context.Angebot.Single(
+            var offerToRemove = Context.Angebot.Single(
                 i => i.Bedarf_Id == id && i.PersonalTrainer_Id == personalTrainerId);
-            Context.Angebot.Remove(angebotToRemove);
+            Context.Angebot.Remove(offerToRemove);
             Context.SaveChanges();
             return RedirectToAction("AngebotTrainer", "Angebot");
         }
 
-        // GET: AngebotList as a Trainer
+        //
+        // GET: /Angebot/AngebotList
         public ActionResult AngebotTrainer()
         {
             if (IsSportler() || !IsLoggedIn())
@@ -182,23 +189,26 @@ namespace BiraFit.Controllers
         private void createEmailForPersonaTrainer(string email)
         {
             var message = "Ihr Angebot wurde angenommen. Eine neue Konversation ist nun verfügbar.";
-            SendMail(email, message, "Ihr Angebot wurde angenommen");
+            var subject = "Ihr Angebot wurde angenommen";
+            SendMail(email, message, subject);
         }
 
         private void createEmailForSportler(string email)
         {
             var message = "Sie haben ein Angebot angenommen. Eine neue Konversation ist nun verfügbar.";
-            SendMail(email, message, "Sie haben ein Angebot angenommen");
+            var subject = "Sie haben ein Angebot angenommen";
+            SendMail(email, message, subject);
         }
 
         private void createCancelEmails(List<Angebot> receiverList)
         {
             var massage = "Tut uns leid, ihr Angebot wurde leider abgelehnt. Versuchen Sie es weiter!";
+            var subject = "Ihr Angebot wurde leider abgelehnt";
             foreach (Angebot cancelAngebot in receiverList)
             {
                 var cancelPersonalTrainer = GetAspNetUserIdFromTrainerId(cancelAngebot.PersonalTrainer_Id);
                 var receiverEmail = Context.Users.Single(s => s.Id == cancelPersonalTrainer).Email;                
-                SendMail(receiverEmail, massage, "Ihr Angebot wurde leider abgelehnt");
+                SendMail(receiverEmail, massage, subject);
             }
         }
 

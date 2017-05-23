@@ -2,11 +2,10 @@
 @using Microsoft.AspNet.Identity.Owin;
 
 @{
-    var user = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().FindByNameAsync(User.Identity.Name).Result;
     var image = "~/Resources/standardprofilbild.jpg";
-    if (user.ProfilBild != null)
+    if (Model.ProfilBild != null)
     {
-        image = "~/Resources/AccountPicture/" + user.ProfilBild;
+        image = "~/Resources/AccountPicture/" + Model.ProfilBild;
     }
 }
 
@@ -33,9 +32,9 @@
                             </div>
                             <div class="col-md-9 col-lg-9">
                                     <ul class="list-group">
-                                        <li class="list-group-item">Vorname: @user.Vorname</li>
-                                        <li class="list-group-item">Nachname: @user.Name</li>
-                                        <li class="list-group-item">Email: <a href="mailto:@user.Email" id="link">@user.Email</a></li>
+                                        <li class="list-group-item">Vorname: @Model.Vorname</li>
+                                        <li class="list-group-item">Nachname: @Model.Nachname</li>
+                                        <li class="list-group-item">Email: <a href="mailto:@Model.Email" id="link">@Model.Email</a></li>
                                         <li class="list-group-item">Kennwort: @Html.ActionLink("Kennwort ändern", "ChangePassword", "Manage", routeValues: null, htmlAttributes: new { id = "link" })</li>
                                     </ul>
                             </div>
