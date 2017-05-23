@@ -14,20 +14,20 @@ namespace BiraFit.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        public DateTime LoginDate { get; set; }
+        public DateTime AnmeldeDatum { get; set; }
 
         [Required]
-        public string LastName { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string FirstName { get; set; }
+        public string Vorname { get; set; }
 
         public string Adresse { get; set; }
 
         public string ProfilBild { get; set; }
 
         [Required]
-        public int Active { get; set; }
+        public int Aktiv { get; set; }
 
         public override string UserName { get; set; }
 

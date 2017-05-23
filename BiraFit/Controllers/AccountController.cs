@@ -107,10 +107,10 @@ namespace BiraFit.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    LoginDate = DateTime.Now,
-                    LastName = model.Lastname,
-                    FirstName = model.Firstname,
-                    Active = 1                                        
+                    AnmeldeDatum = DateTime.Now,
+                    Name = model.Lastname,
+                    Vorname = model.Firstname,
+                    Aktiv = 1                                        
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -317,15 +317,17 @@ namespace BiraFit.Controllers
         {
            if (sportler)
             {
-                DeleteOpenStockForSportler(id, userId);
+                deleteOpenStockForSportler(id, userId);
             }
             else
             {
-                DeleteOpenStockForPersonaltrainer(id, userId);
+                deleteOpenStockForPersonaltrainer(id, userId);
             }
 
-            var messages = Context.Nachricht.Where(m => m.Sender_Id == id || m.Empfaenger_Id == id).ToList();
-            Context.Nachricht.RemoveRange(messages);
+            var queryNachricht = from d in Context.Nachricht
+                where d.Sender_Id == id || d.Empfaenger_Id == id
+                select d;
+            Context.Nachricht.RemoveRange(queryNachricht);
             
             string serverPath = "~/Resources/AccountPicture/";
             if (profilePicture != null)
@@ -339,20 +341,20 @@ namespace BiraFit.Controllers
             Context.SaveChanges();
         }
 
-        private void DeleteOpenStockForSportler(string id, int userId)
+        private void deleteOpenStockForSportler(string id, int userId)
         {
-            if (Context.Bedarf.Any(s => s.Sportler_Id == userId))
-            {
+                if(Context.Bedarf.Any(s => s.Sportler_Id == userId))
+                {
                 var openBedarf = Context.Bedarf.Single(s => s.Sportler_Id == userId);
-                DeleteOpenAngebote(openBedarf.Id);
+                deleteOpenAngebote(openBedarf.Id);
                 Context.Bedarf.Remove(openBedarf);
-            }
-
-            var conversations = Context.Konversation.Where(c => c.Sportler_Id == userId).ToList();
-            Context.Konversation.RemoveRange(conversations);
+                }            
+            var queryKonversation = from d in Context.Konversation
+                where d.Sportler_Id == userId
+                select d;
+            Context.Konversation.RemoveRange(queryKonversation);
         }
-
-        private void DeleteOpenAngebote(int bedarfId)
+        private void deleteOpenAngebote(int bedarfId)
         {
             if (Context.Angebot.Any(s => s.Bedarf_Id == bedarfId))
             {
@@ -360,14 +362,17 @@ namespace BiraFit.Controllers
                 Context.Angebot.RemoveRange(openAngebote);
             }
         }
-
-        private void DeleteOpenStockForPersonaltrainer(string id, int userId)
+        private void deleteOpenStockForPersonaltrainer(string id, int userId)
         {
-            var offers = Context.Angebot.Where(o => o.PersonalTrainer_Id == userId).ToList();
-            Context.Angebot.RemoveRange(offers);
+            var queryAngebot = from d in Context.Angebot
+                where d.PersonalTrainer_Id == userId
+                select d;
+            Context.Angebot.RemoveRange(queryAngebot);
 
-            var conversations = Context.Konversation.Where(c => c.PersonalTrainer_Id == userId).ToList();
-            Context.Konversation.RemoveRange(conversations);
+            var queryKonversation = from d in Context.Konversation
+                where d.PersonalTrainer_Id == userId
+                select d;
+            Context.Konversation.RemoveRange(queryKonversation);
         }
 
         public void AllocateUser(ApplicationUser user, RegisterViewModel model)

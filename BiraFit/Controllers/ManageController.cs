@@ -160,8 +160,8 @@ namespace BiraFit.Controllers
             }
             return View(new EditViewModel
             {
-                Vorname = user.FirstName,
-                Name = user.LastName,
+                Vorname = user.Vorname,
+                Name = user.Name,
                 Email = user.Email,
                 Adresse = user.Adresse,
                 ProfilBild = user.ProfilBild,
@@ -251,8 +251,8 @@ namespace BiraFit.Controllers
             {
                 User_Id = user.Id,
                 Picture_ID = user.ProfilBild,
-                Vorname = user.FirstName,
-                Name = user.LastName,
+                Vorname = user.Vorname,
+                Name = user.Name,
                 Adresse = user.Adresse,
                 Mail = user.Email,
                 Beschreibung = personalTrainer.Beschreibung,

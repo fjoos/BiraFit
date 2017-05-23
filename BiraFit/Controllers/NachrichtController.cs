@@ -69,7 +69,7 @@ namespace BiraFit.Controllers
                 lastMessages.Add(GetLastMessage(konversation.Id));
                 sendTimes.Add(GetLastTime(konversation.Id));
                 string sportlerId = GetAspNetUserIdFromSportlerId(konversation.Sportler_Id);
-                string username = Context.Users.Single(i => i.Id == sportlerId).LastName;
+                string username = Context.Users.Single(i => i.Id == sportlerId).Name;
                 var profileImage = Context.Users.Single(i => i.Id == sportlerId).ProfilBild ??
                                    "standardprofilbild.jpg";
                 userNames.Add(username);
