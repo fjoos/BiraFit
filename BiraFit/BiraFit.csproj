@@ -303,7 +303,7 @@
     <Content Include="Resources\BackgroundLoginRegister.jpg" />
     <Content Include="Resources\BackgroundChat.jpg" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
