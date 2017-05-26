@@ -1,0 +1,92 @@
+﻿@model BiraFit.Models.ShowViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var cookie = Request.Cookies[Model.User_Id];
+}
+
+<body id="profileBack">
+
+    <div class="row">
+        <section>
+            <div class="container">
+                <div class="col-md-8 col-md-offset-2 modal-content" id="mybox">
+                    <div class="panel panel-info" id="innerbox">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h4>Trainer: @Model.Vorname @Model.Name</h4>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-5" align="center">
+                                        @if (Model.Picture_ID != null)
+                                        {
+                                            <img class="img-circle img-responsive" id="detailProfileImg" src="@Url.Content("~/Resources/AccountPicture/" + Model.Picture_ID)" />
+                                        }
+                                        else
+                                        {
+                                            <img class="img-circle img-responsive" id="detailProfileImg" src="~/Resources/default-avatar-c5d8ec086224cb6fc4e395f4ba3018c2.jpg" />
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="list-group" id="myList">
+                                            <li class="list-group-item" id="myListObj">@Model.Vorname</li>
+                                            <li class="list-group-item" id="myListObj">@Model.Name</li>
+                                            <li class="list-group-item" id="myListObj">@Model.Adresse</li>
+                                            <li class="list-group-item" id="myListObj"><a href="mailto:" id="link">@Model.Mail</a></li>
+                                            <li class="list-group-item" id="myListObj">
+                                                Durchschnittliche Bewertung:
+                                                @if (Model.Bewertung > 0)
+                                                {
+                                                    <input value="@Model.Bewertung" id="actRate" class="rating" min=0 max=5 step=0.1 data-size="xs" disabled>
+                                                    <p>(@Model.Bewertung/5) aus @Model.AnzahlBew Bewertungen.</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>Noch keine Bewertung vorhanden</p>
+                                                }
+                                            <li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            @if (Model.AreConnected)
+                                            {
+                                                if (cookie == null)
+                                                {
+                                                    using (Html.BeginForm("RateTrainer", "Manage"))
+                                                    {
+                                                        <input type="text" hidden value="@Model.User_Id" name="id" id="id" />
+                                                        <input id="rating" name="rating" value="0" class="rating" min=0 max=5 step=1 data-size="xs">
+                                                        <button type="submit" id="normalButton" class="btn btn-primary">Bewertung abgeben</button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p>Sie haben den Trainer mit @cookie.Value/5 Sternen bewertet.</p>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <h4>Zu mir</h4>
+                            <p>
+                                @Model.Beschreibung
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>

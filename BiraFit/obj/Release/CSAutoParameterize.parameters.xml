@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-BiraFit-20170323091056.mdf;Initial Catalog=aspnet-BiraFit-20170323091056;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="birafit-Web.config Connection String" description="birafit Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="Data Source=mssql4.gear.host;Initial Catalog=birafit;User ID=birafit;Password=Hsr-123" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='birafit']/@connectionString" />
+  </parameter>
+</parameters>

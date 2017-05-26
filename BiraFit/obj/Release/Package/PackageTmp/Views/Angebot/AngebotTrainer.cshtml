@@ -1,0 +1,89 @@
+﻿@model List<BiraFit.ViewModel.AngebotViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var image = "~/Resources/AccountPicture/";
+}
+
+<body id="mainBack">
+    @ViewBag.angebotli
+    <div class="row">
+        <section id="boxForm">
+            <div class="container">
+                <div class="mainbox col-md-8 col-md-offset-2">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h2>Meine Angebote</h2>
+                        </div>
+                    </div>
+                    @foreach (var item in @Model)
+                    {
+                        <div class="modal-content" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-2">
+                                        <figure>
+                                            @if (item.sportlerPicture != null)
+                                            {
+                                                <img class="img-circle" id="profileImg" src="@Url.Content(image + item.sportlerPicture)" />
+                                            }
+                                            else
+                                            {
+                                                <img class="img-circle" id="profileImg" src="~/Resources/standardprofilbild" />
+                                            }
+                                        </figure>
+                                        <small id="usrName">
+                                            @item.sportlerUsername
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>@item.Bedarf.Titel</b>
+                                        </h4>
+                                        <p>@item.Bedarf.Beschreibung</p>
+                                        <section>
+                                            Preisvorstellung: <p><b>@item.Bedarf.Preis.- / Woche</b></p>
+                                        </section>
+                                        <section>
+                                            Umgebung: <p><b>@item.Bedarf.Ort</b></p>
+                                        </section>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="modal-content col-md-offset-2" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-md-10" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>Mein Angebot</b>
+                                        </h4>
+                                        <p>@item.Angebot.Beschreibung</p>
+                                        <section>
+                                            Preisvorstellung: <p><b>@item.Angebot.Preis.- / Woche</b></p>
+                                        </section>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                    </div>
+                                    <a href="/Angebot/Withdraw/@item.Bedarf.Id" class="btn btn-primary" id="delButton">Löschen</a>
+                                </div>
+                            </article>
+                        </div>
+
+
+                    }
+
+                    @if (Model.Count == 0)
+                    {
+                        <p>Leider haben Sie noch keine Angebote abgegeben</p>
+                    }
+                    </div>
+                </div>
+            </section>
+        </div>
+
+</body>

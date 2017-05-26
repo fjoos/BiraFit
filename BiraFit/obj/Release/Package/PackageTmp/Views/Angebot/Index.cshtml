@@ -1,0 +1,130 @@
+﻿@model List<BiraFit.ViewModel.AngebotViewModel>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var image = "~/Resources/standardprofilbild.jpg";
+    if (Model.Count > 0)
+    {
+        if (Model[0].sportlerPicture != null)
+        {
+            image = "~/Resources/AccountPicture/" + Model[0].sportlerPicture;
+        }
+    }
+}
+
+
+<body id="mainBack">
+    <p>@ViewBag.info</p>
+    <div class="row">
+        <section>
+            <div class="container">
+                <div class="mainbox col-md-8 col-md-offset-2">
+                    @if (@Model.Count > 0)
+                    {
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h2>Mein Bedarf</h2>
+                            </div>
+                        </div>
+                        <div class="modal-content" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <figure>
+                                            <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                        </figure>
+                                        @*Name?*@
+                                    </div>
+                                    <div class="col-sm-6 col-md-8" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>@Model[0].Bedarf.Titel</b>
+                                        </h4>
+                                        <p>@Model[0].Bedarf.Beschreibung</p>
+                                        <section>
+                                            Preisvorstellung: <p><b>@Model[0].Bedarf.Preis.- / Woche</b></p>
+                                        </section>
+                                        <section>
+                                            Umgebung: <p><b>@Model[0].Bedarf.Ort</b></p>
+                                        </section>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@Model[0].Bedarf.Datum</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="panel-heading col-md-offset-2" id">
+                            <h2>Angebote</h2>
+                        </div>
+                        <section class="comment-list">
+
+                            @foreach (var item in @Model)
+                            {
+                                <div class="modal-content col-md-offset-2 col-lg-offset-2 col-sm-offset-0" id="bedarf">
+                                    <article>
+                                        <div class="row">
+                                            <div class="col-md-2 col-sm-4">
+                                                <figure>
+                                                    <a href="/Manage/Show/@item.peronalTrainerId">
+                                                        @if (item.trainerPicture != null)
+                                                        {
+                                                            <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/" + item.trainerPicture)" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img class="img-circle" id="profileImg" src="~/Resources/standardprofilbild.jpg" />
+                                                        }
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-8 col-sm-6" id="angebotBedarfBody">
+                                                <h4>
+                                                    <b>Angebot von <a href="/Manage/Show/@item.peronalTrainerId">@item.trainerUsername</a></b>
+                                                </h4>
+                                                <p>@item.Angebot.Beschreibung</p>
+                                            </div>
+                                            <div class="col-md-2 col-sm-2">
+                                                <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-10 col-md-offset-2">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <section>
+                                                            Preisangebot: <p><b>@item.Angebot.Preis.- / Woche</b></p>
+                                                        </section>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-md-offset-3">
+                                                    <div class="form-group">
+                                                        <a id="acceptButton" href="/Angebot/Accept/@item.Angebot.Id" class="btn btn-block">Annehmen</a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <a id="delButton" href="/Angebot/Reject/@item.Angebot.Id" class="btn btn-block">Ablehnen</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            }
+                        </section>
+                    }
+                    else
+                    {
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <h2>Keine Angebote</h2>
+                            </div>
+                        </div>
+                        <p>Leider haben Sie noch keine Angebote erhalten</p>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+</body>

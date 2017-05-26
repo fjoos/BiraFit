@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="birafit" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="birafit-Web.config Connection String" description="" value="Data Source=mssql4.gear.host;Initial Catalog=birafit;User ID=birafit;Password=Hsr-123" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='birafit']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." value="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-BiraFit-20170323091056.mdf;Initial Catalog=aspnet-BiraFit-20170323091056;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\_Studium\\EngProj\\0-Projekt\\BiraFit\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>

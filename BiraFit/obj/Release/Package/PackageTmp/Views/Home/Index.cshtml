@@ -1,0 +1,39 @@
+﻿@model List<BiraFit.ViewModel.BedarfViewModel>
+
+@{
+    ViewBag.Title = "BiraFit";
+}
+@if (Model != null)
+{
+    <body id="mainBack">
+
+        @if (ViewBag.Type == "PersonalTrainer")
+        {
+            using (Html.BeginForm("Filter", "Home"))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <div class="search">
+                                <input type="number" id="filter" class="form-control" name="price" placeholder="Maximaler Preis..." />
+                                <button type="submit" class="searchbtn btn btn-primary btn-sm">Filtern</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            }
+        }
+
+
+
+
+
+
+                            @Html.Partial("~/views/bedarf/index.cshtml", Model)
+</body>
+}

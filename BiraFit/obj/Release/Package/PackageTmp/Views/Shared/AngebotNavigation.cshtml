@@ -1,0 +1,8 @@
+﻿ @if (ViewBag.Type == "Sportler")
+ {
+    <li>@Html.ActionLink("Alle Angebote", "Index", "Angebot", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+ }
+ else
+ {
+    <li>@Html.ActionLink("Meine Angebote", "AngebotTrainer", "Angebot", routeValues: null, htmlAttributes: new { id = "navlink" })</li>
+ }

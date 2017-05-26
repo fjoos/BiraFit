@@ -309,6 +309,5 @@ D:\_Studium\EngProj\0-Projekt\BiraFit\bin\de\EntityFramework.SqlServer.resources
 D:\_Studium\EngProj\0-Projekt\BiraFit\bin\de\Microsoft.AspNet.Identity.Core.resources.dll
 D:\_Studium\EngProj\0-Projekt\BiraFit\bin\de\Microsoft.AspNet.Identity.Owin.resources.dll
 D:\_Studium\EngProj\0-Projekt\BiraFit\bin\de\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-D:\_Studium\EngProj\0-Projekt\BiraFit\obj\Debug\BiraFit.csprojResolveAssemblyReference.cache
 D:\_Studium\EngProj\0-Projekt\BiraFit\obj\Debug\BiraFit.dll
 D:\_Studium\EngProj\0-Projekt\BiraFit\obj\Debug\BiraFit.pdb

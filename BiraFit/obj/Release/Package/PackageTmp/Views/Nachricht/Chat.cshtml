@@ -1,0 +1,128 @@
+﻿@model BiraFit.ViewModel.ChatViewModel
+@{
+    ViewBag.Title = "Chat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var activeWriterMe = false;
+    var activeWriterHim = false;
+}
+<body id="chatBack">
+<div class="row">
+    <section>
+        <div class="container">
+            <div id="mybox" class="mainbox col-md-8 col-md-offset-2 modal-content">
+                <div class="panel panel-info" id="innerbox">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <h4>Konversation - mit @if (Model.IsSportler)
+                            {
+                                <a href="/Manage/Show/@Model.EmpfängerId"> @Model.Empfänger</a>
+                            }
+                            else
+                            {
+                                @Model.Empfänger
+                            }
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="scrollBody" onload="bodyOnloadHandler()">
+                        <ul class="chat">
+                            @foreach (var item in @Model.Nachrichten)
+                            {
+                                if (item.Sender_Id == @Model.Id)
+                                {
+                                    <li class="right clearfix">
+                                        <div class="col-md-9 col-md-offset-3">
+
+                                            @if (!activeWriterMe)
+                                            {
+                                                <div class="header">
+                                                    <span class="chat-img pull-right">
+                                                        @if (Model.SenderProfilBild == "standardprofilbild.jpg")
+                                                        {
+                                                            <img src="~/Resources/@Model.SenderProfilBild" class="img-circle" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/Resources/AccountPicture/@Model.SenderProfilBild" class="img-circle" />
+                                                        }
+                                                    </span>
+                                                    <strong class="pull-right primary-font">Ich</strong>
+                                                    <small class=" text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>@item.Datum
+                                                    </small>
+                                                </div>
+                                            }
+
+                                            <div class="chat-body clearfix" id="chatMe">
+
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    activeWriterMe = true;
+                                    activeWriterHim = false;
+                                }
+                                else
+                                {
+                                    <li class="left clearfix">
+                                        <div class="col-md-9">
+                                            @if (!activeWriterHim)
+                                            {
+                                                <div class="header">
+                                                    <span class="chat-img pull-left">
+                                                       @if (Model.EmpfängerProfilBild == "standardprofilbild.jpg")
+                                                       {
+                                                        <img src="~/Resources/@Model.EmpfängerProfilBild" class="img-circle" />
+                                                       }
+                                                       else
+                                                       {
+                                                        <img src="~/Resources/AccountPicture/@Model.EmpfängerProfilBild" class="img-circle" />
+                                                       }
+                                                    </span>
+                                                    <strong class="primary-font">@Model.Empfänger</strong>
+                                                    <small class="pull-right text-muted">
+                                                        <span class="glyphicon glyphicon-time"></span>@item.Datum
+                                                    </small>
+                                                </div>
+                                            }
+
+                                            <div class="chat-body clearfix" id="chatHim">
+                                                <p>
+                                                    @item.Text
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </li>
+                                    activeWriterHim = true;
+                                    activeWriterMe = false;
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                    @using (Html.BeginForm("SendMessage", "Nachricht"))
+                    {
+                        <div class="modal-footer">
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    @Html.TextAreaFor(m => m.Nachricht, new {@class = "form-control", @id = "SingleNachricht", @placeholder = "Ihre Nachricht.."})
+                                    @Html.ValidationMessageFor(m => m.Nachricht, "", new {@class = "text-danger"})
+                                    @Html.HiddenFor(k => k.KonversationId, new {@value = Model.KonversationId})
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="input-group-btn">
+                                        <button type="submit" id="normalButton" class="btn btn-block">Senden</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>

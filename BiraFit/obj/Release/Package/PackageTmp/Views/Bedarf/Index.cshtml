@@ -1,0 +1,157 @@
+﻿@model List<BiraFit.ViewModel.BedarfViewModel>
+
+@{
+    ViewBag.Title = "Bedarf";
+    var image = "~/Resources/standardprofilbild.jpg";
+}
+
+<div class="row">
+    <section>
+        <div class="container">
+            <div class="mainbox col-md-8 col-md-offset-2">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <h2>Bedürfnisse</h2>
+                    </div>
+                </div>
+                @foreach (var item in @Model)
+                {
+                    if (item.Bedarf.OpenBedarf)
+                    {
+                        <div class="modal-content" id="bedarf">
+                            <article>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                       
+                                        
+                                            @if (Request.IsAuthenticated)
+                                            {
+                                                if (item.sportlerProfilbild != null && item.sportlerEmail != null)
+                                                {
+                                                    <figure>
+                                                        <img class="img-circle" id="profileImg" src="@Url.Content("~/Resources/AccountPicture/"+item.sportlerProfilbild)" />
+                                                    </figure>
+                                                    <small id="usrName">
+                                                       @item.sportlerEmail
+                                                    </small>
+                                                }
+                                                else
+                                                {
+                                                    <figure>
+                                                        <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                                    </figure>
+                                                    <small id="usrName">
+                                                       @item.sportlerEmail
+                                                    </small>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <figure>
+                                                    <img class="img-circle" id="profileImg" src="@Url.Content(image)" />
+                                                </figure>
+                                                <small id="usrName">
+                                                    Anonym
+                                                </small>
+                                            }
+                                                  
+                                    </div>
+                                    <div class="col-md-8" id="angebotBedarfBody">
+                                        <h4>
+                                            <b>@item.Bedarf.Titel</b>
+                                        </h4>
+                                        <p>@item.Bedarf.Beschreibung</p>
+                                        <div class="col-md-4">
+                                            Preisvorstellung: <p><b>@item.Bedarf.Preis.- / Woche</b></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            Umgebung: <p><b>@item.Bedarf.Ort</b></p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span id="postTime" class="label label-default pull-right">@item.Bedarf.Datum</span>
+                                    </div>
+                                </div>
+                                @if (@item.Trainer != null)
+                                {
+                                    if (@item.OfferMade)
+                                    {
+
+                                        <div class="panel-footer">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <p>Sie haben schon ein Angebot gemacht.</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 pull-right">
+                                                    <div class="form-group">
+                                                        <a class="btn btn-block" id="delButton" href="/Angebot/Withdraw/@item.Bedarf.Id">Angebot zurückziehen</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="panel-footer">
+
+                                            @using (Html.BeginForm("Create", "Angebot"))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h4>Angebot erstellen</h4>
+                                                    <div class="col-md-7">
+                                                        <div class="form-group">
+                                                            <label for="SingleNachricht">Beschreibung</label>
+                                                            @Html.TextArea("Beschreibung", item.Beschreibung, new { @class = "form-control", @placeholder = "Beschreibung wieso ich...", @id = "SingleNachricht", name = "Beschreibung" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <div class="form-group">
+                                                            <label for="Preis">Mein Preis</label>
+                                                            @Html.TextBox("Preis", item.Preis, new { @class = "form-control", @placeholder = "Preis", @id = "Preis", name = "Preis" })
+                                                        </div>
+                                                    </div>
+                                                    @Html.Hidden("Id", item.Bedarf.Id, new { @value = item.Bedarf.Id })
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-block" id="normalButton" value="Angebot abgeben"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+                                            </div>
+                                                
+                                            }
+                                            }
+                                            @if (@item.IsOwner)
+                                            {
+                                                <div class="panel-footer">
+                                                    <div class="row">
+                                                            <div class="col-md-3 col-md-offset-5">
+                                                                <div class="form-group">
+                                                                    <a class="btn btn-block" id="normalButton" href="Bedarf/Edit/@item.Bedarf.Id">Bearbeiten</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1">
+                                                                <p>oder</p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <a class="btn btn-block" id="delButton" href="Bedarf/Delete/@item.Bedarf.Id">Löschen</a>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            }
+                            </article>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+</div>
