@@ -37,7 +37,14 @@
                                             {
                                                 <div class="header">
                                                     <span class="chat-img pull-right">
-                                                        <img src="~/Resources/AccountPicture/@Model.SenderProfilBild" class="img-circle"/>
+                                                        @if (Model.SenderProfilBild == "standardprofilbild.jpg")
+                                                        {
+                                                            <img src="~/Resources/@Model.SenderProfilBild" class="img-circle" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="~/Resources/AccountPicture/@Model.SenderProfilBild" class="img-circle" />
+                                                        }
                                                     </span>
                                                     <strong class="pull-right primary-font">Ich</strong>
                                                     <small class=" text-muted">
@@ -65,8 +72,14 @@
                                             {
                                                 <div class="header">
                                                     <span class="chat-img pull-left">
-                                                        <img src="~/Resources/AccountPicture/@Model.EmpfängerProfilBild" class="img-circle"/>
-
+                                                       @if (Model.EmpfängerProfilBild == "standardprofilbild.jpg")
+                                                       {
+                                                        <img src="~/Resources/@Model.EmpfängerProfilBild" class="img-circle" />
+                                                       }
+                                                       else
+                                                       {
+                                                        <img src="~/Resources/AccountPicture/@Model.EmpfängerProfilBild" class="img-circle" />
+                                                       }
                                                     </span>
                                                     <strong class="primary-font">@Model.Empfänger</strong>
                                                     <small class="pull-right text-muted">

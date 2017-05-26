@@ -93,6 +93,16 @@ namespace BiraFit.Controllers
                 var senderBild = Context.Users.Single(u => u.Id == senderId).ProfilBild;
                 var empfängerBild = Context.Users.Single(u => u.Id == empfängerId).ProfilBild;
 
+                if (senderBild == null)
+                {
+                    senderBild = "standardprofilbild.jpg";
+                }
+
+                if (empfängerBild == null)
+                {
+                    empfängerBild = "standardprofilbild.jpg";
+                }
+
                 return View(new ChatViewModel
                 {
                     Nachrichten = chatList,
