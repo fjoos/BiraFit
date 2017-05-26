@@ -136,9 +136,19 @@ namespace BiraFit.Controllers
             {
                 string username = User.Identity.GetUserId();
                 ApplicationUser user = Context.Users.Single(s => s.Id == username);
-                PersonalTrainer personalTrainer = Context.PersonalTrainer.Single(s => s.User_Id == username);
                 TryUpdateModel(user);
-                TryUpdateModel(personalTrainer);
+                if (IsSportler())
+                {
+                    Sportler sportler = Context.Sportler.Single(s => s.User_Id == username);
+                    TryUpdateModel(sportler);
+                }
+                else
+                {
+                    PersonalTrainer personalTrainer = Context.PersonalTrainer.Single(s => s.User_Id == username);                
+                    TryUpdateModel(personalTrainer);
+                }
+                
+                
                 Context.SaveChanges();
                 return RedirectToAction("Index", "Manage");
             }
